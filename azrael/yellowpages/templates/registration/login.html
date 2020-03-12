@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>YELLOWPAGES // ВХОД</title>
+</head>
+<style>
+  @import url('https://fonts.googleapis.com/css?family=Roboto:400,500,700&display=swap&subset=cyrillic,cyrillic-ext,latin-ext');
+  html {
+    background-color:rgba(49, 49, 49, 0.911)
+  }
+  html, body {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    min-width: 500px;
+    font-family: 'Roboto', sans-serif;
+    letter-spacing: 1px;
+  }
+
+  .mainWrapper {
+    width: 350px;
+    min-height: 210px;
+    display: flex;
+    background-color: #2e2e2e;
+    margin: 12% auto;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    border-radius: 15px;
+    box-shadow: 5px 5px 0 rgb(27, 27, 27),
+    10px 10px 0 rgb(27, 27, 27),
+    15px 15px 0 rgb(27, 27, 27),
+    20px 20px 0 rgb(27, 27, 27),
+    25px 25px 0 rgb(27, 27, 27),
+    30px 30px 0 rgb(27, 27, 27),
+    35px 35px 0 rgb(27, 27, 27),
+    40px 40px 0 rgb(27, 27, 27),
+    45px 45px 0 rgb(27, 27, 27),
+    50px 50px 0 rgb(27, 27, 27);
+  }
+/* 
+  .mainWrapper::before {
+    content: '';
+    width: 350px;
+    height: 50px;
+    background-color: #2e2e2e;
+  } */
+
+  .formWrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-items: center;
+  }
+
+  .formWrapper input {
+    margin-top: 15px;
+    padding: 0;
+    outline: none;
+    border: none;
+    height: 30px;
+    width: 250px;
+    padding: 1px 15px;
+    background-color: #464646;
+    border: 1px solid rgba(0, 0, 0, 0.12);
+    box-shadow: none;
+    -moz-appearance: none;
+    outline-style: none;
+    color: white;
+    border-radius: 15px;
+    box-sizing: border-box;
+    font-family: 'Roboto', sans-serif;
+    letter-spacing: 1px;
+    transition: box-shadow 0.5s, border 0.5s, background-color 0.3s;
+  }
+  
+  .formWrapper #id_username {
+    margin-top: 0;
+  }
+  
+  .formWrapper input::-moz-placeholder {
+    letter-spacing: 0;
+    opacity: 0.2;
+  }
+  /* .formWrapper input::-moz-placeholder {
+    content: 'ENTER';
+  } */
+
+  .formWrapper input:focus {
+    border: 1px solid rgba(0, 102, 255, 0.507);
+  }
+  
+  .formWrapper input:valid {
+    border: 1px solid rgba(0, 255, 128, 0.507);
+  }
+  
+  .formWrapper input:-moz-ui-invalid {
+    border: 1px solid rgba(255, 0, 0, 0.507);
+  }
+
+  .formWrapper input[type="submit"] {
+    background-color: rgba(38, 216, 65, 0.945);
+    text-transform: uppercase;
+  }
+  
+  .formWrapper input[type="submit"]:hover {
+    cursor: pointer;
+    box-shadow: 0px 5.93383px 29.6691px rgba(78, 248, 21, 0.568);
+  }
+  
+  .formWrapper input[type="submit"]:active {
+    box-shadow: 0px 2.93383px 15.6691px rgba(78, 248, 21, 0.288);
+    background-color: rgb(47, 119, 58);
+  }
+  
+  .formWrapper input[type="submit"]:focus {
+    outline: none !important;
+    -moz-box-pack: none;
+  }
+
+  .mainWrapper p a, .mainWrapper p{
+    color: white;
+    text-decoration: none;
+    font-size: 12px;
+  }
+
+  .mainWrapper header {
+    max-height: 50px;
+    margin: 10px auto;
+    width: 250px;
+    text-align: center;
+  }
+
+  .mainWrapper header h1 {
+    font-size: 10px;
+    color: ivory;
+  }
+
+  @media only screen and (max-width: 800px) {
+    
+    html, body {
+      min-width: 0;
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      overflow: hidden;
+    }
+    .mainWrapper {
+      min-height: 100%;
+      margin: 0;
+      border-radius: 0;
+      width: 100%;
+    }
+  }
+
+</style>
+<body>
+<div class="mainWrapper">
+<header>
+    {% if form.errors %}
+    <p>Логин или пароль не подходит. Попробуйте еще раз.</p>
+    {% endif %}
+    {% if next %}
+    {% if user.is_authenticated %}
+    <p>Опа, а у вашего аккаунта нет прав :(</p>
+    {% else %}
+    {% endif %}
+    {% endif %}
+</header>
+<form class="formWrapper" method="post" action="{% url 'login' %}">
+  {% csrf_token %}
+      <div class="username">{{ form.username }}</div>
+      <div class="password">{{ form.password }}</div>
+      <input type="submit" value="Войти" />
+      <input type="hidden" name="next" value="{{ next }}" />
+</form>
+    
+    {# Assumes you setup the password_reset view in your URLconf #}
+    <p><a href="{% url 'password_reset' %}">Забыл пароль</a></p>
+  </div>
+</body>
+<script>
+  document.getElementById('id_password').placeholder='пароль';
+  document.getElementById('id_username').placeholder='логин';
+</script>
+</html>

@@ -1,0 +1,197 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ru-RU">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, inicial-scale=1">
+  <link rel="stylesheet/less" type="text/css" href="{% static 'yellopages/indexStyles.less' %}" />
+  <title>Справочник телефонов</title>
+  <!-- <link rel="shortcut icon" href="../files/favicon-phone.ico.gif" type="image/x-icon"> -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/less.js/3.9.0/less.min.js"></script>
+</head>
+
+<body>
+
+  <div class="wrapper">
+    <div class="headerWrapper">
+      <a href="/yp/">
+        <svg version="1.1" viewBox="0 0 32 17" style="width: 50px; height: 30px; color: white;">
+          <path pid="0" fill="#fff" fill-rule="evenodd" _stroke="#fff"
+            d="M24.207 1.4c-1.587 0-3.428.982-5.808 3.096a36.282 36.282 0 0 0-2.673 2.646l-1.359 1.412s-4.591 5.202-7.154 5.202c-2.562 0-4.552-2.328-4.552-5.202 0-2.875 2.055-5.203 4.552-5.203 1.6 0 4.013 2.068 5.58 3.596l1.385-1.385C12.325 3.742 9.503 1.4 7.213 1.4 3.61 1.4.71 4.606.71 8.554c0 3.947 2.933 7.153 6.503 7.153 1.587 0 3.428-.982 5.808-3.095a36.289 36.289 0 0 0 2.673-2.647l1.352-1.411S21.638 3.35 24.2 3.35c2.562 0 4.552 2.328 4.552 5.203 0 2.874-2.055 5.202-4.552 5.202-1.593 0-4.012-2.068-5.573-3.596l-1.366 1.411c1.854 1.815 4.663 4.136 6.946 4.136 3.603 0 6.503-3.206 6.503-7.153 0-3.948-2.9-7.154-6.503-7.154z">
+          </path>
+        </svg>
+      </a>
+
+
+
+      {% if user.is_authenticated %}
+      <p>  fresh auto // yellowpages // add a new user // <a href="{% url 'logout'%}?next={{request.path}}">
+          {{ user.get_username }}</a>
+      </p>
+      {% else %}
+      <p>  fresh auto // yellowpages // add a new user // <a href="{% url 'login'%}?next={{request.path}}">Login</a></p>
+      {% endif %}
+    </div>
+    <div class="adduserWrapper">
+      {% if result != null %}
+      <form action="{% url 'regular_search' %}" method="GET">
+        
+      {% else %}
+      <form action="{% url 'adduser' %}" method="GET">
+      {% endif %}
+        {% csrf_token %}
+        {% if result != null %}
+        <div class="fio">
+          <input type="hidden" name="key" value="{{key}}">
+          <input class="contactInfo" type="text" name="name" id="name" placeholder="Имя" value="{{ result.1 }}" required>
+          <input class="contactInfo" type="text" name="secondName" id="secondName" value="{{ result.0 }}"
+            placeholder="Фамилия" required>
+          <input class="contactInfo" type="text" name="middlename" id="middlename" value="{{ result.2 }}"
+            placeholder="Отчество" required>
+        </div>
+        <div class="contacts">
+          <input class="contactInfo" type="email" name="email" id="email" value="{{ result.9 }}" placeholder="Эл.адрес"
+            required>
+          <input class="contactInfo" type="tel" name="mobile" id="mobile" value="{{ result.7 }}" placeholder="Мобильный"
+            required>
+          <input class="contactInfo" type="tel" name="tel" id="tel" value="{{ result.8 }}" placeholder="Внутренний"
+            required>
+          <input class="contactInfo" type="date" name="bdate" id="bdate" value="{{result.4}}"
+          placeholder="Дата рождения" required>
+        </div>
+        <div class="city">
+          <select name="city" class="selector citySelect" style="color: rgb(221, 221, 221)"
+            onchange="this.style.color='white'" required>
+            <option disabled>Город</option>
+            <option value="{{ result.3 }}" selected>{{ result.3 }}</option>
+            {% for i in city %}
+            <option value="{{i}}">{{i}}</option>
+            {% endfor %}
+          </select>
+          <select name="address" class="selector addrSelect" style="color: rgb(221, 221, 221)"
+            onchange="this.style.color='white'" required>
+            <option value="{{ result.10 }}" selected>{{ result.10 }}</option>
+            <option value="">Пусто</option>
+            {% for i in address %}
+            <option value="{{i}}">{{i}}</option>
+            {% endfor %}
+          </select>
+          <select name="company" class="selector brandSelect" style="color: rgb(221, 221, 221)"
+            onchange="this.style.color='white'" required>
+            <option disabled>Бренд</option>
+            <option value="{{ result.11 }}" selected>{{ result.11 }}</option>
+            {% for i in company %}
+            <option value="{{i}}">{{i}}</option>
+            {% endfor %}
+          </select>
+        </div>
+        <div class="position">
+          <select name="unit" class="selector officeSelect" style="color: rgb(221, 221, 221)"
+            onchange="this.style.color='white'" required>
+            <option disabled>Отдел</option>
+            <option value="{{ result.12 }}" selected>{{ result.12 }}</option>
+            {% for i in unit %}
+            <option value="{{i}}">{{i}}</option>
+            {% endfor %}
+          </select>
+          <select name="depart" class="selector positionSelect" style="color: rgb(221, 221, 221)"
+            onchange="this.style.color='white'" required>
+            <option disabled>Подразделение</option>
+            <option value="{{ result.6 }}" selected>{{ result.6 }}</option>
+            {% for i in depart %}
+            <option value="{{i}}">{{i}}</option>
+            {% endfor %}
+          </select>
+          <select name="position" class="selector positionSelect" style="color: rgb(221, 221, 221)"
+            onchange="this.style.color='white'" required>
+            <option disabled>Позишн</option>
+            <option value="{{ result.5 }}" selected>{{ result.5 }}</option>
+            {% for i in position %}
+            <option value="{{i}}">{{i}}</option>
+            {% endfor %}
+          </select>
+        </div>
+    </div>
+
+    {% else %}
+    <div class="fio">
+      <input class="contactInfo" type="text" name="name" id="name" placeholder="Имя" required>
+      <input class="contactInfo" type="text" name="secondName" id="secondName" placeholder="Фамилия" required>
+      <input class="contactInfo" type="text" name="middlename" id="middlename" placeholder="Отчество" required>
+    </div>
+    <div class="contacts">
+      <input class="contactInfo" type="email" name="email" id="email" placeholder="Эл.адрес" required>
+      <input class="contactInfo" type="tel" name="mobile" id="mobile" placeholder="Мобильный" required>
+      <input class="contactInfo" type="tel" name="tel" id="tel" placeholder="Внутренний" required>
+      <input class="contactInfo" type="date" name="bdate" id="bdate" placeholder="Дата рождения" required>
+    </div>
+    <div class="city">
+      <select name="city" class="selector citySelect" style="color: rgb(221, 221, 221)"
+        onchange="this.style.color='white'" required>
+        <option disabled selected>Город</option>
+        <option value="">Пусто</option>
+        {% for i in city %}
+        <option value="{{i}}">{{i}}</option>
+        {% endfor %}
+      </select>
+      <select name="address" class="selector addrSelect" style="color: rgb(221, 221, 221)"
+        onchange="this.style.color='white'" required>
+        <option disabled selected>Адрес</option>
+        <option value="">Пусто</option>
+        {% for i in address %}
+        <option value="{{i}}">{{i}}</option>
+        {% endfor %}
+      </select>
+      <select name="company" class="selector brandSelect" style="color: rgb(221, 221, 221)"
+        onchange="this.style.color='white'" required>
+        <option disabled selected>Бренд</option>
+        <option value="">Пусто</option>
+        {% for i in company %}
+        <option value="{{i}}">{{i}}</option>
+        {% endfor %}
+      </select>
+    </div>
+    <div class="position">
+      <select name="unit" class="selector officeSelect" style="color: rgb(221, 221, 221)"
+        onchange="this.style.color='white'" required>
+        <option disabled selected>Отдел</option>
+        <option value="">Пусто</option>
+        {% for i in unit %}
+        <option value="{{i}}">{{i}}</option>
+        {% endfor %}
+      </select>
+      <select name="depart" class="selector positionSelect" style="color: rgb(221, 221, 221)"
+        onchange="this.style.color='white'" required>
+        <option disabled selected>Подразделение</option>
+        <option value="">Пусто</option>
+        {% for i in depart %}
+        <option value="{{i}}">{{i}}</option>
+        {% endfor %}
+      </select>
+      <select name="position" class="selector positionSelect" style="color: rgb(221, 221, 221)"
+        onchange="this.style.color='white'" required>
+        <option disabled selected>Позишн</option>
+        <option value="">Пусто</option>
+        {% for i in position %}
+        <option value="{{i}}">{{i}}</option>
+        {% endfor %}
+      </select>
+    </div>
+  </div>
+  {% endif %}
+  <div class="btnWrapper">
+    {% if result == null %}
+    <button type="submit">Добавить</button>
+    {% else %}
+    <button type="submit">Сохранить</button>
+    {% endif %}
+  </div>
+  </form>
+  </div>
+
+</body>
+<script>
+</script>
+</html>
