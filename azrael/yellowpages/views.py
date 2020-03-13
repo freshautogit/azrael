@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required, permission_required
 from back.sql import yp
+from django.http import JsonResponse
 
 # city = yp.unit('city')
 # address = yp.unit('address')
@@ -114,3 +115,20 @@ def getHeaders(request):
     # result = yp.ypFind(query, True, querySql(request))
     result = yp.yp_find(query, True, querySql(request))
     return render(request, 'results.html', {'result': result, 'query': query, 'headTemp': headTemp})
+
+def testHttpRequest(request):
+    request_city = request.GET.get('city')
+    request_unit = request.GET.get('unit')
+
+    if (request_city == None) and (request_unit == None):
+        units = yp.unit_depart().keys()
+        cities = yp.city_address().keys()
+        return render(request, 'test.html', {'units': units, 'cities': cities})
+
+    elif request_city != None:
+        response = yp.city_address().get(request_city)
+        return JsonResponse({'response': response})
+
+    elif request_unit != None:
+        response = yp.unit_depart().get(request_unit)
+        return JsonResponse({'response': response})

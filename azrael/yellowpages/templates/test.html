@@ -1,0 +1,117 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, inicial-scale=1">
+    <link rel="stylesheet/less" type="text/css" href="{% static 'yellopages/indexStyles.less' %}" />
+    <title>ASYNC TEST</title>
+</head>
+
+<body>
+
+<div>
+    <select name="city">
+        <option value="null" disabled selected>Выбери город</option>
+        {% for i in cities %}
+        <option id="city{{forloop.counter}}"value="{{i}}">{{i}}</option>
+        {% endfor %}
+    </select>
+    <select name="addr">
+        <option value="disabled" disabled selected></option>
+    </select>
+    <select name="unit">
+        <option value="None" disabled selected>Выберите департамент</option>
+        {% for i in units %}
+            <option id="unit{{forloop.counter}}"value="{{i}}">{{i}}</option>
+        {% endfor %}
+    </select>
+    <select name="depart">
+    </select>
+</div>
+
+<script>
+    const select1 = document.querySelector('select[name=city]');
+    const select2 = document.querySelector('select[name=addr]');
+    const select3 = document.querySelector('select[name=unit]');
+    const select4 = document.querySelector('select[name=depart]');
+
+    // делаешь асинхронный хэндлер к селекту
+    select1.addEventListener('change', async event => {
+        // не дает форме обновиться (блокируешь стандартное поведение)
+        event.preventDefault();
+        // получаешь выбранный текст
+        const selectedOption = event.target.value;
+        console.log('Выбранный в селекте текст: ' + selectedOption);
+
+
+
+        let xhr = new XMLHttpRequest();
+        let url = "?city=" + encodeURIComponent(selectedOption);
+        xhr.open("GET", url, true);
+        xhr.setRequestHeader("Content-Type", "application/json");
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState === 4 && xhr.status === 200) {
+                let json = JSON.parse(xhr.response);
+                console.log(json);
+                if (select2 != null) {
+                    while (select2.firstChild) {
+                        select2.removeChild(select2.firstChild);
+                    }
+                }
+
+                for (let i = 0; i < json.response.length; i++) {
+                    console.log(json.response[i]);
+                    let option = document.createElement('option');
+                    option.value += json.response[i];
+                    option.innerHTML += json.response[i];
+                    select2.appendChild(option);
+                }
+            }
+        };
+        xhr.send();
+    });
+
+    // делаешь асинхронный хэндлер к селекту
+    select3.addEventListener('change', async event => {
+        // не дает форме обновиться (блокируешь стандартное поведение)
+        event.preventDefault();
+        // получаешь выбранный текст
+        const selectedOption = event.target.value;
+        console.log('Выбранный в селекте текст: ' + selectedOption);
+
+
+
+        let xhr = new XMLHttpRequest();
+        let url = "?unit=" + encodeURIComponent(selectedOption);
+        xhr.open("GET", url, true);
+        xhr.setRequestHeader("Content-Type", "application/json");
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState === 4 && xhr.status === 200) {
+                let json = JSON.parse(xhr.response);
+                console.log(json);
+                if (select4 != null) {
+                    while (select4.firstChild) {
+                        select4.removeChild(select4.firstChild);
+                    }
+                }
+
+                for (let i = 0; i < json.response.length; i++) {
+                    console.log(json.response[i]);
+                    let option = document.createElement('option');
+                    console.log('1.  ' + json.response)
+                    option.value += json.response[i];
+                    option.innerHTML += json.response[i];
+                    select4.appendChild(option);
+                }
+            }
+        };
+        xhr.send();
+    });
+
+
+</script>
+
+</body>
+</html>
