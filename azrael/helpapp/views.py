@@ -1,7 +1,8 @@
 from django.shortcuts import render
 from django.http import HttpResponseRedirect, HttpResponse
 from helpapp.models import Document
-from back import helpForm, wbhook
+from back.help_form import helpForm
+from back.webhook import wbhook
 
 apply = [".jpeg", ".jpg", ".gif", ".png", ".svg", ".avi", ".mp4", ".zip", ".rar", ".pdf", ".doc", ".docx", ".xls",
           ".xlsx", ".pptx", ".ppt", ".mp3", ".wav", ".odp", ".7z"]
