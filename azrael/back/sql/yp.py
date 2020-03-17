@@ -15,8 +15,10 @@ def yp_find(request, full, query_sql):
     if full:
         concat = 'id, surname, name, middlename, city, bdate, position, depart, unit, mobile, workphone, email, address, ' \
                  'company '
+        concat_id = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13]
     else:
         concat = 'id, surname, name, city, position, depart, unit, mobile, workphone, email, address, company'
+        concat_id = [0, 1, 2, 4, 6, 13, 7, 8, 9, 10, 11, 12]
 
     request = request.strip()
     array_words = request.split(' ')
@@ -29,7 +31,7 @@ def yp_find(request, full, query_sql):
                 cursor.execute(sql)
                 temp_result = ''
                 for row in cursor:
-                    for temp in range(len(concat.split(','))):
+                    for temp in concat_id:
                         temp_result += str(row[temp]).strip() + ';'
                     temp_result += '\n'
             for temp in temp_result.split('\n'):
