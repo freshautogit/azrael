@@ -34,6 +34,9 @@ def yp_find(request, full, query_sql):
                     for temp in concat_id:
                         temp_result += str(row[temp]).strip() + ';'
                     temp_result += '\n'
+            if temp_result[len(temp_result) - 1:len(temp_result)] == '\n':
+                temp_result = temp_result[:len(temp_result) - 1] + temp_result[len(temp_result) + 1:]
+
             for temp in temp_result.split('\n'):
                 count = 0
                 for tempWord in array_words:
