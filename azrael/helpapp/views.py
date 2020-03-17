@@ -22,7 +22,7 @@ def success(request):
                 newDoc = Document(userFile=f)
                 newDoc.save()
 
-        key = helpForm.acceptTask(request, get_client_ip(request))
+        key = helpForm.accept_task(request, get_client_ip(request))
         return HttpResponseRedirect('https://tracker.yandex.ru/' + key)
     else:
         return HttpResponse('Error!')

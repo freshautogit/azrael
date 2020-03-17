@@ -35,7 +35,7 @@ def index(request):
 
 def success(request):
     if request.method == 'POST':
-        key = testCore.acceptTask(request, get_client_ip(request))
+        key = testCore.accept_task(request, get_client_ip(request))
     return render(request, 'helpform/index.html', {'result': key})
 
 def get_client_ip(request):
