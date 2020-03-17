@@ -42,8 +42,10 @@ def addUser(request):
 
 
 def indexYP(request):
-
-    return render(request, 'index.html')
+    testHttpRequest(request)
+    units = yp.unit_depart().keys()
+    cities = yp.city_address().keys()
+    return render(request, 'index.html', {'cities': cities, 'units': units})
                  # {'depart': depart, 'city': city, 'unit': unit, 'address': address, 'company': company, 'unitAndDepart' : unitAndDepart, 'departAndPos' : departAndPos})
 
 
@@ -51,6 +53,8 @@ def indexYP(request):
 def regular_search(request):
     headTemp = yp.headers(False)
     key = request.GET.get('key')
+    units = yp.unit_depart().keys()
+    cities = yp.city_address().keys()
 
     if key is not None:
         query = request.GET.get('secondName') + str(' ') + request.GET.get('name')
@@ -61,7 +65,7 @@ def regular_search(request):
     else:
         query, result = searchResult(request)
 
-    return render(request, 'results.html', {'result': result, 'query': query, 'key': key, 'headTemp': headTemp})
+    return render(request, 'results.html', {'result': result, 'query': query, 'key': key, 'headTemp': headTemp, 'cities': cities, 'units': units})
 
 
 # Если пользователь авторизирован как менежер
@@ -126,9 +130,15 @@ def testHttpRequest(request):
         return render(request, 'test.html', {'units': units, 'cities': cities})
 
     elif request_city != None:
-        response = yp.city_address().get(request_city)
+        if yp.city_address().get(request_city) == None:
+            response = "None"
+        else:
+            response = yp.city_address().get(request_city)
         return JsonResponse({'response': response})
 
     elif request_unit != None:
-        response = yp.unit_depart().get(request_unit)
+        if yp.unit_depart().get(request_unit) == None:
+            response = "None"
+        else:
+            response = yp.unit_depart().get(request_unit)
         return JsonResponse({'response': response})

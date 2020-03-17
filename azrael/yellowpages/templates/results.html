@@ -10,7 +10,7 @@
     <!-- <link rel="shortcut icon" href="../files/favicon-phone.ico.gif" type="image/x-icon"> -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/less.js/3.9.0/less.min.js"></script>
-    <script src="{% static 'yellopages/scripts/jquery.tablesorter.min.js' %}"></script>
+    <!--<script src="{% static 'yellopages/scripts/jquery.tablesorter.min.js' %}"></script>-->
     <script src="{% static 'yellopages/scripts/xlsx.full.min.js' %}"></script>
 </head>
 
@@ -57,48 +57,36 @@
                 <div class="spoiler">
                     <details>
                         <summary>Search options</summary>
-                        <div class="selectWrapper">
-                            <select name="city" class="selector citySelect" style="color: rgb(221, 221, 221)"
-                                onchange="this.style.color='white'">
-                                <option disabled selected value="None">City</option>
-                                <option value="None">Пусто</option>
-                                {% for i in city %}
-                                <option value="{{i}}">{{i}}</option>
-                                {% endfor %}
-                            </select>
-                            <select name="addr" class="selector addrSelect" style="color: rgb(221, 221, 221)"
-                                onchange="this.style.color='white'">
-                                <option disabled selected value="None">Address</option>
-                                <option value="None">Пусто</option>
-                                {% for i in address %}
-                                <option value="{{i}}">{{i}}</option>
-                                {% endfor %}
-                            </select>
-                            <select name="brand" class="selector brandSelect" style="color: rgb(221, 221, 221)"
-                                onchange="this.style.color='white'">
-                                <option disabled selected value="None">Brand</option>
-                                <option value="None">Пусто</option>
-                                {% for i in company %}
-                                <option value="{{i}}">{{i}}</option>
-                                {% endfor %}
-                            </select>
-                            <select name="office" class="selector officeSelect" style="color: rgb(221, 221, 221)"
-                                onchange="this.style.color='white'">
-                                <option disabled selected value="None">Office</option>
-                                <option value="None">Пусто</option>
-                                {% for i in unit %}
-                                <option value="{{i}}">{{i}}</option>
-                                {% endfor %}
-                            </select>
-                            <select name="position" class="selector positionSelect" style="color: rgb(221, 221, 221)"
-                                onchange="this.style.color='white'">
-                                <option disabled selected value="None">Position</option>
-                                <option value="None">Пусто</option>
-                                {% for i in depart %}
-                                <option value="{{i}}">{{i}}</option>
-                                {% endfor %}
-                            </select>
-                        </div>
+            <div class="selectWrapper">
+              <select name="city" class="selector citySelect" style="color: rgb(221, 221, 221)" onchange="this.style.color='white'">
+                <option disabled selected>City</option>
+                <option value="None">Пусто</option>
+                {% for i in cities %}
+                    <option id="city{{forloop.counter}}"value="{{i}}">{{i}}</option>
+                {% endfor %}
+              </select>
+              <select name="addr" class="selector addrSelect hidden" style="color: rgb(221, 221, 221)" onchange="this.style.color='white'">
+                  <option disabled selected>Address</option>
+                  <option value="None">Пусто</option>
+              </select>
+              <select name="brand" class="selector brandSelect" style="color: rgb(221, 221, 221)" onchange="this.style.color='white'">
+                  <option disabled selected>Brand</option>
+                {% for i in company %}
+                    <option id="brand{{forloop.counter}}" value="{{i}}">{{i}}</option>
+                {% endfor %}
+              </select>
+              <select name="office" class="selector officeSelect" style="color: rgb(221, 221, 221)" onchange="this.style.color='white'">
+                  <option disabled selected>Office</option>
+                  <option value="None">Пусто</option>
+                {% for i in units %}
+                    <option id="office{{forloop.counter}}" value="{{i}}">{{i}}</option>
+                {% endfor %}
+              </select>
+              <select name="position" class="selector positionSelect hidden" style="color: rgb(221, 221, 221)" onchange="this.style.color='white'">
+                  <option disabled selected>Position</option>
+                  <option value="None">Пусто</option>
+              </select>
+            </div>
                     </details>
                 </div>
             </form>
@@ -123,37 +111,8 @@
                     </tbody>
                 </table>
             </div>
-            <button id="exportXlsxButton">Скачать таблицу</button>
     </div>
     <svg id="svgEditIcon" xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24"><path fill="rgba(38, 216, 65, 0.945)" d="M14.078 4.232l-12.64 12.639-1.438 7.129 7.127-1.438 12.641-12.64-5.69-5.69zm-10.369 14.893l-.85-.85 11.141-11.125.849.849-11.14 11.126zm2.008 2.008l-.85-.85 11.141-11.125.85.85-11.141 11.125zm18.283-15.444l-2.816 2.818-5.691-5.691 2.816-2.816 5.691 5.689z"/></svg>
-    <script>
-        var wb = XLSX.utils.table_to_book(document.getElementById('myTable'), {
-            sheet: "Sheet JS"
-        });
-        var wbout = XLSX.write(wb, {
-            bookType: 'xlsx',
-            bookSST: true,
-            type: 'binary'
-        });
-
-        function s2ab(s) {
-            var buf = new ArrayBuffer(s.length);
-            var view = new Uint8Array(buf);
-            for (var i = 0; i < s.length; i++) view[i] = s.charCodeAt(i) & 0xFF;
-            return buf;
-        }
-        $("#exportXlsxButton").click(function () {
-            saveAs(new Blob([s2ab(wbout)], {
-                type: "application/octet-stream"
-            }), 'phonebook.xlsx');
-        });
-    </script>
-    <script>
-        $(document).ready(function () {
-            $("#myTable").tablesorter();
-        });
-    </script>
-
     <script>
         let line = document.getElementsByTagName('tr');
         
@@ -195,6 +154,7 @@
             };
         };
     </script>
+    <script src="{% static 'yellopages/scripts/dropdown.js' %}"></script>
 </body>
 
 </html>

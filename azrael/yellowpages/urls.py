@@ -14,5 +14,6 @@ urlpatterns = [
 	path('s/saveuser/', views.saveUser, name='saveuser'),
 	path('s/', views.regular_search, name='regular_search'),
 	path('test/', views.testHttpRequest, name='testHttpsRequest'),
+	path('s/test/', views.testHttpRequest, name='testHttpsRequest'),
 	path('', include('django.contrib.auth.urls'))
 ]

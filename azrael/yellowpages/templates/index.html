@@ -10,6 +10,7 @@
   <!-- <link rel="shortcut icon" href="../files/favicon-phone.ico.gif" type="image/x-icon"> -->
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
   <script src="//cdnjs.cloudflare.com/ajax/libs/less.js/3.9.0/less.min.js"></script>
+
 </head>
 
 <body>
@@ -51,85 +52,39 @@
           <details>
             <summary>Search options</summary>
             <div class="selectWrapper">
-              <select name="city" class="selector citySelect" style="color: rgb(221, 221, 221)"
-                onchange="this.style.color='white'">
+              <select name="city" class="selector citySelect" style="color: rgb(221, 221, 221)" onchange="this.style.color='white'">
                 <option disabled selected>City</option>
-                <option value="">Пусто</option>
-                {% for i in city %}
-                <option id="city{{forloop.counter}}"value="{{i}}">{{i}}</option>
+                <option value="None">Пусто</option>
+                {% for i in cities %}
+                    <option id="city{{forloop.counter}}"value="{{i}}">{{i}}</option>
                 {% endfor %}
               </select>
-              <select name="addr" class="selector addrSelect" style="color: rgb(221, 221, 221)"
-                onchange="this.style.color='white'">
-                <option disabled selected>Address</option>
-                <option value="">Пусто</option>
-                {% for i in address %}
-                <option id="addr{{forloop.counter}}" value="{{i}}">{{i}}</option>
-                {% endfor %}
+              <select name="addr" class="selector addrSelect hidden" style="color: rgb(221, 221, 221)" onchange="this.style.color='white'">
+                  <option disabled selected>Address</option>
+                  <option value="None">Пусто</option>
               </select>
-              <select name="brand" class="selector brandSelect" style="color: rgb(221, 221, 221)"
-                onchange="this.style.color='white'">
-                <option disabled selected>Brand</option>
-                <option value="">Пусто</option>
+              <select name="brand" class="selector brandSelect" style="color: rgb(221, 221, 221)" onchange="this.style.color='white'">
+                  <option disabled selected>Brand</option>
                 {% for i in company %}
-                <option id="brand{{forloop.counter}}" value="{{i}}">{{i}}</option>
+                    <option id="brand{{forloop.counter}}" value="{{i}}">{{i}}</option>
                 {% endfor %}
               </select>
-              <select name="office" class="selector officeSelect" style="color: rgb(221, 221, 221)"
-                onchange="this.style.color='white'">
-                <option disabled selected>Office</option>
-                <option value="">Пусто</option>
-                {% for i in unit %}
-                <option id="office{{forloop.counter}}" value="{{i}}">{{i}}</option>
+              <select name="office" class="selector officeSelect" style="color: rgb(221, 221, 221)" onchange="this.style.color='white'">
+                  <option disabled selected>Office</option>
+                  <option value="None">Пусто</option>
+                {% for i in units %}
+                    <option id="office{{forloop.counter}}" value="{{i}}">{{i}}</option>
                 {% endfor %}
               </select>
-              <select name="position" class="selector positionSelect" style="color: rgb(221, 221, 221)"
-                onchange="this.style.color='white'">
-                <option disabled selected>Position</option>
-                <option value="">Пусто</option>
-                {% for i in depart %}
-                <option id="position{{forloop.counter}}" value="{{i}}">{{i}}</option>
-                {% endfor %}
+              <select name="position" class="selector positionSelect hidden" style="color: rgb(221, 221, 221)" onchange="this.style.color='white'">
+                  <option disabled selected>Position</option>
+                  <option value="None">Пусто</option>
               </select>
             </div>
           </details>
         </div>
       </form>
   </div>
-  <!-- <div class="doge__wrapper">
-    <div class="doge"></div>
-  </div> -->
 </body>
-<script>
-function CreateRequest()
-{
-    var Request = false;
-
-    if (window.XMLHttpRequest)
-    {
-        //Gecko-совместимые браузеры, Safari, Konqueror
-        Request = new XMLHttpRequest();
-    }
-    else if (window.ActiveXObject)
-    {
-        //Internet explorer
-        try
-        {
-             Request = new ActiveXObject("Microsoft.XMLHTTP");
-        }    
-        catch (CatchException)
-        {
-             Request = new ActiveXObject("Msxml2.XMLHTTP");
-        }
-    }
- 
-    if (!Request)
-    {
-        alert("Невозможно создать XMLHttpRequest");
-    }
-    
-    return Request;
-} 
-</script>
-
+<script src="{% static 'yellopages/scripts/dropdown.js' %}"></script>
 </html>
