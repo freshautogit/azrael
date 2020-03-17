@@ -15,6 +15,7 @@ from django.http import JsonResponse
 unit_depart = yp.unit_depart()
 depart_pos = yp.depart_pos()
 city_address = yp.city_address()
+brand = yp.get_brand()
 ########################################
 
 def editUser(request):
@@ -45,6 +46,7 @@ def indexYP(request):
     testHttpRequest(request)
     units = yp.unit_depart().keys()
     cities = yp.city_address().keys()
+
     return render(request, 'index.html', {'cities': cities, 'units': units})
                  # {'depart': depart, 'city': city, 'unit': unit, 'address': address, 'company': company, 'unitAndDepart' : unitAndDepart, 'departAndPos' : departAndPos})
 
@@ -55,6 +57,7 @@ def regular_search(request):
     key = request.GET.get('key')
     units = yp.unit_depart().keys()
     cities = yp.city_address().keys()
+    brands = brand
 
     if key is not None:
         query = request.GET.get('secondName') + str(' ') + request.GET.get('name')
@@ -65,7 +68,7 @@ def regular_search(request):
     else:
         query, result = searchResult(request)
 
-    return render(request, 'results.html', {'result': result, 'query': query, 'key': key, 'headTemp': headTemp, 'cities': cities, 'units': units})
+    return render(request, 'results.html', {'result': result, 'query': query, 'key': key, 'headTemp': headTemp, 'cities': cities, 'units': units, 'brands': brands})
 
 
 # Если пользователь авторизирован как менежер

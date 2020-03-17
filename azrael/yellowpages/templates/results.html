@@ -10,7 +10,7 @@
     <!-- <link rel="shortcut icon" href="../files/favicon-phone.ico.gif" type="image/x-icon"> -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/less.js/3.9.0/less.min.js"></script>
-    <!--<script src="{% static 'yellopages/scripts/jquery.tablesorter.min.js' %}"></script>-->
+    <script src="{% static 'yellopages/scripts/jquery.tablesorter.min.js' %}"></script>
     <script src="{% static 'yellopages/scripts/xlsx.full.min.js' %}"></script>
 </head>
 
@@ -96,6 +96,7 @@
                 <table id="myTable" class="tablesorter">
                     <thead>
                         <tr>
+                            <th class="hidden" name="null_th_for_tablesorter">Your mom</th>
                             {% for head in headTemp %}
                             <th class="header">{{head}}</th>
                             {% endfor %}
@@ -110,14 +111,16 @@
                         {% endfor %}
                     </tbody>
                 </table>
+    <script>
+        $(function() {
+            $("#myTable").tablesorter();
+        });
+    </script>
             </div>
     </div>
     <svg id="svgEditIcon" xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24"><path fill="rgba(38, 216, 65, 0.945)" d="M14.078 4.232l-12.64 12.639-1.438 7.129 7.127-1.438 12.641-12.64-5.69-5.69zm-10.369 14.893l-.85-.85 11.141-11.125.849.849-11.14 11.126zm2.008 2.008l-.85-.85 11.141-11.125.85.85-11.141 11.125zm18.283-15.444l-2.816 2.818-5.691-5.691 2.816-2.816 5.691 5.689z"/></svg>
     <script>
         let line = document.getElementsByTagName('tr');
-        
-        
-
         for (let i = 1; i < line.length; i++) {
             let btn = document.createElement('td');
             btn.innerHTML = '+';
@@ -138,7 +141,7 @@
         let btn = document.querySelectorAll('td[class^="btn__del"]');
         let btnEdit = document.querySelectorAll('td[class^="btn__edit"]');
         let key = document.querySelectorAll('tr[class^="tableLine_"] > td:first-child');
-        
+
         console.log(line);
 
         for (let i = 0; i < line.length - 1; i++) {
