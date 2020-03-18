@@ -65,7 +65,7 @@
               </select>
               <select name="brand" class="selector brandSelect" style="color: rgb(221, 221, 221)" onchange="this.style.color='white'">
                   <option disabled selected>Brand</option>
-                {% for i in company %}
+                {% for i in brands %}
                     <option id="brand{{forloop.counter}}" value="{{i}}">{{i}}</option>
                 {% endfor %}
               </select>
