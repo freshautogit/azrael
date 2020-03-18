@@ -13,8 +13,8 @@ def yp_find(request, full, query_sql):
 
     result_words = []
     if full:
-        concat = 'id, surname, name, middlename, city, bdate, position, depart, unit, mobile, workphone, email, address, ' \
-                 'company '
+        concat = 'id, surname, name, middlename, city, bdate, position, depart, unit, mobile, workphone, email, ' \
+                 'address, company '
         concat_id = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13]
     else:
         concat = 'id, surname, name, city, position, depart, unit, mobile, workphone, email, address, company'
@@ -27,7 +27,8 @@ def yp_find(request, full, query_sql):
         with connection.cursor() as cursor:
 
             for word in array_words:
-                sql = "select * from phonebook where concat(" + concat + ") ~* '" + word + "' " + query_sql + " and fired = 0"
+                sql = "select * from phonebook where concat(" + concat + ") ~* '" + word + "' "
+                sql = sql + query_sql + " and fired = 0;"
 
                 cursor.execute(sql)
                 temp_result = ''
@@ -48,7 +49,8 @@ def yp_find(request, full, query_sql):
                         result_words.append(temp.split(';'))
         connection.close()
         return result_words
-    except:
+    except Exception as e:
+        print("[!] ", e)
         connection.close()
         return 'Error'
 
@@ -68,7 +70,8 @@ def get_brand():
 
         connection.close()
         return result
-    except:
+    except Exception as e:
+        print("[!] ", e)
         connection.close()
         return result
 
@@ -88,7 +91,8 @@ def unit_depart():
 
         connection.close()
         return result
-    except:
+    except Exception as e:
+        print("[!] ", e)
         connection.close()
         return result
 
@@ -107,7 +111,8 @@ def depart_pos():
 
         connection.close()
         return result
-    except:
+    except Exception as e:
+        print("[!] ", e)
         connection.close()
         return result
 
@@ -127,14 +132,14 @@ def city_address():
 
         connection.close()
         return result
-    except:
+    except Exception as e:
+        print("[!] ", e)
         connection.close()
         return result
 
 
 def add_user(request):
     id = get_last_id() + 1
-    key = request.GET.get('key')
     name = request.GET.get('name')
     secondname = request.GET.get('secondName')
     middlename = request.GET.get('middlename')
@@ -164,7 +169,9 @@ def add_user(request):
 
         if id_in_yp == 0:
 
-            query = "INSERT INTO phonebook (id, surname, name, middlename, city, bdate, position, depart, mobile, workphone, email, address, company, unit) VALUES ('{0}', '{1}', '{2}', '{3}', '{4}', '{5}', '{6}', '{7}', '{8}', {9}, '{10}', '{11}', '{12}', '{13}');".format(
+            query = "INSERT INTO phonebook (id, surname, name, middlename, city, bdate, position, depart, mobile, " \
+                    "workphone, email, address, company, unit) VALUES ('{0}', '{1}', '{2}', '{3}', '{4}', '{5}', " \
+                    "'{6}', '{7}', '{8}', {9}, '{10}', '{11}', '{12}', '{13}');".format(
                 id, secondname, name, middlename, city, bdate, position, depart, mobile, tel, email, address, company,
                 unit_in_yp)
             print(query)
@@ -198,7 +205,9 @@ def edit_user(request):
                                   password=password, host=host)
 
     with connection.cursor() as cursor:
-        query = "UPDATE phonebook SET surname = '{0}', name = '{1}', middlename = '{2}', city = '{3}', bdate = '{4}', position = '{5}', depart = '{6}', mobile = '{7}', workphone = '{8}', email = '{9}', address = '{10}', company = '{11}', unit = '{12}' WHERE id = {13}".format(
+        query = "UPDATE phonebook SET surname = '{0}', name = '{1}', middlename = '{2}', city = '{3}', " \
+                "bdate = '{4}', position = '{5}', depart = '{6}', mobile = '{7}', workphone = '{8}', " \
+                "email = '{9}', address = '{10}', company = '{11}', unit = '{12}' WHERE id = {13}".format(
             secondname, name, middlename, city, bdate, position, depart, mobile, tel, email, address, company,
             unit_in_yp,
             key)
@@ -239,7 +248,8 @@ def get_user(request):
 
         connection.close()
         return result
-    except:
+    except Exception as e:
+        print("[!] ", e)
         connection.close()
         return result
 
@@ -258,7 +268,8 @@ def del_yp(request):
 
         connection.close()
         return True
-    except:
+    except Exception as e:
+        print("[!] ", e)
         connection.close()
         return False
 
@@ -287,6 +298,7 @@ def get_last_id():
 
         connection.close()
         return result
-    except:
+    except Exception as e:
+        print("[!] ", e)
         connection.close()
         return result

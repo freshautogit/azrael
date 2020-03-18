@@ -39,7 +39,7 @@
       <form action="{% url 'regular_search' %}" method="GET">
         
       {% else %}
-      <form action="{% url 'saveUser' %}" method="GET">
+      <form action="{% url 'save_user' %}" method="GET">
       {% endif %}
         {% csrf_token %}
         {% if result != null %}

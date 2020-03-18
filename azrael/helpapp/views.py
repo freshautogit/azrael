@@ -5,7 +5,7 @@ from back.help_form import helpForm
 from back.webhook import wbhook
 
 apply = [".jpeg", ".jpg", ".gif", ".png", ".svg", ".avi", ".mp4", ".zip", ".rar", ".pdf", ".doc", ".docx", ".xls",
-          ".xlsx", ".pptx", ".ppt", ".mp3", ".wav", ".odp", ".7z"]
+         ".xlsx", ".pptx", ".ppt", ".mp3", ".wav", ".odp", ".7z"]
 
 
 def index(request):

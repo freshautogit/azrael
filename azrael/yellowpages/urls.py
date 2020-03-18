@@ -1,38 +1,35 @@
 from django.urls import path, include
-from django.views.generic.edit import FormView
 from . import views
 
-
 urlpatterns = [
-	path('', views.indexYP, name='indexYP'),
+    path('', views.index_yp, name='index_yp'),
 
-	# Авторизированный поиск и добавление запси
-	# в справочник со страницы авторизированного поиска
-	path('search/', views.search, name='search'),
-	path('search/adduser/', views.addUser, name='adduser'),
-	path('search/saveUser/', views.saveUser, name='saveUser'),
-	path('search/adduser/dropdown_request/', views.dropdown_request, name='dropdown_request'),
+    # Авторизированный поиск и добавление запси
+    # в справочник со страницы авторизированного поиска
+    path('search/', views.search, name='search'),
+    path('search/add_user/', views.add_user, name='add_user'),
+    path('search/save_user/', views.save_user, name='save_user'),
+    path('search/add_user/dropdown_request/', views.dropdown_request, name='dropdown_request'),
 
-	# Добавить новую запись в справочник с главной страницы
-	path('adduser/', views.addUser, name='adduser'),
+    # Добавить новую запись в справочник с главной страницы
+    path('add_user/', views.add_user, name='add_user'),
 
-	# Обычный поиск
-	path('s/', views.regular_search, name='regular_search'),
+    # Обычный поиск
+    path('s/', views.regular_search, name='regular_search'),
 
-	#Запросы с выпадающих списков
-	path('s/dropdown_request/', views.dropdown_request, name='dropdown_request'),
+    # Запросы с выпадающих списков
+    path('s/dropdown_request/', views.dropdown_request, name='dropdown_request'),
 
+    #############################################################
+    # Добавить новую запись в справочник со страницы поиска
+    # Удалить, изменить и сохранить запись в справочнике
+    # со страницы обычного поиска
+    path('s/add_user/', views.add_user, name='add_user'),
+    path('s/del_user/', views.del_user, name='del_user'),
+    path('s/edit_user/', views.edit_user, name='edit_user'),
+    path('s/save_user/', views.save_user, name='save_user'),
+    #############################################################
 
-	#############################################################
-	# Добавить новую запись в справочник со страницы поиска
-	# Удалить, изменить и сохранить запись в справочнике
-	# со страницы обычного поиска
-	path('s/adduser/', views.addUser, name='adduser'),
-	path('s/deluser/', views.delUser, name='deluser'),
-	path('s/edituser/', views.editUser, name='edituser'),
-	path('s/saveuser/', views.saveUser, name='saveuser'),
-	#############################################################
-
-	path('dropdown_request/', views.dropdown_request, name='dropdown_request'),
-	path('', include('django.contrib.auth.urls'))
+    path('dropdown_request/', views.dropdown_request, name='dropdown_request'),
+    path('', include('django.contrib.auth.urls'))
 ]

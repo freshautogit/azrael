@@ -1,8 +1,5 @@
-from sys import argv
-
 import psycopg2
 from yandex_tracker_client import TrackerClient
-import pymysql.cursors
 from back import config
 
 dbname = config.sql_database
@@ -27,7 +24,9 @@ def get_user(number):
 
         connection.close()
         return mail, surname
-    except:
+    except Exception as e:
+        print("[!] ", e)
+        connection.close()
         return mail, surname
 
 
@@ -45,7 +44,9 @@ def get_assignee(number):
 
         connection.close()
         return login[:login.index('@')]
-    except:
+    except Exception as e:
+        print("[!] ", e)
+        connection.close()
         return login
 
 
@@ -67,12 +68,13 @@ def create(number_user, number_assignee):
             description='*Опиши проблему*',
             assignee=get_assignee(number_assignee)
         ).key)
-    except:
+    except Exception as e:
+        print("[!] ", e)
         issue = client.issues.create(
             queue='helpdesk',
             emailFrom=email,
             summary='Звонок от {0}'.format(fio),
             type={'name': 'Ticket'},
             description='*Опиши проблему*')
-        comment = issue.comments.create(text='#FIX\nЧто то пошло не так', summonees='v.gussarov')
+        issue.comments.create(text='#FIX\nЧто то пошло не так\n{0}'.format(e), summonees='v.gussarov')
         print('https://tracker.yandex.ru/' + issue.key)
