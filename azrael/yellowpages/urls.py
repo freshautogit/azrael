@@ -10,6 +10,8 @@ urlpatterns = [
 	# в справочник со страницы авторизированного поиска
 	path('search/', views.search, name='search'),
 	path('search/adduser/', views.addUser, name='adduser'),
+	path('search/saveUser/', views.saveUser, name='saveUser'),
+	path('search/adduser/dropdown_request/', views.dropdown_request, name='dropdown_request'),
 
 	# Добавить новую запись в справочник с главной страницы
 	path('adduser/', views.addUser, name='adduser'),
@@ -18,7 +20,7 @@ urlpatterns = [
 	path('s/', views.regular_search, name='regular_search'),
 
 	#Запросы с выпадающих списков
-	path('s/test/', views.testHttpRequest, name='testHttpsRequest'),
+	path('s/dropdown_request/', views.dropdown_request, name='dropdown_request'),
 
 
 	#############################################################
@@ -31,6 +33,6 @@ urlpatterns = [
 	path('s/saveuser/', views.saveUser, name='saveuser'),
 	#############################################################
 
-	path('test/', views.testHttpRequest, name='testHttpsRequest'),
+	path('dropdown_request/', views.dropdown_request, name='dropdown_request'),
 	path('', include('django.contrib.auth.urls'))
 ]

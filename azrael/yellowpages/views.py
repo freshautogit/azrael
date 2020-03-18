@@ -22,11 +22,13 @@ def editUser(request):
     result = yp.get_user(request)
 
     key = request.GET.get('key')
+    print(key)
     return render(request, 'adduser.html', {'result': result})
 
 
 def saveUser(request):
-    yp.get_user(request, False)
+    yp.add_user(request)
+    query = request.GET.get('secondName')
     return getHeaders(request)
 
 
@@ -36,8 +38,10 @@ def delUser(request):
 
 
 def addUser(request):
-    yp.edit_user(request, True)
-    return render(request, 'adduser.html')
+    units = yp.unit_depart().keys()
+    cities = yp.city_address().keys()
+    brands = brand
+    return render(request, 'adduser.html', {'cities': cities, 'units': units, 'brands': brands})
 #                  {'depart': depart, 'city': city, 'unit': unit, 'address': address, 'company': company,
  #                  'position': position})
 
@@ -46,8 +50,8 @@ def indexYP(request):
     testHttpRequest(request)
     units = yp.unit_depart().keys()
     cities = yp.city_address().keys()
-
-    return render(request, 'index.html', {'cities': cities, 'units': units})
+    brands = brand
+    return render(request, 'index.html', {'cities': cities, 'units': units, 'brands': brands})
                  # {'depart': depart, 'city': city, 'unit': unit, 'address': address, 'company': company, 'unitAndDepart' : unitAndDepart, 'departAndPos' : departAndPos})
 
 
@@ -72,7 +76,7 @@ def regular_search(request):
 
 
 # Если пользователь авторизирован как менежер
-@permission_required('yellopages.can_view')
+@permission_required('yellowpages.can_view')
 def manager_search(request):
     headTemp = yp.headers(False)
 
@@ -119,15 +123,15 @@ def querySql(request):
 def getHeaders(request):
     headTemp = yp.headers(True)
     query = request.GET.get('searchRequest')
-    # result = yp.ypFind(query, True, querySql(request))
     result = yp.yp_find(query, True, querySql(request))
     return render(request, 'results.html', {'result': result, 'query': query, 'headTemp': headTemp})
 
-def testHttpRequest(request):
+def dropdown_request(request):
     request_city = request.GET.get('city')
     request_unit = request.GET.get('unit')
+    request_position = request.GET.get('position')
 
-    if (request_city == None) and (request_unit == None):
+    if (request_city == None) and (request_unit == None) and (request_position == None):
         units = yp.unit_depart().keys()
         cities = yp.city_address().keys()
         return render(request, 'test.html', {'units': units, 'cities': cities})
@@ -144,4 +148,11 @@ def testHttpRequest(request):
             response = "None"
         else:
             response = yp.unit_depart().get(request_unit)
+        return JsonResponse({'response': response})
+
+    elif request_position != None:
+        if yp.depart_pos().get(request_position) == None:
+            response = "None"
+        else:
+            response = yp.depart_pos().get(request_position)
         return JsonResponse({'response': response})

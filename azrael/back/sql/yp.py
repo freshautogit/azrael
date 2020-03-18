@@ -19,9 +19,10 @@ def yp_find(request, full, query_sql):
     else:
         concat = 'id, surname, name, city, position, depart, unit, mobile, workphone, email, address, company'
         concat_id = [0, 1, 2, 4, 6, 13, 7, 8, 9, 10, 11, 12]
-
-    request = request.strip()
-    array_words = request.split(' ')
+    print(request)
+    if request is not None:
+        request = request.strip()
+        array_words = request.split(' ')
     try:
         with connection.cursor() as cursor:
 
@@ -50,6 +51,26 @@ def yp_find(request, full, query_sql):
     except:
         connection.close()
         return 'Error'
+
+
+def get_brand():
+    result = []
+    connection = psycopg2.connect(dbname=dbname, user=user,
+                                  password=password, host=host)
+
+    try:
+        with connection.cursor() as cursor:
+            sql = "select * from company"
+            cursor.execute(sql)
+
+            for row in cursor:
+                result.append(row[1])
+
+        connection.close()
+        return result
+    except:
+        connection.close()
+        return result
 
 
 def unit_depart():
@@ -111,7 +132,53 @@ def city_address():
         return result
 
 
-def edit_user(request, add):
+def add_user(request):
+    id = get_last_id() + 1
+    key = request.GET.get('key')
+    name = request.GET.get('name')
+    secondname = request.GET.get('secondName')
+    middlename = request.GET.get('middlename')
+    email = request.GET.get('email')
+    mobile = request.GET.get('mobile')
+    tel = request.GET.get('tel')
+    city = request.GET.get('city')
+    address = request.GET.get('addr')
+    company = request.GET.get('brand')
+    unit_in_yp = request.GET.get('unit')
+    depart = request.GET.get('office')
+    position = request.GET.get('position')
+    bdate = request.GET.get('bdate')
+
+    connection = psycopg2.connect(dbname=dbname, user=user,
+                                  password=password, host=host)
+    with connection.cursor() as cursor:
+        query = "SELECT id FROM phonebook WHERE name = '{0}' and surname = '{1}' and email = '{2}'".format(name,
+                                                                                                           secondname,
+                                                                                                           email)
+
+        print(query)
+        cursor.execute(query)
+        id_in_yp = 0
+        for row in cursor:
+            id_in_yp = row[0]
+
+        if id_in_yp == 0:
+
+            query = "INSERT INTO phonebook (id, surname, name, middlename, city, bdate, position, depart, mobile, workphone, email, address, company, unit) VALUES ('{0}', '{1}', '{2}', '{3}', '{4}', '{5}', '{6}', '{7}', '{8}', {9}, '{10}', '{11}', '{12}', '{13}');".format(
+                id, secondname, name, middlename, city, bdate, position, depart, mobile, tel, email, address, company,
+                unit_in_yp)
+            print(query)
+            cursor.execute(query)
+            connection.commit()
+            connection.close()
+
+            return True
+        else:
+            connection.close()
+        return False
+
+
+def edit_user(request):
     key = request.GET.get('key')
     name = request.GET.get('name')
     secondname = request.GET.get('secondName')
@@ -129,43 +196,18 @@ def edit_user(request, add):
 
     connection = psycopg2.connect(dbname=dbname, user=user,
                                   password=password, host=host)
-    if add:
-        with connection.cursor() as cursor:
-            query = "SELECT id FROM phonebook WHERE name = '{0}' and surname = '{1}' and email = '{2}'".format(name,
-                                                                                                               secondname,
-                                                                                                               email)
 
-            cursor.execute(query)
-            id_in_yp = 0
-            for row in cursor:
-                id_in_yp = row['id']
+    with connection.cursor() as cursor:
+        query = "UPDATE phonebook SET surname = '{0}', name = '{1}', middlename = '{2}', city = '{3}', bdate = '{4}', position = '{5}', depart = '{6}', mobile = '{7}', workphone = '{8}', email = '{9}', address = '{10}', company = '{11}', unit = '{12}' WHERE id = {13}".format(
+            secondname, name, middlename, city, bdate, position, depart, mobile, tel, email, address, company,
+            unit_in_yp,
+            key)
 
-            if id_in_yp == 0:
+        print(query)
 
-                query = "INSERT INTO phonebook (surname, name, middlename, city, bdate, position, depart, mobile, workphone, email, address, company, unit) VALUES ('{0}', '{1}', '{2}', '{3}', '{4}', '{5}', '{6}', '{7}', '{8}', '{9}', '{10}', '{11}', '{12}');".format(
-                    secondname, name, middlename, city, bdate, position, depart, mobile, tel, email, address, company,
-                    unit_in_yp)
-
-                cursor.execute(query)
-                connection.commit()
-                connection.close()
-
-                return True
-            else:
-                connection.close()
-            return False
-    else:
-        with connection.cursor() as cursor:
-            query = "UPDATE phonebook SET surname = '{0}', name = '{1}', middlename = '{2}', city = '{3}', bdate = '{4}', position = '{5}', depart = '{6}', mobile = '{7}', workphone = '{8}', email = '{9}', address = '{10}', company = '{11}', unit = '{12}' WHERE id = {13}".format(
-                secondname, name, middlename, city, bdate, position, depart, mobile, tel, email, address, company,
-                unit_in_yp,
-                key)
-
-            print(query)
-
-            cursor.execute(query)
-            connection.commit()
-            connection.close()
+        cursor.execute(query)
+        connection.commit()
+        connection.close()
 
 
 def get_user(request):
@@ -228,3 +270,23 @@ def headers(full):
     else:
         return ['Фамилия', 'Имя', 'Город', 'Должность', 'Подразделение', 'Отдел/Служба', 'Мобильный', 'Внутренний',
                 'Эл.адрес', 'Адрес', 'Бренд']
+
+
+def get_last_id():
+    result = 0
+    connection = psycopg2.connect(dbname=dbname, user=user,
+                                  password=password, host=host)
+    try:
+        with connection.cursor() as cursor:
+            sql = "select * from phonebook"
+            cursor.execute(sql)
+
+            for row in cursor:
+                if row[0] > result:
+                    result = row[0]
+
+        connection.close()
+        return result
+    except:
+        connection.close()
+        return result
