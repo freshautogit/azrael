@@ -15,7 +15,7 @@
 
 
         let xhr = new XMLHttpRequest();
-        let url = "test/?city=" + encodeURIComponent(selectedOption);
+        let url = "dropdown_request/?city=" + encodeURIComponent(selectedOption);
         xhr.open("GET", url, true);
         xhr.setRequestHeader("Content-Type", "application/json");
         xhr.onreadystatechange = function () {
@@ -60,27 +60,38 @@
 
 
         let xhr = new XMLHttpRequest();
-        let url = "test/?unit=" + encodeURIComponent(selectedOption);
+        let url = "dropdown_request/?unit=" + encodeURIComponent(selectedOption);
         xhr.open("GET", url, true);
         xhr.setRequestHeader("Content-Type", "application/json");
         xhr.onreadystatechange = function () {
             if (xhr.readyState === 4 && xhr.status === 200) {
                 let json = JSON.parse(xhr.response);
-                console.log(json);
                 if (select4 != null) {
                     while (select4.firstChild) {
                         select4.removeChild(select4.firstChild);
                     }
-                }
+                };
+                if (select5 != null) {
+                    while (select5.firstChild) {
+                        select5.removeChild(select5.firstChild);
+                    }
+                };
+
                 if (json.response != "None") {
                 for (let i = 0; i < json.response.length; i++) {
                     console.log(json.response[i]);
+                    console.log('==========================================================');
+                    console.log(json.response_position[i]);
                     select4.classList.remove("hidden");
+                    select5.classList.remove("hidden");
                     let option = document.createElement('option');
-                    console.log('1.  ' + json.response)
                     option.value += json.response[i];
                     option.innerHTML += json.response[i];
                     select4.appendChild(option);
+                    let option_position = document.createElement('option')
+                    option_position.value += json.response_position[i];
+                    option_position.innerHTML += json.response_position[i];
+                    select5.appendChild(option_position);
                     }
                 } else {
                     select4.classList.add("hidden");
@@ -88,6 +99,7 @@
                     option.value = "None";
                     option.innerHTML = "Пусто";
                     select4.appendChild(option);
+
                 }
             }
         };
@@ -106,9 +118,8 @@
         console.log('Выбранный в селекте текст: ' + selectedOption);
 
 
-
         let xhr = new XMLHttpRequest();
-        let url = "test/?position=" + encodeURIComponent(selectedOption);
+        let url = "dropdown_request/?position=" + encodeURIComponent(selectedOption);
         xhr.open("GET", url, true);
         xhr.setRequestHeader("Content-Type", "application/json");
         xhr.onreadystatechange = function () {
@@ -123,13 +134,17 @@
                 if (json.response != "None") {
                 for (let i = 0; i < json.response.length; i++) {
                     console.log(json.response[i]);
+                    select5.classList.remove("hidden");
                     let option = document.createElement('option');
                     console.log('1.  ' + json.response)
                     option.value += json.response[i];
                     option.innerHTML += json.response[i];
-                    select4.appendChild(option);
+                    select5.appendChild(option);
+
                     }
+
                 } else {
+                    select4.classList.add("hidden");
                     let option = document.createElement('option');
                     option.value = "None";
                     option.innerHTML = "Пусто";
