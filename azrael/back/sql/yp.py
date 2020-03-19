@@ -15,11 +15,11 @@ def yp_find(request, full, query_sql):
     if full:
         concat = 'id, surname, name, middlename, city, bdate, position, depart, unit, mobile, workphone, email, ' \
                  'address, company '
-        concat_id = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13]
+        concat_id = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 13, 12]
+        concat_id = [0, 1, 2, 3, 4, 5, 6, 7, 13, 8, 9, 10, 11, 12]
     else:
         concat = 'id, surname, name, city, position, depart, unit, mobile, workphone, email, address, company'
         concat_id = [0, 1, 2, 4, 6, 13, 7, 8, 9, 10, 11, 12]
-    print(request)
     if request is not None:
         request = request.strip()
         array_words = request.split(' ')
@@ -161,7 +161,6 @@ def add_user(request):
                                                                                                            secondname,
                                                                                                            email)
 
-        print(query)
         cursor.execute(query)
         id_in_yp = 0
         for row in cursor:
@@ -174,7 +173,7 @@ def add_user(request):
                     "'{6}', '{7}', '{8}', {9}, '{10}', '{11}', '{12}', '{13}');".format(
                 id, secondname, name, middlename, city, bdate, position, depart, mobile, tel, email, address, company,
                 unit_in_yp)
-            print(query)
+
             cursor.execute(query)
             connection.commit()
             connection.close()
@@ -211,8 +210,6 @@ def edit_user(request):
             secondname, name, middlename, city, bdate, position, depart, mobile, tel, email, address, company,
             unit_in_yp,
             key)
-
-        print(query)
 
         cursor.execute(query)
         connection.commit()

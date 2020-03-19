@@ -16,13 +16,12 @@ brand = yp.get_brand()
 def edit_user(request):
     result = yp.get_user(request)
     key = request.GET.get('key')
-    print(key)
     return render(request, 'add_user.html', {'result': result})
 
 
 def save_user(request):
     yp.add_user(request)
-    return get_headers(request)
+    return get_headers(request, True)
 
 
 def del_user(request):
@@ -89,7 +88,7 @@ def search(request):
     if request.GET.get('key') is not None:
         yp.edit_user(request)
 
-    return get_headers(request)
+    return get_headers(request, False)
 
 
 def query_sql(request):
@@ -103,20 +102,24 @@ def query_sql(request):
     if request.GET.get('brand') is not None and request.GET.get('brand') != 'None':
         query += 'and company = \'' + str(request.GET.get('brand')) + '\' '
 
-    if request.GET.get('office') is not None and request.GET.get('office') != 'None':
-        query += 'and unit = \'' + str(request.GET.get('office')) + '\' '
+    if request.GET.get('unit') is not None and request.GET.get('unit') != 'None':
+        query += 'and unit = \'' + str(request.GET.get('unit')) + '\' '
 
-    if request.GET.get('position') is not None and request.GET.get('position') != 'None':
-        query += 'and depart = \'' + str(request.GET.get('position')) + '\' '
+    if request.GET.get('office') is not None and request.GET.get('office') != 'None':
+        query += 'and depart = \'' + str(request.GET.get('office')) + '\' '
 
     return query
 
 
-def get_headers(request):
-    headTemp = yp.headers(True)
-    query = request.GET.get('searchRequest')
-    result = yp.yp_find(query, True, query_sql(request))
-    return render(request, 'results.html', {'result': result, 'query': query, 'headTemp': headTemp})
+def get_headers(request, add):
+    head_temp = yp.headers(True)
+    if add:
+        query = request.GET.get('email')
+    else:
+        query = request.GET.get('searchRequest')
+    query_sql_temp = query_sql(request)
+    result = yp.yp_find(query, True, query_sql_temp)
+    return render(request, 'results.html', {'result': result, 'query': query, 'headTemp': head_temp})
 
 
 def dropdown_request(request):

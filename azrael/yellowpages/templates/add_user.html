@@ -148,18 +148,18 @@
               </select>
     </div>
     <div class="position">
-              <select name="office" class="selector officeSelect" style="color: rgb(221, 221, 221)" onchange="this.style.color='white'">
+              <select name="unit" class="selector officeSelect" style="color: rgb(221, 221, 221)" onchange="this.style.color='white'">
                   <option disabled selected>Office</option>
                   <option value="None">Служба</option>
                 {% for i in units %}
                     <option id="office{{forloop.counter}}" value="{{i}}">{{i}}</option>
                 {% endfor %}
               </select>
-              <select name="position" class="selector positionSelect hidden" style="color: rgb(221, 221, 221)" onchange="this.style.color='white'">
+              <select name="office" class="selector positionSelect hidden" style="color: rgb(221, 221, 221)" onchange="this.style.color='white'">
                   <option disabled selected>Отдел</option>
                   <option value="None">Пусто</option>
               </select>
-              <select name="unit" class="selector unitSelect hidden" style="color: rgb(221, 221, 221)" onchange="this.style.color='white'">
+              <select name="position" class="selector unitSelect hidden" style="color: rgb(221, 221, 221)" onchange="this.style.color='white'">
                   <option disabled selected>Должность</option>
                   <option value="None">Пусто</option>
               </select>

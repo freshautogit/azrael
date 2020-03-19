@@ -51,7 +51,6 @@ def accept_task(request, ip):
 def create_task(queue, text, email_from, priority, type_task, assignee):
     path_to_files = '/home/hack/help/media/files/'
 
-    print(os.listdir(path_to_files))
 
     files = []
 

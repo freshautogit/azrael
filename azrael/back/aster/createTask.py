@@ -60,14 +60,14 @@ def create(number_user, number_assignee):
         fio = number_user
 
     try:
-        print('https://tracker.yandex.ru/' + client.issues.create(
+        client.issues.create(
             queue='helpdesk',
             emailFrom=email,
             summary='Звонок от {0}'.format(fio),
             type={'name': 'Ticket'},
             description='*Опиши проблему*',
             assignee=get_assignee(number_assignee)
-        ).key)
+        )
     except Exception as e:
         print("[!] ", e)
         issue = client.issues.create(
@@ -77,4 +77,3 @@ def create(number_user, number_assignee):
             type={'name': 'Ticket'},
             description='*Опиши проблему*')
         issue.comments.create(text='#FIX\nЧто то пошло не так\n{0}'.format(e), summonees='v.gussarov')
-        print('https://tracker.yandex.ru/' + issue.key)
