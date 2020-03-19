@@ -141,7 +141,8 @@ def dropdown_request(request):
             response = "None"
         else:
             response = yp.unit_depart().get(request_unit)
-        return JsonResponse({'response': response})
+            response_position = yp.depart_pos().get(response[0])
+        return JsonResponse({'response': response, 'response_position': response_position})
 
     elif request_position is not None:
         if yp.depart_pos().get(request_position) is None:
