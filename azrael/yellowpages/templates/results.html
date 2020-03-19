@@ -29,7 +29,7 @@
 
         {% if user.is_authenticated %}
         <p>  fresh auto // yellowpages //<a href="{% url 'logout'%}?next={{request.path}}">
-                {{ user.get_username }}</a> // <a href="add_user/">add a new person</a></p>
+                {{ user.get_username }}</a> // <a href="adduser/">add a new person</a></p>
         {% else %}
         <p>  fresh auto // yellowpages // <a href="{% url 'login'%}?next={{request.path}}">Login</a> // <a href="add_user/">add a new person</a></p>
         {% endif %}
