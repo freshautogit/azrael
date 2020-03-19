@@ -16,7 +16,7 @@ brand = yp.get_brand()
 def edit_user(request):
     result = yp.get_user(request)
     key = request.GET.get('key')
-    return render(request, 'add_user.html', {'result': result})
+    return render(request, 'add_user.html', {'result': result, 'key': key})
 
 
 def save_user(request):
@@ -34,6 +34,12 @@ def add_user(request):
     cities = yp.city_address().keys()
     brands = brand
     return render(request, 'add_user.html', {'cities': cities, 'units': units, 'brands': brands})
+
+def add_info(request):
+    units = yp.unit_depart().keys()
+    cities = yp.city_address().keys()
+    brands = brand
+    return render(request, 'add_info.html', {'cities': cities, 'units': units, 'brands': brands})
 
 
 def index_yp(request):
