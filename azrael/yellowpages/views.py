@@ -35,10 +35,17 @@ def add_user(request):
     brands = brand
     return render(request, 'add_user.html', {'cities': cities, 'units': units, 'brands': brands})
 
+
 def add_info(request):
-    units = yp.unit_depart().keys()
-    cities = yp.city_address().keys()
-    brands = brand
+    if request.GET.get('newCity') is not None:
+        print(yp.adding_in_dropdown_list(request))
+        units = yp.unit_depart().keys()
+        cities = yp.city_address().keys()
+        brands = yp.get_brand()
+    else:
+        units = yp.unit_depart().keys()
+        cities = yp.city_address().keys()
+        brands = yp.get_brand()
     return render(request, 'add_info.html', {'cities': cities, 'units': units, 'brands': brands})
 
 
