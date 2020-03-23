@@ -243,7 +243,6 @@ def yp_find(request, full, query_sql):
                     if count == len(array_words):
                         if row not in result_new:
                             result_new.append(row)
-
                 for in_word in array_words:
                     for row in result_new:
                         for cell in range(1, 4):

@@ -12,6 +12,7 @@ def yp_find(request, full, query_sql):
                                   password=password, host=host)
 
     result = []
+    result_new = []
 
     if full:
         concat = 'id, surname, name, middlename, city, bdate, position, depart, unit, mobile, workphone, email, ' \
@@ -42,23 +43,29 @@ def yp_find(request, full, query_sql):
                         for cell in row:
                             if tempWord.lower() in cell.lower():
                                 count += 1
-                        if count != len(array_words):
-                            result.remove(row)
+                                continue
+                    if count == len(array_words):
+                        if row not in result_new:
+                            result_new.append(row)
 
                 for in_word in array_words:
-                    for row in result:
+                    for row in result_new:
+                        print()
                         for cell in range(1, 4):
+                            print(row[cell])
                             if in_word.lower() in row[cell].lower():
                                 if len(in_word) != len(row[cell]):
-                                    result.remove(row)
+                                    result_new.remove(row)
         connection.close()
-        return result
+        return result_new
     except Exception as e:
         print("[!] ", e)
         connection.close()
         return 'Error'
 
 
-array = yp_find('Менеджер отдела продаж', True, '')
-for row in array:
-    print(row)
+array = yp_find('иван', True, '')
+# for row in array:
+#     print(row)
+
+print(len(array))
