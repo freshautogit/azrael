@@ -7,6 +7,156 @@ password = config.sql_password
 host = config.sql_host
 
 
+def adding_in_dropdown_list(request):
+    if request.GET.get('newCity') is not None:
+        new_city = request.GET.get('newCity')
+        connection = psycopg2.connect(dbname=dbname, user=user,
+                                      password=password, host=host)
+        try:
+            with connection.cursor() as cursor:
+                query = "SELECT id FROM city_address WHERE city ~* '{0}'".format(new_city)
+                cursor.execute(query)
+                id_in_db = 0
+                for row in cursor:
+                    id_in_db = row[0]
+                if id_in_db == 0:
+                    last_id = get_last_id('city_address') + 1
+                    query = "INSERT INTO city_address (id, city) VALUES ({0}, '{1}');".format(last_id, new_city)
+                    cursor.execute(query)
+                    connection.commit()
+                    connection.close()
+                    return True
+                else:
+                    connection.close()
+                    return False
+        except Exception as e:
+            print("[!] ", e)
+            connection.close()
+            return 'Error'
+    # elif request.GET.get('new_address') is not None:
+    #     new_address = request.GET.get('new_address')
+    #     connection = psycopg2.connect(dbname=dbname, user=user,
+    #                                   password=password, host=host)
+    #     with connection.cursor() as cursor:
+    #         query = "SELECT id FROM city_address WHERE address ~* '{0}'".format(new_address)
+    #         cursor.execute(query)
+    #         id_in_db = 0
+    #         for row in cursor:
+    #             id_in_db = row[0]
+    #         if id_in_db == 0:
+    #             query = "select address from city_address where city='{0}';".format(request.GET.get('city'))
+    #             cursor.execute(query)
+    #             for row in cursor:
+    #                 old_address = row[0]
+    #             address = old_address + '\n' + new_address
+    #             query = "update city_address set address = '{0}' where city='{1}'".format(address,
+    #                                                                                       request.GET.get('city'))
+    #             cursor.execute(query)
+    #             connection.commit()
+    #             connection.close()
+    #             return True
+    #         else:
+    #             connection.close()
+    #         return False
+    # elif request.GET.get('new_unit') is not None:
+    #     new_unit = request.GET.get('new_unit')
+    #     connection = psycopg2.connect(dbname=dbname, user=user,
+    #                                   password=password, host=host)
+    #     with connection.cursor() as cursor:
+    #         query = "SELECT id FROM unit_depart WHERE unit ~* '{0}'".format(new_unit)
+    #         cursor.execute(query)
+    #         id_in_db = 0
+    #         for row in cursor:
+    #             id_in_db = row[0]
+    #         if id_in_db == 0:
+    #             query = "INSERT INTO unit_depart (unit) VALUES ('{0}');".format(new_unit)
+    #             cursor.execute(query)
+    #             connection.commit()
+    #             connection.close()
+    #             return True
+    #         else:
+    #             connection.close()
+    #         return False
+    # elif request.GET.get('new_depart') is not None:
+    #     new_depart = request.GET.get('new_depart')
+    #     connection = psycopg2.connect(dbname=dbname, user=user,
+    #                                   password=password, host=host)
+    #     with connection.cursor() as cursor:
+    #         query = "select id from depart_pos where depart ~* '{1}'".format(new_depart)
+    #         cursor.execute(query)
+    #         id_in_db = 0
+    #         for row in cursor:
+    #             id_in_db = row[0]
+    #         if id_in_db == 0:
+    #             query = "select depart from unit_depart where unit='{0}';".format(request.GET.get('unit'))
+    #             cursor.execute(query)
+    #             for row in cursor:
+    #                 old_depart = row[0]
+    #             depart = old_depart + '\n' + new_depart
+    #             query = "update unit_depart set depart = '{0}' where unit='{1}'".format(depart, request.GET.get('unit'))
+    #             cursor.execute(query)
+    #             query = "INSERT INTO depart_pos (depart) VALUES ('{0}');".format(new_depart)
+    #             cursor.execute(query)
+    #             connection.commit()
+    #             connection.close()
+    #             return True
+    #         else:
+    #             query = "select depart from unit_depart where unit='{0}';".format(request.GET.get('unit'))
+    #             cursor.execute(query)
+    #             for row in cursor:
+    #                 old_depart = row[0]
+    #             depart = old_depart + '\n' + new_depart
+    #             query = "update unit_depart set depart = '{0}' where unit='{1}'".format(depart, request.GET.get('unit'))
+    #             cursor.execute(query)
+    #             connection.commit()
+    #             connection.close()
+    #             return True
+    # elif request.GET.get('new_position') is not None:
+    #     new_position = request.GET.get('new_position')
+    #     connection = psycopg2.connect(dbname=dbname, user=user,
+    #                                   password=password, host=host)
+    #     with connection.cursor() as cursor:
+    #         query = "SELECT id FROM depart_pos WHERE pos ~* '{0}'".format(new_position)
+    #         cursor.execute(query)
+    #         id_in_db = 0
+    #         for row in cursor:
+    #             id_in_db = row[0]
+    #         if id_in_db == 0:
+    #             query = "select pos from depart_pos depart ='{0}';".format(request.GET.get('depart'))
+    #             cursor.execute(query)
+    #             for row in cursor:
+    #                 old_position = row[0]
+    #             position = old_position + '\n' + new_position
+    #             query = "update depart_pos set pos = '{0}' where depart = '{1}'".format(position,
+    #                                                                                     request.GET.get('depart'))
+    #             cursor.execute(query)
+    #             connection.commit()
+    #             connection.close()
+    #             return True
+    #         else:
+    #             connection.close()
+    #         return False
+    # elif request.GET.get('new_brand') is not None:
+    #     new_brand = request.GET.get('new_brand')
+    #     connection = psycopg2.connect(dbname=dbname, user=user,
+    #                                   password=password, host=host)
+    #     with connection.cursor() as cursor:
+    #         query = "SELECT id FROM company WHERE company.company ~* '{0}'".format(new_brand)
+    #         cursor.execute(query)
+    #         id_in_db = 0
+    #         for row in cursor:
+    #             id_in_db = row[0]
+    #         if id_in_db == 0:
+    #             query = "INSERT INTO company (company) VALUES ('{0}');".format(new_brand)
+    #             cursor.execute(query)
+    #             connection.commit()
+    #             connection.close()
+    #             return True
+    #         else:
+    #             connection.close()
+    #         return False
+
+
 def yp_find(request, full, query_sql):
     connection = psycopg2.connect(dbname=dbname, user=user,
                                   password=password, host=host)
@@ -15,7 +165,6 @@ def yp_find(request, full, query_sql):
     if full:
         concat = 'id, surname, name, middlename, city, bdate, position, depart, unit, mobile, workphone, email, ' \
                  'address, company '
-        concat_id = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 13, 12]
         concat_id = [0, 1, 2, 3, 4, 5, 6, 7, 13, 8, 9, 10, 11, 12]
     else:
         concat = 'id, surname, name, city, position, depart, unit, mobile, workphone, email, address, company'
@@ -44,9 +193,9 @@ def yp_find(request, full, query_sql):
                 for tempWord in array_words:
                     if tempWord.lower() in temp.lower():
                         count += 1
-                    if count == len(array_words):
-                        temp = temp[:len(temp) - 1]
-                        result_words.append(temp.split(';'))
+                if count == len(array_words):
+                    temp = temp[:len(temp) - 1]
+                    result_words.append(temp.split(';'))
         connection.close()
         return result_words
     except Exception as e:
@@ -54,6 +203,56 @@ def yp_find(request, full, query_sql):
         connection.close()
         return 'Error'
 
+def yp_find(request, full, query_sql):
+    connection = psycopg2.connect(dbname=dbname, user=user,
+                                  password=password, host=host)
+
+    result = []
+
+    if full:
+        concat = 'id, surname, name, middlename, city, bdate, position, depart, unit, mobile, workphone, email, ' \
+                 'address, company '
+        concat_id = [0, 1, 2, 3, 4, 5, 6, 7, 13, 8, 9, 10, 11, 12]
+    else:
+        concat = 'id, surname, name, city, position, depart, unit, mobile, workphone, email, address, company'
+        concat_id = [0, 1, 2, 4, 6, 13, 7, 8, 9, 10, 11, 12]
+    if request is not None:
+        request = request.strip()
+        array_words = request.split(' ')
+    try:
+        with connection.cursor() as cursor:
+
+            for word in array_words:
+                sql = "select * from phonebook where concat(" + concat + ") ~* '" + word + "' "
+                sql = sql + query_sql + " and fired = 0;"
+                cursor.execute(sql)
+                for row in cursor:
+                    row_result = ''
+                    for id in concat_id:
+                        row_result += str(row[id]).strip() + ';'
+                    result.append(row_result.split(';'))
+
+                for row in result:
+                    count = 0
+                    for tempWord in array_words:
+                        for cell in row:
+                            if tempWord.lower() in cell.lower():
+                                count += 1
+                    if count != len(array_words):
+                        result.remove(row)
+
+                for in_word in array_words:
+                    for row in result:
+                        for cell in range(1, 4):
+                            if in_word.lower() in row[cell].lower():
+                                if len(in_word) != len(row[cell]):
+                                    result.remove(row)
+        connection.close()
+        return result
+    except Exception as e:
+        print("[!] ", e)
+        connection.close()
+        return 'Error'
 
 def get_brand():
     result = []
@@ -139,7 +338,7 @@ def city_address():
 
 
 def add_user(request):
-    id = get_last_id() + 1
+    id = get_last_id('phonebook') + 1
     name = request.GET.get('name')
     secondname = request.GET.get('secondName')
     middlename = request.GET.get('middlename')
@@ -229,19 +428,19 @@ def get_user(request):
             cursor.execute(sql)
 
             for row in cursor:
-                result.append(row['surname'])
-                result.append(row['name'])
-                result.append(row['middlename'])
-                result.append(row['city'])
-                result.append(row['bdate'].strftime("%Y-%m-%d"))
-                result.append(row['position'])
-                result.append(row['depart'])
-                result.append(row['mobile'])
-                result.append(row['workphone'])
-                result.append(row['email'])
-                result.append(row['address'])
-                result.append(row['company'])
-                result.append(row['unit'])
+                result.append(row[1])
+                result.append(row[2])
+                result.append(row[3])
+                result.append(row[4])
+                result.append(row[5].strftime("%Y-%m-%d"))
+                result.append(row[6])
+                result.append(row[7])
+                result.append(row[8])
+                result.append(row[9])
+                result.append(row[10])
+                result.append(row[11])
+                result.append(row[12])
+                result.append(row[13])
 
         connection.close()
         return result
@@ -280,13 +479,13 @@ def headers(full):
                 'Эл.адрес', 'Адрес', 'Бренд']
 
 
-def get_last_id():
+def get_last_id(table):
     result = 0
     connection = psycopg2.connect(dbname=dbname, user=user,
                                   password=password, host=host)
     try:
         with connection.cursor() as cursor:
-            sql = "select * from phonebook"
+            sql = "select * from {0}".format(table)
             cursor.execute(sql)
 
             for row in cursor:
