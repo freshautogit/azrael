@@ -10,54 +10,82 @@
     const divPositions = document.querySelector('div[class=positions');
     const divUnits = document.querySelector('div[class=units]');
 
-    // делаешь асинхронный хэндлер к селекту
-    selectCity.addEventListener('change', async event => {
-        // не дает форме обновиться (блокируешь стандартное поведение)
-        event.preventDefault();
-        // получаешь выбранный текст
-        const selectedOption = event.target.value;
-        let xhr = new XMLHttpRequest();
-        let url = 'dropdown_request/?city=' + encodeURIComponent(selectedOption);
-        xhr.open('GET', url, true);
-        xhr.setRequestHeader('Content-Type', 'application/json');
-        xhr.onreadystatechange = function () {
-            if (xhr.readyState === 4 && xhr.status === 200) {
-                let json = JSON.parse(xhr.response);
-                if (selectAddress != null) {
-                    while (selectAddress.firstChild) {
-                        selectAddress.removeChild(selectAddress.firstChild);
-                    }
-                }
-
-                if (json.response != 'None') {
-                    for (let i = 0; i < json.response.length; i++) {
-
-                        selectAddress.classList.remove('hidden');
-
-                        let option = document.createElement('option');
-                        option.value += json.response[i];
-                        option.innerHTML += json.response[i];
-                        selectAddress.appendChild(option);
-                    }
-                    if (divAddresses != null) {
-                        divAddresses.classList.remove('hidden');
-                        let addAddressOption = document.createElement('option');
-                        addAddressOption.innerHTML = 'Добавить новый адрес';
-                        addAddressOption.value = 'addNewAddress';
-                        addAddressOption.style = 'color: black; background-color: lightgreen;';
-                        selectAddress.appendChild(addAddressOption);
-                        addingNewAddress();
-                    }
-                } else {
-                    selectAddress.classList.add('hidden');
-                    let option = document.createElement('option');
-                    option.value = 'None';
-                    option.innerHTML = 'Пусто';
-                    selectAddress.appendChild(option);
+    let doXHr = function(currentSelect, selectedOption, nextSelect) {
+    let xhr = new XMLHttpRequest();
+    let urlName = currentSelect.name;
+    console.log('URL NAME ================ ' + urlName);
+    let url = 'dropdown_request/?' + urlName + encodeURIComponent(selectedOption);
+    xhr.open('GET', url, true);
+    xhr.setRequestHeader('Content-Type', 'application/json');
+    xhr.onreadystatechange = function () {
+        if (xhr.readyState === 4 && xhr.status === 200) {
+            let json = JSON.parse(xhr.response);
+            if (nextSelect != null) {
+                while (nextSelect.firstChild) {
+                    nextSelect.removeChild(nextSelect.firstChild);
                 }
             }
-        };
-        xhr.send();
+            if (json.response != 'None') {
+                for (let i = 0; i < json.response.length; i++) {
+                    nextSelect.classList.remove('hidden');
+                    let option = document.createElement('option');
+                    option.value += json.response[i];
+                    option.innerHTML += json.response[i];
+                    nextSelect.appendChild(option);
+                }
+            }
+        }
+    }
+    };
+
+    selectCity.addEventListener('change', async event => {
+    event.preventDefault();
+    const selectedOption = event.target.value;
+    doXHr(selectCity, selectedOption, selectAddress);
+    //
+    //
+    //
+    // let xhr = new XMLHttpRequest();
+    // let url = 'dropdown_request/?city=' + encodeURIComponent(selectedOption);
+    // xhr.open('GET', url, true);
+    // xhr.setRequestHeader('Content-Type', 'application/json');
+    // xhr.onreadystatechange = function () {
+    //
+    //     if (xhr.readyState === 4 && xhr.status === 200) {
+    //         let json = JSON.parse(xhr.response);
+    //         if (selectAddress != null) {
+    //             while (selectAddress.firstChild) {
+    //                 selectAddress.removeChild(selectAddress.firstChild);
+    //             }
+    //         }
+    //
+    //         if (json.response != 'None') {
+    //             for (let i = 0; i < json.response.length; i++) {
+    //                 selectAddress.classList.remove('hidden');
+    //                 let option = document.createElement('option');
+    //                 option.value += json.response[i];
+    //                 option.innerHTML += json.response[i];
+    //                 selectAddress.appendChild(option);
+    //             }
+    //             if (divAddresses != null) {
+    //                 divAddresses.classList.remove('hidden');
+    //                 let addAddressOption = document.createElement('option');
+    //                 addAddressOption.innerHTML = 'Добавить новый адрес';
+    //                 addAddressOption.value = 'addNewAddress';
+    //                 addAddressOption.style = 'color: black; background-color: lightgreen;';
+    //                 selectAddress.appendChild(addAddressOption);
+    //                 addingNewAddress();
+    //             }
+    //         } else {
+    //             selectAddress.classList.add('hidden');
+    //             let option = document.createElement('option');
+    //             option.value = 'None';
+    //             option.innerHTML = 'Пусто';
+    //             selectAddress.appendChild(option);
+    //         }
+    //     }
+    // };
+    xhr.send();
     });
 
     // делаешь асинхронный хэндлер к селекту
