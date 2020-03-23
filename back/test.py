@@ -36,27 +36,29 @@ def yp_find(request, full, query_sql):
                     for id in concat_id:
                         row_result += str(row[id]).strip() + ';'
                     result.append(row_result.split(';'))
-
-                for row in result:
-                    count = 0
-                    for tempWord in array_words:
-                        for cell in row:
-                            if tempWord.lower() in cell.lower():
-                                count += 1
-                                continue
-                    if count == len(array_words):
-                        if row not in result_new:
-                            result_new.append(row)
-
-                for in_word in array_words:
-                    for row in result_new:
-                        print()
-                        for cell in range(1, 4):
-                            print(row[cell])
-                            if in_word.lower() in row[cell].lower():
-                                if len(in_word) != len(row[cell]):
-                                    result_new.remove(row)
         connection.close()
+
+        for row in result:
+            count = 0
+            temp_word = []
+            for word in array_words:
+                for cell in row:
+                    if word.lower() in cell.lower():
+                        count = count + 1
+                        temp_word.append(cell + ' > ' + word)
+            if count == len(array_words):
+                if row not in result_new:
+                    result_new.append(row)
+        temp_result = []
+        for row in result_new:
+            for word in array_words:
+                for cell in range(1,4):
+                    if word.lower() in row[cell].lower():
+                        if len(word) != len(row[cell]):
+                            if row not in temp_result:
+                                temp_result.append(row)
+        for temp in temp_result:
+            result_new.remove(temp)
         return result_new
     except Exception as e:
         print("[!] ", e)
@@ -64,8 +66,9 @@ def yp_find(request, full, query_sql):
         return 'Error'
 
 
-array = yp_find('иван', True, '')
+array = yp_find('вадим', True, '')
+# array = yp_find('иван Гребенников', True, '')
 for row in array:
     print(row)
 
-print(len(array))
+# print(len(array))
