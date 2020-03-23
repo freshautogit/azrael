@@ -1,42 +1,59 @@
-    const select1 = document.querySelector('select[name=city]');
-    const select2 = document.querySelector('select[name=addr]');
-    const select3 = document.querySelector('select[name=unit]');
-    const select4 = document.querySelector('select[name=office]');
-    const select5 = document.querySelector('select[name=position]');
+    const selectCity = document.querySelector('select[name=city]');
+    const selectAddress = document.querySelector('select[name=addr]');
+    const selectUnit = document.querySelector('select[name=unit]');
+    const selectDepart = document.querySelector('select[name=depart]');
+    const selectPosition = document.querySelector('select[name=position]');
+
+    const divCities = document.querySelector('div[class=cities');
+    const divAddresses = document.querySelector('div[class=addresses]');
+    const divDeparts = document.querySelector('div[class=departs');
+    const divPositions = document.querySelector('div[class=positions');
+    const divUnits = document.querySelector('div[class=units]');
 
     // делаешь асинхронный хэндлер к селекту
-    select1.addEventListener('change', async event => {
+    selectCity.addEventListener('change', async event => {
         // не дает форме обновиться (блокируешь стандартное поведение)
         event.preventDefault();
         // получаешь выбранный текст
         const selectedOption = event.target.value;
         let xhr = new XMLHttpRequest();
-        let url = "dropdown_request/?city=" + encodeURIComponent(selectedOption);
-        xhr.open("GET", url, true);
-        xhr.setRequestHeader("Content-Type", "application/json");
+        let url = 'dropdown_request/?city=' + encodeURIComponent(selectedOption);
+        xhr.open('GET', url, true);
+        xhr.setRequestHeader('Content-Type', 'application/json');
         xhr.onreadystatechange = function () {
             if (xhr.readyState === 4 && xhr.status === 200) {
                 let json = JSON.parse(xhr.response);
-                if (select2 != null) {
-                    while (select2.firstChild) {
-                        select2.removeChild(select2.firstChild);
+                if (selectAddress != null) {
+                    while (selectAddress.firstChild) {
+                        selectAddress.removeChild(selectAddress.firstChild);
                     }
                 }
 
-                if (json.response != "None") {
+                if (json.response != 'None') {
                     for (let i = 0; i < json.response.length; i++) {
-                        select2.classList.remove("hidden");
+
+                        selectAddress.classList.remove('hidden');
+
                         let option = document.createElement('option');
                         option.value += json.response[i];
                         option.innerHTML += json.response[i];
-                        select2.appendChild(option);
+                        selectAddress.appendChild(option);
+                    }
+                    if (divAddresses != null) {
+                        divAddresses.classList.remove('hidden');
+                        let addAddressOption = document.createElement('option');
+                        addAddressOption.innerHTML = 'Добавить новый адрес';
+                        addAddressOption.value = 'addNewAddress';
+                        addAddressOption.style = 'color: black; background-color: lightgreen;';
+                        selectAddress.appendChild(addAddressOption);
+                        addingNewAddress();
                     }
                 } else {
-                    select2.classList.add("hidden");
+                    selectAddress.classList.add('hidden');
                     let option = document.createElement('option');
-                    option.value = "None";
-                    option.innerHTML = "Пусто";
-                    select2.appendChild(option);
+                    option.value = 'None';
+                    option.innerHTML = 'Пусто';
+                    selectAddress.appendChild(option);
                 }
             }
         };
@@ -44,52 +61,52 @@
     });
 
     // делаешь асинхронный хэндлер к селекту
-    select3.addEventListener('change', async event => {
+    selectUnit.addEventListener('change', async event => {
         // не дает форме обновиться (блокируешь стандартное поведение)
         event.preventDefault();
         // получаешь выбранный текст
         const selectedOption = event.target.value;
         let xhr = new XMLHttpRequest();
-        let url = "dropdown_request/?unit=" + encodeURIComponent(selectedOption);
-        xhr.open("GET", url, true);
-        xhr.setRequestHeader("Content-Type", "application/json");
+        let url = 'dropdown_request/?unit=' + encodeURIComponent(selectedOption);
+        xhr.open('GET', url, true);
+        xhr.setRequestHeader('Content-Type', 'application/json');
         xhr.onreadystatechange = function () {
             if (xhr.readyState === 4 && xhr.status === 200) {
                 let json = JSON.parse(xhr.response);
-                if (select4 != null) {
-                    while (select4.firstChild) {
-                        select4.removeChild(select4.firstChild);
+                if (selectDepart != null) {
+                    while (selectDepart.firstChild) {
+                        selectDepart.removeChild(selectDepart.firstChild);
                     }
                 };
-                if (select5 != null) {
-                    while (select5.firstChild) {
-                        select5.removeChild(select5.firstChild);
+                if (selectPosition != null) {
+                    while (selectPosition.firstChild) {
+                        selectPosition.removeChild(selectPosition.firstChild);
                     }
                 };
 
-                if (json.response != "None") {
+                if (json.response != 'None') {
                 for (let i = 0; i < json.response.length; i++) {
-                    select4.classList.remove("hidden");
-                    if (select5 != null) {
-                        select5.classList.remove("hidden");
+                    selectDepart.classList.remove('hidden');
+                    if (selectPosition != null) {
+                        selectPosition.classList.remove('hidden');
                     }
                     let option = document.createElement('option');
                     option.value += json.response[i];
                     option.innerHTML += json.response[i];
-                    select4.appendChild(option);
-                    if (select5 != null) {
+                    selectDepart.appendChild(option);
+                    if (selectPosition != null) {
                         let option_position = document.createElement('option')
                         option_position.value += json.response_position[i];
                         option_position.innerHTML += json.response_position[i];
-                        select5.appendChild(option_position);
+                        selectPosition.appendChild(option_position);
                     }
                     }
                 } else {
-                    select4.classList.add("hidden");
+                    selectDepart.classList.add('hidden');
                     let option = document.createElement('option');
-                    option.value = "None";
-                    option.innerHTML = "Пусто";
-                    select4.appendChild(option);
+                    option.value = 'None';
+                    option.innerHTML = 'Пусто';
+                    selectDepart.appendChild(option);
 
                 }
             }
@@ -100,44 +117,98 @@
 
     // делаешь асинхронный хэндлер к селекту
 
-    if (select5 != null) {
-        select4.addEventListener('change', async event => {
+    if (selectPosition != null) {
+        selectDepart.addEventListener('change', async event => {
             // не дает форме обновиться (блокируешь стандартное поведение)
             event.preventDefault();
             // получаешь выбранный текст
             const selectedOption = event.target.value;
             let xhr = new XMLHttpRequest();
-            let url = "dropdown_request/?position=" + encodeURIComponent(selectedOption);
-            xhr.open("GET", url, true);
-            xhr.setRequestHeader("Content-Type", "application/json");
+            let url = 'dropdown_request/?position=' + encodeURIComponent(selectedOption);
+            xhr.open('GET', url, true);
+            xhr.setRequestHeader('Content-Type', 'application/json');
             xhr.onreadystatechange = function () {
                 if (xhr.readyState === 4 && xhr.status === 200) {
                     let json = JSON.parse(xhr.response);
-                    if (select5 != null) {
-                        while (select5.firstChild) {
-                            select5.removeChild(select5.firstChild);
+                    if (selectPosition != null) {
+                        while (selectPosition.firstChild) {
+                            selectPosition.removeChild(selectPosition.firstChild);
                         }
                     }
-                    if (json.response != "None") {
+                    if (json.response != 'None') {
                         for (let i = 0; i < json.response.length; i++) {
-                            select5.classList.remove("hidden");
+                            selectPosition.classList.remove('hidden');
                             let option = document.createElement('option');
                             option.value += json.response[i];
                             option.innerHTML += json.response[i];
-                            select5.appendChild(option);
+                            selectPosition.appendChild(option);
 
                         }
 
                     } else {
-                        select4.classList.add("hidden");
+                        selectDepart.classList.add('hidden');
                         let option = document.createElement('option');
-                        option.value = "None";
-                        option.innerHTML = "Пусто";
-                        select5.appendChild(option);
+                        option.value = 'None';
+                        option.innerHTML = 'Пусто';
+                        selectPosition.appendChild(option);
                     }
                 }
             };
             xhr.send();
         });
     }
+    // Добавление нового города
+    if (document.querySelector('select[id=addCity]').options[1].value=='addNewCity' && document.querySelector('select[id=addCity]') != null) {
+        console.log('success');
+        selectCity.addEventListener('change', event => {
+            event.preventDefault();
+            const currentOption = event.target.value;
+            console.log(currentOption);
 
+            if (currentOption == 'addNewCity') {
+
+            if (document.querySelector('input[name=newCity]') != null) {
+                divCities.removeChild(divCities.lastChild);
+
+            }
+
+                let input = document.createElement('input');
+                input.name = 'newCity';
+                input.classList.add('contactInfo');
+                input.placeholder = 'Введи название города';
+                input.type = 'text';
+                divCities.appendChild(input);
+                divAddresses.removeChild(divAddresses.lastChild);
+            }
+        });
+    } else {
+        console.log('fail');
+    }
+
+    // Добавление нового адреса
+    let addingNewAddress = function () {
+    if (selectAddress != null) {
+        console.log('success');
+        selectAddress.addEventListener('change', event => {
+            event.preventDefault();
+            const currentOption = event.target.value;
+            console.log(currentOption);
+
+            if (currentOption == 'addNewAddress') {
+                if (document.querySelector('input[name=newAddress]') != null) {
+                divAddresses.removeChild(divAddresses.lastChild);
+            }
+
+                let input = document.createElement('input');
+                input.name = 'newAddress';
+                input.classList.add('contactInfo');
+                input.placeholder = 'Введи новый адрес';
+                input.type = 'text';
+                divAddresses.appendChild(input);
+                selectAddress.removeChild(selectAddress.lastChild);
+            }
+        });
+    } else {
+        console.log('fail address');
+    }
+    }
