@@ -65,7 +65,7 @@ def yp_find(request, full, query_sql):
 
 
 array = yp_find('иван', True, '')
-# for row in array:
-#     print(row)
+for row in array:
+    print(row)
 
 print(len(array))
