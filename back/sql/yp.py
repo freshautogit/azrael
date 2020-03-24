@@ -157,57 +157,58 @@ def adding_in_dropdown_list(request):
     #         return False
 
 
-def yp_find(request, full, query_sql):
-    connection = psycopg2.connect(dbname=dbname, user=user,
-                                  password=password, host=host)
-
-    result_words = []
-    if full:
-        concat = 'id, surname, name, middlename, city, bdate, position, depart, unit, mobile, workphone, email, ' \
-                 'address, company '
-        concat_id = [0, 1, 2, 3, 4, 5, 6, 7, 13, 8, 9, 10, 11, 12]
-    else:
-        concat = 'id, surname, name, city, position, depart, unit, mobile, workphone, email, address, company'
-        concat_id = [0, 1, 2, 4, 6, 13, 7, 8, 9, 10, 11, 12]
-    if request is not None:
-        request = request.strip()
-        array_words = request.split(' ')
-    try:
-        with connection.cursor() as cursor:
-
-            for word in array_words:
-                sql = "select * from phonebook where concat(" + concat + ") ~* '" + word + "' "
-                sql = sql + query_sql + " and fired = 0;"
-
-                cursor.execute(sql)
-                temp_result = ''
-                for row in cursor:
-                    for temp in concat_id:
-                        temp_result += str(row[temp]).strip() + ';'
-                    temp_result += '\n'
-            if temp_result[len(temp_result) - 1:len(temp_result)] == '\n':
-                temp_result = temp_result[:len(temp_result) - 1] + temp_result[len(temp_result) + 1:]
-
-            for temp in temp_result.split('\n'):
-                count = 0
-                for tempWord in array_words:
-                    if tempWord.lower() in temp.lower():
-                        count += 1
-                if count == len(array_words):
-                    temp = temp[:len(temp) - 1]
-                    result_words.append(temp.split(';'))
-        connection.close()
-        return result_words
-    except Exception as e:
-        print("[!] ", e)
-        connection.close()
-        return 'Error'
+# def yp_find(request, full, query_sql):
+#     connection = psycopg2.connect(dbname=dbname, user=user,
+#                                   password=password, host=host)
+#
+#     result_words = []
+#     if full:
+#         concat = 'id, surname, name, middlename, city, bdate, position, depart, unit, mobile, workphone, email, ' \
+#                  'address, company '
+#         concat_id = [0, 1, 2, 3, 4, 5, 6, 7, 13, 8, 9, 10, 11, 12]
+#     else:
+#         concat = 'id, surname, name, city, position, depart, unit, mobile, workphone, email, address, company'
+#         concat_id = [0, 1, 2, 4, 6, 13, 7, 8, 9, 10, 11, 12]
+#     if request is not None:
+#         request = request.strip()
+#         array_words = request.split(' ')
+#     try:
+#         with connection.cursor() as cursor:
+#
+#             for word in array_words:
+#                 sql = "select * from phonebook where concat(" + concat + ") ~* '" + word + "' "
+#                 sql = sql + query_sql + " and fired = 0;"
+#
+#                 cursor.execute(sql)
+#                 temp_result = ''
+#                 for row in cursor:
+#                     for temp in concat_id:
+#                         temp_result += str(row[temp]).strip() + ';'
+#                     temp_result += '\n'
+#             if temp_result[len(temp_result) - 1:len(temp_result)] == '\n':
+#                 temp_result = temp_result[:len(temp_result) - 1] + temp_result[len(temp_result) + 1:]
+#
+#             for temp in temp_result.split('\n'):
+#                 count = 0
+#                 for tempWord in array_words:
+#                     if tempWord.lower() in temp.lower():
+#                         count += 1
+#                 if count == len(array_words):
+#                     temp = temp[:len(temp) - 1]
+#                     result_words.append(temp.split(';'))
+#         connection.close()
+#         return result_words
+#     except Exception as e:
+#         print("[!] ", e)
+#         connection.close()
+#         return 'Error'
 
 def yp_find(request, full, query_sql):
     connection = psycopg2.connect(dbname=dbname, user=user,
                                   password=password, host=host)
 
     result = []
+    result_new = []
 
     if full:
         concat = 'id, surname, name, middlename, city, bdate, position, depart, unit, mobile, workphone, email, ' \
@@ -231,24 +232,30 @@ def yp_find(request, full, query_sql):
                     for id in concat_id:
                         row_result += str(row[id]).strip() + ';'
                     result.append(row_result.split(';'))
-
-                for row in result:
-                    count = 0
-                    for tempWord in array_words:
-                        for cell in row:
-                            if tempWord.lower() in cell.lower():
-                                count += 1
-                    if count != len(array_words):
-                        result.remove(row)
-
-                for in_word in array_words:
-                    for row in result:
-                        for cell in range(1, 4):
-                            if in_word.lower() in row[cell].lower():
-                                if len(in_word) != len(row[cell]):
-                                    result.remove(row)
         connection.close()
-        return result
+
+        for row in result:
+            count = 0
+            temp_word = []
+            for word in array_words:
+                for cell in row:
+                    if word.lower() in cell.lower():
+                        count = count + 1
+                        temp_word.append(cell + ' > ' + word)
+            if count == len(array_words):
+                if row not in result_new:
+                    result_new.append(row)
+        temp_result = []
+        for row in result_new:
+            for word in array_words:
+                for cell in range(1,4):
+                    if word.lower() in row[cell].lower():
+                        if len(word) != len(row[cell]):
+                            if row not in temp_result:
+                                temp_result.append(row)
+        for temp in temp_result:
+            result_new.remove(temp)
+        return result_new
     except Exception as e:
         print("[!] ", e)
         connection.close()
