@@ -321,20 +321,23 @@ def city_address():
     connection = psycopg2.connect(dbname=dbname, user=user,
                                   password=password, host=host)
 
-    try:
-        with connection.cursor() as cursor:
-            sql = "select * from city_address"
-            cursor.execute(sql)
+    # try:
+    with connection.cursor() as cursor:
+        sql = "select * from city_address"
+        cursor.execute(sql)
 
-            for row in cursor:
+        for row in cursor:
+            if "\\n" in str(row[2]):
                 result.update({row[1]: row[2].split('\\n')})
+            else:
+                result.update({row[1]: row[2]})
 
-        connection.close()
-        return result
-    except Exception as e:
-        print("[!] ", e)
-        connection.close()
-        return result
+    connection.close()
+    return result
+    # except Exception as e:
+    #     print("[!] ", e)
+    #     connection.close()
+    #     return result
 
 
 def add_user(request):
