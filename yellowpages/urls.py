@@ -14,6 +14,7 @@ urlpatterns = [
     path('search/deluser/', views.del_user, name='del_user'),
     path('search/adduser/dropdown_request/', views.dropdown_request, name='dropdown_request'),
     path('addinfo/dropdown_request/', views.dropdown_request, name='dropdown_request'),
+    path('search/dropdown_request/', views.dropdown_request, name='dropdown_request'),
 
     # Добавить новую запись в справочник с главной страницы
     path('adduser/', views.add_user, name='add_user'),

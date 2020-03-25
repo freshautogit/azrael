@@ -17,8 +17,7 @@ select:hover {
 }
 
 input:active, input:hover, input:invalid, input:focus, 
- textarea:active, textarea:hover, textarea:invalid, textarea:focus
-   {
+ textarea:active, textarea:hover, textarea:invalid, textarea:focus {
     border: 1px solid rgba(0, 0, 0, 0.12) !important;
     box-shadow: none !important;
     -webkit-appearance: none !important;
@@ -62,6 +61,19 @@ input, button {
     margin: 15% auto auto auto;
 }
 
+.addingWrapper {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    justify-content: space-around;
+    min-width: 400px;
+    width: 100%;
+    max-width: 1300px;
+    align-items: center;
+    justify-content: center;
+    margin: auto;
+}
+
 .inputWrapper {
     display: flex;
     flex-direction: column;
@@ -69,6 +81,17 @@ input, button {
     align-items: center;
     align-content: center;
     width:100%;
+}
+
+.inputAddInfoWrapper {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    margin: 2px 0 15px 0 !important;
+}
+
+.inputWrapper .headerWrapper {
+
 }
 
 .headerWrapper {
@@ -163,7 +186,7 @@ a[href="/yp/"] {
     margin-bottom: 10px;
 }    
 select::-ms-expand {
-          display: none;
+    display: none;
 }
 
 .selector ~ option[value="null"] {
@@ -183,6 +206,31 @@ select::-ms-expand {
     font-size: 15px;
     margin: 0;
     padding-left: 15px;
+}
+
+.inputAddInfoWrapper input {
+    font-family:  'Roboto', sans-serif;
+    -webkit-user-select: text;
+    -webkit-appearance:none;
+    height: 20px;
+    min-width: 300px;
+    background-color: #EAF1F1;
+    border: 1px solid rgba(0, 0, 0, 0.12);
+    border-radius: 0;
+    font-size: 15px;
+    margin: 0;
+}
+
+.addInfoWrapper select {
+    max-width: 300px;
+    font-family: 'Roboto', sans-serif;
+    -webkit-user-select: text;
+    -webkit-appearance:none;
+    border: 1px solid rgba(0, 0, 0, 0.12) !important;
+    border-radius: 0;
+    font-size: 15px;
+    margin: 0;
+    padding: 0;
 }
 
 .adduserWrapper {
@@ -391,7 +439,7 @@ select::-ms-expand {
 
 @media only screen and (max-width: 800px) {
     
-    .wrapper {
+    .wrapper, .addingWrapper {
         min-width: 0;
     }
 

@@ -44,7 +44,7 @@
         {% csrf_token %}
         {% if result != null %}
         <div class="fio">
-          <input type="hidden" name="key" value="{{key}}">
+          <input hidden name="key" value="{{key}}">
           <input class="contactInfo" type="text" name="name" id="name" placeholder="Имя" value="{{ result.1 }}" required>
           <input class="contactInfo" type="text" name="secondName" id="secondName" value="{{ result.0 }}"
             placeholder="Фамилия" required>
@@ -130,18 +130,19 @@
     <div class="city">
       <select name="city" class="selector citySelect" style="color: rgb(221, 221, 221)"
         onchange="this.style.color='white'" required>
-        <option disabled selected>Город</option>
-        <option value="">Пусто</option>
+        <option disabled selected>Выберите город</option>
+        <option value="">Оставить пустым</option>
         {% for i in cities %}
         <option value="{{i}}">{{i}}</option>
         {% endfor %}
       </select>
-              <select name="addr" class="selector addrSelect hidden" style="color: rgb(221, 221, 221)" onchange="this.style.color='white'">
-                  <option disabled selected>Address</option>
-                  <option value="None">Пусто</option>
+              <select disabled name="addr" class="selector addrSelect" style="color: rgb(221, 221, 221)" onchange="this.style.color='white'">
+                  <option disabled selected>Выберите адрес</option>
+                  <option value="">Оставить пустым</option>
               </select>
               <select name="brand" class="selector brandSelect" style="color: rgb(221, 221, 221)" onchange="this.style.color='white'">
-                  <option disabled selected>Brand</option>
+                  <option disabled selected>Выберите бренд</option>
+                  <option value="">Оставить пустым</option>
                 {% for i in brands %}
                     <option id="brand{{forloop.counter}}" value="{{i}}">{{i}}</option>
                 {% endfor %}
@@ -149,28 +150,28 @@
     </div>
     <div class="position">
               <select name="unit" class="selector departSelect" style="color: rgb(221, 221, 221)" onchange="this.style.color='white'">
-                  <option disabled selected>depart</option>
-                  <option value="None">Служба</option>
+                  <option disabled selected>Выберите службу</option>
+                  <option value="">Оставить пустым</option>
                 {% for i in units %}
                     <option id="depart{{forloop.counter}}" value="{{i}}">{{i}}</option>
                 {% endfor %}
               </select>
-              <select name="depart" class="selector positionSelect hidden" style="color: rgb(221, 221, 221)" onchange="this.style.color='white'">
-                  <option disabled selected>Отдел</option>
-                  <option value="None">Пусто</option>
+              <select disabled name="depart" class="selector positionSelect" style="color: rgb(221, 221, 221)" onchange="this.style.color='white'">
+                  <option disabled selected>Выберите отдел</option>
+                  <option value="">Оставить пустым</option>
               </select>
-              <select name="position" class="selector unitSelect hidden" style="color: rgb(221, 221, 221)" onchange="this.style.color='white'">
-                  <option disabled selected>Должность</option>
-                  <option value="None">Пусто</option>
+              <select disabled name="position" class="selector unitSelect" style="color: rgb(221, 221, 221)" onchange="this.style.color='white'">
+                  <option disabled selected>Выберите должность</option>
+                  <option value="">Оставить пустым</option>
               </select>
     </div>
   </div>
   {% endif %}
   <div class="btnWrapper">
     {% if result == null %}
-    <button type="submit">Добавить</button>
+    <button type="submit" onclick="return confirm('Вы уверены?')">Добавить</button>
     {% else %}
-    <button type="submit">Сохранить</button>
+    <button type="submit" onclick="return confirm('Вы уверены?')">Сохранить</button>
     {% endif %}
   </div>
   </form>

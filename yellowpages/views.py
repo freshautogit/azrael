@@ -20,7 +20,7 @@ def edit_user(request):
 
 
 def save_user(request):
-    yp.add_user(request)
+    not_dublicate = yp.add_user(request)
     return get_headers(request, True)
 
 
@@ -37,16 +37,14 @@ def add_user(request):
 
 
 def add_info(request):
-    if request.GET.get('newCity') is not None:
-        print(yp.adding_in_dropdown_list(request))
-        units = yp.unit_depart().keys()
-        cities = yp.city_address().keys()
-        brands = yp.get_brand()
+    if request.GET.get('adding') is not None:
+        not_dublicate = yp.adding_in_dropdown_list(request)
     else:
-        units = yp.unit_depart().keys()
-        cities = yp.city_address().keys()
-        brands = yp.get_brand()
-    return render(request, 'add_info.html', {'cities': cities, 'units': units, 'brands': brands})
+        not_dublicate = None
+    units = yp.unit_depart().keys()
+    cities = yp.city_address().keys()
+    brands = yp.get_brand()
+    return render(request, 'add_info.html', {'cities': cities, 'units': units, 'brands': brands, 'not_dublicate': not_dublicate})
 
 
 def index_yp(request):
@@ -125,6 +123,10 @@ def query_sql(request):
 
 
 def get_headers(request, add):
+    dropdown_request(request)
+    units = yp.unit_depart().keys()
+    cities = yp.city_address().keys()
+    brands = brand
     head_temp = yp.headers(True)
     if add:
         query = request.GET.get('email')
@@ -132,13 +134,13 @@ def get_headers(request, add):
         query = request.GET.get('searchRequest')
     query_sql_temp = query_sql(request)
     result = yp.yp_find(query, True, query_sql_temp)
-    return render(request, 'results.html', {'result': result, 'query': query, 'headTemp': head_temp})
+    return render(request, 'results.html', {'result': result, 'query': query, 'headTemp': head_temp, 'cities': cities, 'units': units, 'brands': brands})
 
 
 def dropdown_request(request):
     request_city = request.GET.get('city')
     request_unit = request.GET.get('unit')
-    request_position = request.GET.get('position')
+    request_position = request.GET.get('depart')
 
     if (request_city is None) and (request_unit is None) and (request_position is None):
         units = yp.unit_depart().keys()
@@ -155,6 +157,7 @@ def dropdown_request(request):
     elif request_unit is not None:
         if yp.unit_depart().get(request_unit) is None:
             response = "None"
+            response_position = 'None'
         else:
             response = yp.unit_depart().get(request_unit)
             response_position = yp.depart_pos().get(response[0])
@@ -163,6 +166,8 @@ def dropdown_request(request):
     elif request_position is not None:
         if yp.depart_pos().get(request_position) is None:
             response = "None"
+            response_position = 'None'
         else:
             response = yp.depart_pos().get(request_position)
-        return JsonResponse({'response': response})
+            response_position = yp.depart_pos().get(response[0])
+        return JsonResponse({'response': response, 'response_position': response_position})

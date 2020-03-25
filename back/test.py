@@ -59,6 +59,17 @@ def yp_find(request, full, query_sql):
         return 'Error'
 
 
-array = yp_find('Менеджер отдела продаж', True, '')
-for row in array:
-    print(row)
+# array = yp_find('Менеджер отдела продаж', True, '')
+# for row in array:
+#     print(row)
+
+
+import keyring
+
+print(keyring.get_password('postgresql', 'postgres'))
+print(keyring.get_password('postgresql', 'user'))
+print(keyring.get_password('postgresql', 'host'))
+print(keyring.get_password('postgresql', 'db_name'))
+
+print(keyring.get_password('yandex_tracker', 'token'))
+print(keyring.get_password('yandex_tracker', 'org_id'))

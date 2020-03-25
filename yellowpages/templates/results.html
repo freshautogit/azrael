@@ -65,27 +65,31 @@
                     <option id="city{{forloop.counter}}"value="{{i}}">{{i}}</option>
                 {% endfor %}
               </select>
-              <select name="addr" class="selector addrSelect hidden" style="color: rgb(221, 221, 221)" onchange="this.style.color='white'">
+              <select disabled name="addr" class="selector addrSelect" style="color: rgb(221, 221, 221)" onchange="this.style.color='white'">
                   <option disabled selected>Address</option>
                   <option value="None">Пусто</option>
               </select>
-              <select name="brand" class="selector brandSelect" style="color: rgb(221, 221, 221)" onchange="this.style.color='white'">
+                <select name="brand" class="selector brandSelect" style="color: rgb(221, 221, 221)" onchange="this.style.color='white'">
                   <option disabled selected>Brand</option>
-                {% for i in company %}
+                {% for i in brands %}
                     <option id="brand{{forloop.counter}}" value="{{i}}">{{i}}</option>
                 {% endfor %}
               </select>
-              <select name="office" class="selector officeSelect" style="color: rgb(221, 221, 221)" onchange="this.style.color='white'">
+                <select name="unit" class="selector officeSelect" style="color: rgb(221, 221, 221)" onchange="this.style.color='white'">
                   <option disabled selected>Office</option>
                   <option value="None">Пусто</option>
                 {% for i in units %}
                     <option id="office{{forloop.counter}}" value="{{i}}">{{i}}</option>
                 {% endfor %}
               </select>
-              <select name="position" class="selector positionSelect hidden" style="color: rgb(221, 221, 221)" onchange="this.style.color='white'">
-                  <option disabled selected>Position</option>
-                  <option value="None">Пусто</option>
-              </select>
+                <select disabled name="depart" class="selector positionSelect" style="color: rgb(221, 221, 221)" onchange="this.style.color='white'">
+                    <option disabled selected>Position</option>
+                    <option value="None">Пусто</option>
+                </select>
+                <select disabled name="position" class="selector positionSelect" style="color: rgb(221, 221, 221)" onchange="this.style.color='white'">
+                    <option disabled selected>Position</option>
+                    <option value="None">Пусто</option>
+                </select>
             </div>
                     </details>
                 </div>
@@ -150,7 +154,8 @@
             btn[i].setAttribute('target', btn[i].id);
             btnEdit[i].setAttribute('target', btnEdit[i].id);
             btn[i].onclick = function (e) {
-                location.href= 'deluser?key=' + btn[i].id;
+                if (confirm('Вы уверены что хотите удалть запись?')) {
+                    location.href= 'deluser?key=' + btn[i].id;
             };
             btnEdit[i].onclick = function (e) {
                 location.href= 'edituser?key=' + btn[i].id;
