@@ -15,14 +15,12 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from django.urls import path, include
 
 urlpatterns = [
-    path('account/', include('yellowpages.urls')),
+   # path('accounts/', include('yellopages.urls')),
     path('admin/', admin.site.urls),
-    # path('help/', include('helpapp.urls')),
+   # path('help/', include('helpapp.urls')),
     path('bots/', include('bots.urls')),
-     # path('wh/', include('helpapp.urls')),
-    path('yp/', include('yellowpages.urls')),
-    path('', include('django.contrib.auth.urls')),
+   # path('wh/', include('helpapp.urls')),
+    path('yp/', include('yellowpages.urls'))
 ]
