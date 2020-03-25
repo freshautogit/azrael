@@ -155,12 +155,14 @@
             btnEdit[i].setAttribute('target', btnEdit[i].id);
             btn[i].onclick = function (e) {
                 if (confirm('Вы уверены что хотите удалть запись?')) {
-                    location.href= 'deluser?key=' + btn[i].id;
+                    location.href = 'deluser?key=' + btn[i].id;
+                }
+                ;
+                btnEdit[i].onclick = function (e) {
+                    location.href = 'edituser?key=' + btn[i].id;
+                };
             };
-            btnEdit[i].onclick = function (e) {
-                location.href= 'edituser?key=' + btn[i].id;
-            };
-        };
+        }
     </script>
     <script src="{% static 'yellowpages/scripts/dropdown.js' %}"></script>
 </body>
