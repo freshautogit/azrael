@@ -78,6 +78,9 @@ def regular_search(request):
 
 
 # Если пользователь авторизирован как менежер
+
+#TODO Сдлеать отдельный тип доступа для редактирования, добавлени и удаления, и привязать его к нужным методам
+@login_required(redirect_field_name='/yp/', login_url='/yp/')
 @permission_required('yellowpages.can_view')
 def manager_search(request):
     head_temp = yp.headers(False)
@@ -94,7 +97,7 @@ def search_result(request):
 
 
 # Если пользователь авторизирован как супервайзер
-@login_required(redirect_field_name='/yp')
+@login_required(redirect_field_name='/yp/')
 def search(request):
     if request.GET.get('key') is not None:
         yp.edit_user(request)
