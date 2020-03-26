@@ -1,13 +1,12 @@
 {% load static %}
 <!DOCTYPE html>
-<html>
+<html lang="">
 
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, inicial-scale=1">
     <link rel="stylesheet/less" type="text/css" href="{% static 'yellowpages/style1.less' %}" />
-    <title>Справочник телефонов</title>
-    <!-- <link rel="shortcut icon" href="../files/favicon-phone.ico.gif" type="image/x-icon"> -->
+    <title>Справочник</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/less.js/3.9.0/less.min.js"></script>
     <script src="{% static 'yellowpages/scripts/jquery.tablesorter.min.js' %}"></script>
@@ -15,173 +14,168 @@
 </head>
 
 <body>
-
-    <div class="wrapper">
-        <div class="headerWrapper">
-            <a href="/yp/">
+<div class="wrapper">
+    <div class="headerWrapper">
+        <a href="{% url 'index_yp' %}">
             <svg version="1.1" viewBox="0 0 32 17" style="width: 50px; height: 30px; color: white;">
-                <path pid="0" fill="#fff" fill-rule="evenodd" _stroke="#fff"
-                    d="M24.207 1.4c-1.587 0-3.428.982-5.808 3.096a36.282 36.282 0 0 0-2.673 2.646l-1.359 1.412s-4.591 5.202-7.154 5.202c-2.562 0-4.552-2.328-4.552-5.202 0-2.875 2.055-5.203 4.552-5.203 1.6 0 4.013 2.068 5.58 3.596l1.385-1.385C12.325 3.742 9.503 1.4 7.213 1.4 3.61 1.4.71 4.606.71 8.554c0 3.947 2.933 7.153 6.503 7.153 1.587 0 3.428-.982 5.808-3.095a36.289 36.289 0 0 0 2.673-2.647l1.352-1.411S21.638 3.35 24.2 3.35c2.562 0 4.552 2.328 4.552 5.203 0 2.874-2.055 5.202-4.552 5.202-1.593 0-4.012-2.068-5.573-3.596l-1.366 1.411c1.854 1.815 4.663 4.136 6.946 4.136 3.603 0 6.503-3.206 6.503-7.153 0-3.948-2.9-7.154-6.503-7.154z">
+                <path id="0" fill="#fff" fill-rule="evenodd" stroke="#fff" d="M24.207 1.4c-1.587 0-3.428.982-5.808 3.096a36.282 36.282 0 0 0-2.673 2.646l-1.359 1.412s-4.591 5.202-7.154 5.202c-2.562 0-4.552-2.328-4.552-5.202 0-2.875 2.055-5.203 4.552-5.203 1.6 0 4.013 2.068 5.58 3.596l1.385-1.385C12.325 3.742 9.503 1.4 7.213 1.4 3.61 1.4.71 4.606.71 8.554c0 3.947 2.933 7.153 6.503 7.153 1.587 0 3.428-.982 5.808-3.095a36.289 36.289 0 0 0 2.673-2.647l1.352-1.411S21.638 3.35 24.2 3.35c2.562 0 4.552 2.328 4.552 5.203 0 2.874-2.055 5.202-4.552 5.202-1.593 0-4.012-2.068-5.573-3.596l-1.366 1.411c1.854 1.815 4.663 4.136 6.946 4.136 3.603 0 6.503-3.206 6.503-7.153 0-3.948-2.9-7.154-6.503-7.154z">
                 </path>
             </svg>
         </a>
 
 
         {% if user.is_authenticated %}
-        <p>  fresh auto // yellowpages //<a href="{% url 'logout'%}?next={{request.path}}">
-                {{ user.get_username }}</a> // <a href="adduser/">add a new person</a> // <a href="add_user/">add a new person</a></p>
-        {% else %}
-        <p>  fresh auto // yellowpages // <a href="{% url 'login'%}?next={{request.path}}">Login</a>
+            <p>  fresh auto // справочник //<a href="{% url 'logout' %}">{{ user.get_username }}</a> // <a href="{% url 'adduser' %}">создать запись</a> // <a href="{% url 'addinfo' %}">добавить информацию</a>
+                {% else %}
+            <p>  fresh auto // справочник // <a href="{% url 'login'%}">войти</a>
         {% endif %}
     </div>
 
 
-        {% if user.is_authenticated %}
+    {% if user.is_authenticated %}
         <form class="inputWrapper" action="{% url 'search' %}" method="GET" id="searching">
-            {% csrf_token %}
-            <div class="typeFieldWrapper">
-                <input type="search" name="searchRequest" placeholder="Name, surename or whatever you want"
-                    value="{{query}}">
-                <button>search</button>
-            </div>
-        {% else %}
-            <form class="inputWrapper" action="{% url 'regular_search' %}" method="GET" id="searching">
-                {% csrf_token %}
-                <div class="typeFieldWrapper">
-                    <input type="search" name="searchRequest" placeholder="Name, surename or whatever you want"
-                        value="{{query}}">
-                    <button>search</button>
-                </div>
-        {% endif %}
+        {% csrf_token %}
+        <div class="typeFieldWrapper">
+            <input type="search" name="searchRequest" value="{{query}}">
+            <button>искать</button>
+        </div>
+    {% else %}
+        <form class="inputWrapper" action="{% url 'regular_search' %}" method="GET" id="searching">
+        {% csrf_token %}
+        <div class="typeFieldWrapper">
+            <input type="search" name="searchRequest" value="{{query}}">
+            <button>искать</button>
+        </div>
+    {% endif %}
 
-                <div class="spoiler">
-                    <details>
-                        <summary>Search options</summary>
+    <div class="spoiler">
+        <details>
+            <summary>Фильтры</summary>
             <div class="selectWrapper">
-              <select name="city" class="selector citySelect" style="color: rgb(221, 221, 221)" onchange="this.style.color='white'">
-                <option disabled selected>City</option>
-                <option value="None">Пусто</option>
-                {% for i in cities %}
-                    <option id="city{{forloop.counter}}"value="{{i}}">{{i}}</option>
-                {% endfor %}
-              </select>
-              <select disabled name="addr" class="selector addrSelect" style="color: rgb(221, 221, 221)" onchange="this.style.color='white'">
-                  <option disabled selected>Address</option>
-                  <option value="None">Пусто</option>
-              </select>
+                <select name="city" class="selector citySelect" style="color: rgb(221, 221, 221)" onchange="this.style.color='white'">
+                    <option disabled selected>Город</option>
+                    <option value="None">Пусто</option>
+                    {% for i in cities %}
+                        <option id="city{{forloop.counter}}"value="{{i}}">{{i}}</option>
+                    {% endfor %}
+                </select>
+                <select disabled name="addr" class="selector addrSelect" style="color: rgb(221, 221, 221)" onchange="this.style.color='white'">
+                    <option disabled selected>Адрес</option>
+                    <option value="None">Пусто</option>
+                </select>
                 <select name="brand" class="selector brandSelect" style="color: rgb(221, 221, 221)" onchange="this.style.color='white'">
-                  <option disabled selected>Brand</option>
-                {% for i in brands %}
-                    <option id="brand{{forloop.counter}}" value="{{i}}">{{i}}</option>
-                {% endfor %}
-              </select>
+                    <option disabled selected>Бренд</option>
+                    {% for i in brands %}
+                        <option id="brand{{forloop.counter}}" value="{{i}}">{{i}}</option>
+                    {% endfor %}
+                </select>
                 <select name="unit" class="selector officeSelect" style="color: rgb(221, 221, 221)" onchange="this.style.color='white'">
-                  <option disabled selected>Office</option>
-                  <option value="None">Пусто</option>
-                {% for i in units %}
-                    <option id="office{{forloop.counter}}" value="{{i}}">{{i}}</option>
-                {% endfor %}
-              </select>
+                    <option disabled selected>Отдел</option>
+                    <option value="None">Пусто</option>
+                    {% for i in units %}
+                        <option id="office{{forloop.counter}}" value="{{i}}">{{i}}</option>
+                    {% endfor %}
+                </select>
                 <select disabled name="depart" class="selector positionSelect" style="color: rgb(221, 221, 221)" onchange="this.style.color='white'">
-                    <option disabled selected>Position</option>
+                    <option disabled selected>Служба</option>
                     <option value="None">Пусто</option>
                 </select>
                 <select disabled name="position" class="selector positionSelect" style="color: rgb(221, 221, 221)" onchange="this.style.color='white'">
-                    <option disabled selected>Position</option>
+                    <option disabled selected>Должность</option>
                     <option value="None">Пусто</option>
                 </select>
             </div>
-                    </details>
-                </div>
-            </form>
-            <div>
-            </div>
-            <div class="tableWrapper">
-                <table id="myTable" class="tablesorter">
-                    <thead>
-                        <tr>
-                            <th hidden name="null_th_for_tablesorter">Your mom</th>
-                            {% for head in headTemp %}
-                            <th class="header">{{head}}</th>
-                            {% endfor %}
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {% for row in result %}
-                        <tr>{% for cell in row%}
-                            <td>{{ cell }}</td>
-                            {% endfor %}
-                        </tr>
-                        {% endfor %}
-                    </tbody>
-                </table>
-    <script>
+        </details>
+    </div>
+    </form>
+    <div class="tableWrapper">
+        <table id="myTable" class="tablesorter">
+            <thead>
+            <tr>
+                <th hidden name="null_th_for_tablesorter">Your mom</th>
+                {% for head in headTemp %}
+                    <th class="header">{{head}}</th>
+                {% endfor %}
+            </tr>
+            </thead>
+            <tbody>
+            {% for row in result %}
+                <tr>{% for cell in row %}
+                    <td>{{ cell }}</td>
+                {% endfor %}
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+        <script>
         $(function() {
             $("#myTable").tablesorter();
         });
-    </script>
-            </div>
+        </script>
     </div>
-    <svg id="svgEditIcon" xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24"><path fill="rgba(38, 216, 65, 0.945)" d="M14.078 4.232l-12.64 12.639-1.438 7.129 7.127-1.438 12.641-12.64-5.69-5.69zm-10.369 14.893l-.85-.85 11.141-11.125.849.849-11.14 11.126zm2.008 2.008l-.85-.85 11.141-11.125.85.85-11.141 11.125zm18.283-15.444l-2.816 2.818-5.691-5.691 2.816-2.816 5.691 5.689z"/></svg>
-
+    </div>
+<svg id="svgEditIcon" xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24"><path fill="rgba(38, 216, 65, 0.945)" d="M14.078 4.232l-12.64 12.639-1.438 7.129 7.127-1.438 12.641-12.64-5.69-5.69zm-10.369 14.893l-.85-.85 11.141-11.125.849.849-11.14 11.126zm2.008 2.008l-.85-.85 11.141-11.125.85.85-11.141 11.125zm18.283-15.444l-2.816 2.818-5.691-5.691 2.816-2.816 5.691 5.689z"/></svg>
+{% if user.is_authenticated %}
     <script>
-        {% if user.is_authenticated %}
-        let line = document.getElementsByTagName('tr');
+            let line = document.getElementsByTagName('tr');
 
-        for (let i = 1; i < line.length; i++) {
-            let btn = document.createElement('td');
-            btn.innerHTML = '+';
-            btn.className = 'btn__del' + i;
-            line[i].append(btn);
-            line[i].className = 'tableLine_' + i;
-        };
-
-        let svgEditIcon = document.querySelector('#svgEditIcon');
-        for (let i = 1; i < line.length; i++) {
-            let btnEdit = document.createElement('td');
-            let clonedNode = svgEditIcon.cloneNode(true);
-            btnEdit.appendChild(clonedNode);
-            btnEdit.className = 'btn__edit' + i;
-            line[i].append(btnEdit);
-        };
-
-        let btn = document.querySelectorAll('td[class^="btn__del"]');
-        let btnEdit = document.querySelectorAll('td[class^="btn__edit"]');
-        let key = document.querySelectorAll('tr[class^="tableLine_"] > td:first-child');
-
-        console.log(line);
-
-        for (let i = 0; i < line.length - 1; i++) {
-            btn[i].id = key[i].innerHTML;
-            btnEdit[i].id = key[i].innerHTML;
-            btn[i].setAttribute('target', btn[i].id);
-            btnEdit[i].setAttribute('target', btnEdit[i].id);
-            btn[i].onclick = function (e) {
-                if (confirm('Вы уверены что хотите удалть запись?')) {
-                    location.href = 'deluser?key=' + btn[i].id;
-                }
-                ;
-                btnEdit[i].onclick = function (e) {
-                    location.href = 'edituser?key=' + btn[i].id;
-                };
+            for (let i = 1; i < line.length; i++) {
+                let btn = document.createElement('td');
+                btn.innerHTML = '+';
+                btn.className = 'btn__del' + i;
+                line[i].append(btn);
+                line[i].className = 'tableLine_' + i;
             };
-        }
-    {% else %}
-        let line = document.getElementsByTagName('tr');
 
-        for (let i = 1; i < line.length; i++) {
-            let btn = document.createElement('td');
-            btn.className = 'btn__del' + i;
-            line[i].append(btn);
-            line[i].className = 'tableLine_' + i;
-        };
+            let svgEditIcon = document.querySelector('#svgEditIcon');
+            for (let i = 1; i < line.length; i++) {
+                let btnEdit = document.createElement('td');
+                let clonedNode = svgEditIcon.cloneNode(true);
+                btnEdit.appendChild(clonedNode);
+                btnEdit.className = 'btn__edit' + i;
+                line[i].append(btnEdit);
+            };
 
-        for (let i = 1; i < line.length; i++) {
-            let btnEdit = document.createElement('td');
-            btnEdit.className = 'btn__edit' + i;
-            line[i].append(btnEdit);
-        };
+            let btn = document.querySelectorAll('td[class^="btn__del"]');
+            let btnEdit = document.querySelectorAll('td[class^="btn__edit"]');
+            let key = document.querySelectorAll('tr[class^="tableLine_"] > td:first-child');
+
+            console.log(line);
+
+            for (let i = 0; i < line.length - 1; i++) {
+                btn[i].id = key[i].innerHTML;
+                btnEdit[i].id = key[i].innerHTML;
+                btn[i].setAttribute('target', btn[i].id);
+                btnEdit[i].setAttribute('target', btnEdit[i].id);
+                btn[i].onclick = function (e) {
+                    if (confirm('Вы уверены что хотите удалть запись?')) {
+                        location.href = 'deluser?key=' + btn[i].id;
+                    }
+                    ;
+                };
+                    btnEdit[i].onclick = function (e) {
+                        location.href = 'edituser?key=' + btn[i].id;
+                    };
+            };
     </script>
+        {% else %}
+    <script>
+            let line = document.getElementsByTagName('tr');
+
+            for (let i = 1; i < line.length; i++) {
+                let btn = document.createElement('td');
+                btn.className = 'btn__del' + i;
+                line[i].append(btn);
+                line[i].className = 'tableLine_' + i;
+            };
+
+            for (let i = 1; i < line.length; i++) {
+                let btnEdit = document.createElement('td');
+                btnEdit.className = 'btn__edit' + i;
+                line[i].append(btnEdit);
+            };
+    </script>
+
     {% endif %}
     <script src="{% static 'yellowpages/scripts/dropdown.js' %}"></script>
 </body>

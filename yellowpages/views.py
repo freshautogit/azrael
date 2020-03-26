@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from django.contrib.auth.decorators import login_required, permission_required
+from django.contrib.auth.decorators import permission_required
 from back.sql import yp
 from django.http import JsonResponse
 
@@ -8,8 +8,8 @@ unit_depart = yp.unit_depart()
 depart_pos = yp.depart_pos()
 city_address = yp.city_address()
 brand = yp.get_brand()
-
 ########################################
+
 @permission_required('yellowpages.can_edit')
 def edit_user(request):
     result = yp.get_user(request)
@@ -63,7 +63,7 @@ def regular_search(request):
     if key is not None:
         query = request.GET.get('secondName') + str(' ') + request.GET.get('name')
         yp.edit_user(request)
-        result = yp.yp_find(str(query), False, ' ')
+        result = yp.yp_find(str(query), True, ' ')
 
     else:
         query, result = search_result(request)
@@ -83,26 +83,30 @@ def search_result(request):
 def search(request):
     if request.GET.get('key') is not None:
         yp.edit_user(request)
+        return get_headers(request, True)
 
     return get_headers(request, False)
 
 
 def query_sql(request):
     query = ''
-    if request.GET.get('city') is not None and request.GET.get('city') != 'None':
+    if request.GET.get('city') is not None and request.GET.get('city') != '':
         query += 'and city = \'' + str(request.GET.get('city')) + '\' '
 
-    if request.GET.get('addr') is not None and request.GET.get('addr') != 'None':
+    if request.GET.get('addr') is not None and request.GET.get('addr') != '':
         query += 'and address = \'' + str(request.GET.get('addr')) + '\' '
 
-    if request.GET.get('brand') is not None and request.GET.get('brand') != 'None':
+    if request.GET.get('brand') is not None and request.GET.get('brand') != '':
         query += 'and company = \'' + str(request.GET.get('brand')) + '\' '
 
-    if request.GET.get('unit') is not None and request.GET.get('unit') != 'None':
+    if request.GET.get('unit') is not None and request.GET.get('unit') != '':
         query += 'and unit = \'' + str(request.GET.get('unit')) + '\' '
 
-    if request.GET.get('office') is not None and request.GET.get('office') != 'None':
-        query += 'and depart = \'' + str(request.GET.get('office')) + '\' '
+    if request.GET.get('depart') is not None and request.GET.get('depart') != '':
+        query += 'and depart = \'' + str(request.GET.get('depart')) + '\' '
+
+    if request.GET.get('position') is not None and request.GET.get('position') != '':
+        query += 'and position = \'' + str(request.GET.get('position')) + '\' '
 
     return query
 
@@ -130,7 +134,7 @@ def dropdown_request(request):
     if (request_city is None) and (request_unit is None) and (request_position is None):
         units = yp.unit_depart().keys()
         cities = yp.city_address().keys()
-        return render(request, 'test.html', {'units': units, 'cities': cities})
+        return JsonResponse({'units': units, 'cities': cities})
 
     elif request_city is not None:
         if yp.city_address().get(request_city) is None:

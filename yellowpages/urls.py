@@ -8,12 +8,14 @@ urlpatterns = [
     # в справочник со страницы авторизированного поиска
     path('search/', views.search, name='search'),
     path('addinfo/', views.add_info, name='add_info'),
+    path('search/addinfo/', views.add_info, name='add_info'),
     path('search/adduser/', views.add_user, name='add_user'),
     path('search/edituser/', views.edit_user, name='edit_user'),
     path('search/saveuser/', views.save_user, name='save_user'),
     path('search/deluser/', views.del_user, name='del_user'),
     path('search/adduser/dropdown_request/', views.dropdown_request, name='dropdown_request'),
     path('addinfo/dropdown_request/', views.dropdown_request, name='dropdown_request'),
+    path('search/addinfo/dropdown_request/', views.dropdown_request, name='dropdown_request'),
     path('search/dropdown_request/', views.dropdown_request, name='dropdown_request'),
 
     # Добавить новую запись в справочник с главной страницы
