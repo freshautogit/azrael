@@ -16,7 +16,7 @@ def edit_user(request):
     key = request.GET.get('key')
     return render(request, 'add_user.html', {'result': result, 'key': key})
 
-
+#TODO Что вообще эта функция делает? Она сейчас просто возвращает страничку с поиском и ничего не ищет в итоге
 def save_user(request):
     not_dublicate = yp.add_user(request)
     return get_headers(request, True)
@@ -134,7 +134,7 @@ def dropdown_request(request):
     if (request_city is None) and (request_unit is None) and (request_position is None):
         units = yp.unit_depart().keys()
         cities = yp.city_address().keys()
-        return JsonResponse({'units': units, 'cities': cities})
+        return render(request, 'index.html', {'units': units, 'cities': cities})
 
     elif request_city is not None:
         if yp.city_address().get(request_city) is None:
