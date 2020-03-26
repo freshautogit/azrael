@@ -597,7 +597,7 @@ def yp_find(request, full, query_sql):
                     else:
                         query_sql_position = " and position ~* '{0}'".format(position)
                     sql = "select * from phonebook where concat(" + concat + ") ~* '" + word + "' "
-                    sql = sql + query_sql_unit + query_sql_depart + query_sql_position + query_sql + " and fired = 0;"
+                    sql = sql + query_sql_unit + query_sql_depart + query_sql_position + query_sql + " and fired = 0 ORDER by surname;"
                     result_query_sql.append(sql)
 
     try:
