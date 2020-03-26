@@ -269,9 +269,11 @@ def unit_depart():
                 else:
                     temp_array = [row[2]]
                     result.update({row[1]: temp_array})
-
         connection.close()
-        return result
+        sorted_result = {}
+        for k in sorted(result.keys()):
+            sorted_result.update({k: sorted(result[k])})
+        return sorted_result
     except Exception as e:
         print("[!] ", e)
         connection.close()
@@ -295,7 +297,10 @@ def depart_pos():
                     result.update({row[1]: temp_array})
 
         connection.close()
-        return result
+        sorted_result = {}
+        for k in sorted(result.keys()):
+            sorted_result.update({k: sorted(result[k])})
+        return sorted_result
     except Exception as e:
         print("[!] ", e)
         connection.close()
@@ -320,7 +325,10 @@ def city_address():
                     result.update({row[1]: temp_array})
 
         connection.close()
-        return result
+        sorted_result = {}
+        for k in sorted(result.keys()):
+            sorted_result.update({k: sorted(result[k])})
+        return sorted_result
     except Exception as e:
         print("[!] ", e)
         connection.close()
