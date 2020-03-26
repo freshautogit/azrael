@@ -29,10 +29,10 @@ urlpatterns = [
     # Добавить новую запись в справочник со страницы поиска
     # Удалить, изменить и сохранить запись в справочнике
     # со страницы обычного поиска
-    path('s/adduser/', views.add_user, name='add_user'),
-    path('s/deluser/', views.del_user, name='del_user'),
-    path('s/edituser/', views.edit_user, name='edit_user'),
-    path('s/saveuser/', views.save_user, name='save_user'),
+    #path('s/adduser/', views.add_user, name='add_user'),
+    #path('s/deluser/', views.del_user, name='del_user'),
+    #path('s/edituser/', views.edit_user, name='edit_user'),
+    #path('s/saveuser/', views.save_user, name='save_user'),
     #############################################################
 
     path('dropdown_request/', views.dropdown_request, name='dropdown_request'),

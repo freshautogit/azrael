@@ -29,9 +29,9 @@
 
         {% if user.is_authenticated %}
         <p>  fresh auto // yellowpages //<a href="{% url 'logout'%}?next={{request.path}}">
-                {{ user.get_username }}</a> // <a href="adduser/">add a new person</a></p>
+                {{ user.get_username }}</a> // <a href="adduser/">add a new person</a> // <a href="add_user/">add a new person</a></p>
         {% else %}
-        <p>  fresh auto // yellowpages // <a href="{% url 'login'%}?next={{request.path}}">Login</a> // <a href="add_user/">add a new person</a></p>
+        <p>  fresh auto // yellowpages // <a href="{% url 'login'%}?next={{request.path}}">Login</a>
         {% endif %}
     </div>
 
@@ -44,7 +44,7 @@
                     value="{{query}}">
                 <button>search</button>
             </div>
-            {% else %}
+        {% else %}
             <form class="inputWrapper" action="{% url 'regular_search' %}" method="GET" id="searching">
                 {% csrf_token %}
                 <div class="typeFieldWrapper">
@@ -52,7 +52,7 @@
                         value="{{query}}">
                     <button>search</button>
                 </div>
-                {% endif %}
+        {% endif %}
 
                 <div class="spoiler">
                     <details>
@@ -100,7 +100,7 @@
                 <table id="myTable" class="tablesorter">
                     <thead>
                         <tr>
-                            <th class="hidden" name="null_th_for_tablesorter">Your mom</th>
+                            <th hidden name="null_th_for_tablesorter">Your mom</th>
                             {% for head in headTemp %}
                             <th class="header">{{head}}</th>
                             {% endfor %}
@@ -123,8 +123,11 @@
             </div>
     </div>
     <svg id="svgEditIcon" xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24"><path fill="rgba(38, 216, 65, 0.945)" d="M14.078 4.232l-12.64 12.639-1.438 7.129 7.127-1.438 12.641-12.64-5.69-5.69zm-10.369 14.893l-.85-.85 11.141-11.125.849.849-11.14 11.126zm2.008 2.008l-.85-.85 11.141-11.125.85.85-11.141 11.125zm18.283-15.444l-2.816 2.818-5.691-5.691 2.816-2.816 5.691 5.689z"/></svg>
+
     <script>
+        {% if user.is_authenticated %}
         let line = document.getElementsByTagName('tr');
+
         for (let i = 1; i < line.length; i++) {
             let btn = document.createElement('td');
             btn.innerHTML = '+';
@@ -163,7 +166,23 @@
                 };
             };
         }
+    {% else %}
+        let line = document.getElementsByTagName('tr');
+
+        for (let i = 1; i < line.length; i++) {
+            let btn = document.createElement('td');
+            btn.className = 'btn__del' + i;
+            line[i].append(btn);
+            line[i].className = 'tableLine_' + i;
+        };
+
+        for (let i = 1; i < line.length; i++) {
+            let btnEdit = document.createElement('td');
+            btnEdit.className = 'btn__edit' + i;
+            line[i].append(btnEdit);
+        };
     </script>
+    {% endif %}
     <script src="{% static 'yellowpages/scripts/dropdown.js' %}"></script>
 </body>
 

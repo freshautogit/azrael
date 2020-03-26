@@ -1,25 +1,11 @@
 from django.db import models
-from django.conf import settings
-from django.utils import timezone
 
-# Create your models here.
 class FullRights(models.Model):
     class Meta:
         permissions = (
-            ("can_view", "He can view"),
+            ('full_search', 'Can use full search'),
+            ('add_person', 'Can add new persons to the DB'),
+            ('add_info', 'Can add new info to the DB'),
+            ('can_delete', 'Can delete persons from the DB'),
+            ('can_edit', 'Can edit info in the DB'),
         )
-
-class Post(models.Model):
-    author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-    title = models.CharField(max_length=200)
-    text = models.TextField()
-    created_date = models.DateTimeField(default=timezone.now)
-    published_date = models.DateTimeField(blank=True, null=True)
-
-    def publish(self):
-        self.published_date = timezone.now
-        self.save
-
-    def __str__(self):
-        return self.title
-    
