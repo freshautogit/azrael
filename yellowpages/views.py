@@ -4,15 +4,13 @@ from back.sql import yp
 from django.http import JsonResponse
 
 #########################################
-# TODO Доделать списки, вот две переменные
 unit_depart = yp.unit_depart()
 depart_pos = yp.depart_pos()
 city_address = yp.city_address()
 brand = yp.get_brand()
 
-
 ########################################
-
+@permission_required('yellowpages.can_edit')
 def edit_user(request):
     result = yp.get_user(request)
     key = request.GET.get('key')
@@ -23,19 +21,19 @@ def save_user(request):
     not_dublicate = yp.add_user(request)
     return get_headers(request, True)
 
-
+@permission_required('yellowpages.can_delete')
 def del_user(request):
     yp.del_yp(request)
     return render(request, 'deleted.html')
 
-
+@permission_required('yellowpages.add_person')
 def add_user(request):
     units = yp.unit_depart().keys()
     cities = yp.city_address().keys()
     brands = brand
     return render(request, 'add_user.html', {'cities': cities, 'units': units, 'brands': brands})
 
-
+@permission_required('yellowpages.add_info')
 def add_info(request):
     if request.GET.get('adding') is not None:
         not_dublicate = yp.adding_in_dropdown_list(request)
@@ -55,7 +53,6 @@ def index_yp(request):
     return render(request, 'index.html', {'cities': cities, 'units': units, 'brands': brands})
 
 
-# Если пользователь не авторизирован
 def regular_search(request):
     head_temp = yp.headers(False)
     key = request.GET.get('key')
@@ -76,25 +73,13 @@ def regular_search(request):
                    'units': units,
                    'brands': brands})
 
-
-# Если пользователь авторизирован как менежер
-@permission_required('yellowpages.can_view')
-def manager_search(request):
-    head_temp = yp.headers(False)
-
-    query, result = search_result(request)
-
-    return render(request, 'results.html', {'result': result, 'query': query, 'headTemp': head_temp})
-
-
 def search_result(request):
     query = request.GET.get('searchRequest')
     result = yp.yp_find(str(query), False, query_sql(request))
     return query, result
 
 
-# Если пользователь авторизирован как супервайзер
-@login_required(redirect_field_name='/yp')
+@permission_required('yellowpages.full_search')
 def search(request):
     if request.GET.get('key') is not None:
         yp.edit_user(request)
