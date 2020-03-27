@@ -9,6 +9,8 @@ def accept_task(request, ip):
     priority = 'normal'
     type_task = 'Ticket'
 
+    subject = request.POST['ticketText'].capitalize()
+
     text = request.POST['ticketText'].capitalize() + '\n\n'
 
     if request.POST['subject'] == '1CD':
@@ -21,7 +23,6 @@ def accept_task(request, ip):
         assignee = 'robotfresh'
     else:
         queue = 'HELPDESK'
-        assignee = Sql.getAssignee(ip)
         if request.POST['subject'] == 'newAccount':
             text += 'Создать учетку: ' + request.POST['username'] + '\n'
             priority = 'critical'
@@ -45,11 +46,11 @@ def accept_task(request, ip):
     if request.POST['localIp'] != '':
         text += 'Внутренний ip: ' + request.POST['localIp'] + '\n'
 
-    return create_task(queue, text, request.POST['email'], priority, type_task, assignee)
+    return create_task(queue, subject, text, request.POST['email'], priority, type_task)
 
 
-def create_task(queue, text, email_from, priority, type_task, assignee):
-    path_to_files = '/home/hack/help/media/files/'
+def create_task(queue, subject, text, email_from, priority, type_task):
+    path_to_files = '/home/django-user/public_server/azrael/media/files/'
 
 
     files = []
@@ -61,11 +62,10 @@ def create_task(queue, text, email_from, priority, type_task, assignee):
 
     key = (client.issues.create(
         queue=queue,
-        summary=text[:50],
+        summary=subject[:50],
         type={'name': type_task},
         emailFrom=email_from + '@freshauto.ru',
-        emailTo='vadimhacker.ru',
-        assignee=assignee,
+        emailTo='help@freshauto2.ru',
         description=text,
         priority=priority,
         attachments=path_to_file

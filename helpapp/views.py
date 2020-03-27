@@ -4,6 +4,8 @@ from helpapp.models import Document
 from back.help_form import helpForm
 from back.webhook import wbhook
 
+import time
+
 apply = [".jpeg", ".jpg", ".gif", ".png", ".svg", ".avi", ".mp4", ".zip", ".rar", ".pdf", ".doc", ".docx", ".xls",
          ".xlsx", ".pptx", ".ppt", ".mp3", ".wav", ".odp", ".7z"]
 
@@ -21,8 +23,9 @@ def success(request):
             if str(f)[str(f).rindex('.'):] in apply:
                 newDoc = Document(userFile=f)
                 newDoc.save()
-
+        start_time = time.time()
         key = helpForm.accept_task(request, get_client_ip(request))
+        print("--- %s seconds ---" % (time.time() - start_time))
         return HttpResponseRedirect('https://tracker.yandex.ru/' + key)
     else:
         return HttpResponse('Error!')

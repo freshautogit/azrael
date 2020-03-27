@@ -32,7 +32,7 @@ ALLOWED_HOSTS = ['10.10.1.2', 'localhost', '127.0.0.1']
 
 INSTALLED_APPS = [
     'yellowpages',
-   # 'helpapp',
+    'helpapp',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -137,6 +137,9 @@ STATIC_ROOT = os.path.join(BASE_DIR, '/static/')
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, 'static'),
 )
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 LOGIN_REDIRECT_URL = '/yp/'
 LOGIN_URL = '/login/'
