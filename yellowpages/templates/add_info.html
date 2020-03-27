@@ -31,43 +31,43 @@
         <form action="{% url 'add_info' %}" method="get">
             <input type="hidden" name="adding" value="true">
             <div class="cities">
-                <select class="selector citySelect" id="addCity" name="city" size="15" style="min-width: 300px">
+                <select class="selector citySelect" id="addCity" name="city" size="15" style="min-width: 300px; border-radius: 0;">
                     <option disabled selected>Город</option>
                     {% for i in cities %}
                         <option value="{{i}}">{{i}}</option>
                     {% endfor %}
                 </select>
-                <select class="selector addrSelect" id="addAddress" name="addr" size="15" style="min-width: 300px">
+                <select class="selector addrSelect" id="addAddress" name="addr" size="15" style="min-width: 300px; border-radius: 0;">
                 </select>
             </div>
             <div class="inputAddInfoWrapper">
-                <input type="text" name="newCity" style="min-width: 296px"><input type="text" name="newAddress" style="min-width: 296px"><button onclick="return confirm('Вы уверены?')">Добавить</button>
+                <input type="text" name="newCity" style="min-width: 296px"><input type="text" name="newAddress" style="min-width: 296px"><button class="addButton" onclick="return confirm('Вы уверены?')">Добавить</button>
             </div>
             <div class="units">
-                <select class="selector brandSelect" name="brand" size="15" style="min-width: 300px">
+                <select class="selector brandSelect" name="brand" size="15" style="min-width: 300px;  border-radius: 0;">
                     <option disabled selected>Бренд</option>
                     {% for i in brands %}
                         <option id="brand{{forloop.counter}}" value="{{i}}">{{i}}</option>
                     {% endfor %}
                 </select>
-                <select class="selector departSelect" name="unit" size="15" style="min-width: 300px">
+                <select class="selector departSelect" name="unit" size="15" style="min-width: 300px; border-radius: 0;">
                     <option disabled selected>Служба</option>
                     <option value="None">Пусто</option>
                     {% for i in units %}
                         <option id="depart{{forloop.counter}}" value="{{i}}">{{i}}</option>
                     {% endfor %}
                 </select>
-                <select class="selector positionSelect" name="depart" size="15" style="min-width: 300px">
+                <select class="selector positionSelect" name="depart" size="15" style="min-width: 300px; border-radius: 0;">
                     <option disabled selected>Отдел</option>
                     <option value="None">Пусто</option>
                 </select>
-                <select class="selector unitSelect" name="position" size="15" style="min-width: 300px">
+                <select class="selector unitSelect" name="position" size="15" style="min-width: 300px; border-radius: 0;">
                     <option disabled selected>Должность</option>
                     <option value="None">Пусто</option>
                 </select>
             </div>
             <div class="inputAddInfoWrapper">
-                <input type="text" name="newBrand" style="min-width: 296px"><input type="text" name="newUnit" style="min-width: 296px"><input type="text" name="newDepart" style="min-width: 296px"><input type="text" name="newPosition" style="min-width: 296px"><button onclick="return confirm('Вы уверены?')">Добавить</button>
+                <input type="text" name="newBrand" style="min-width: 296px"><input type="text" name="newUnit" style="min-width: 296px"><input type="text" name="newDepart" style="min-width: 296px"><input type="text" name="newPosition" style="min-width: 296px"><button class="addButton" onclick="return confirm('Вы уверены?')">Добавить</button>
             </div>
         </form>
     </div>

@@ -56,7 +56,7 @@
                     <option disabled selected>Город</option>
                     <option value="None">Пусто</option>
                     {% for i in cities %}
-                        <option id="city{{forloop.counter}}"value="{{i}}">{{i}}</option>
+                        <option id="city{{forloop.counter}}" value="{{i}}">{{i}}</option>
                     {% endfor %}
                 </select>
                 <select disabled name="addr" class="selector addrSelect" style="color: rgb(221, 221, 221)" onchange="this.style.color='white'">
@@ -88,33 +88,37 @@
         </details>
     </div>
     </form>
-    <div class="tableWrapper">
-        <table id="myTable" class="tablesorter">
-            <thead>
-            <tr>
-                <th hidden name="null_th_for_tablesorter">Your mom</th>
-                {% for head in headTemp %}
-                    <th class="header">{{head}}</th>
-                {% endfor %}
-            </tr>
-            </thead>
-            <tbody>
-            {% for row in result %}
-                <tr>{% for cell in row %}
-                    <td>{{ cell }}</td>
-                {% endfor %}
+    {% if result != False %}
+        <div class="tableWrapper">
+            <table id="myTable" class="tablesorter">
+                <thead>
+                <tr>
+                    <th hidden name="null_th_for_tablesorter">Your mom</th>
+                    {% for head in headTemp %}
+                        <th class="header">{{head}}</th>
+                    {% endfor %}
                 </tr>
-            {% endfor %}
-            </tbody>
-        </table>
-        <script>
-        $(function() {
-            $("#myTable").tablesorter();
-        });
-        </script>
+                </thead>
+                <tbody>
+                {% for row in result %}
+                    <tr>{% for cell in row %}
+                        <td>{{ cell }}</td>
+                    {% endfor %}
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+            <script>
+            $(function() {
+                $("#myTable").tablesorter();
+            });
+            </script>
+        </div>
+    {% else %}
+        <h2 style="color: white;">Запрос не может быть пустым.</h2>
+    {% endif %}
     </div>
-    </div>
-<svg id="svgEditIcon" xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24"><path fill="rgba(38, 216, 65, 0.945)" d="M14.078 4.232l-12.64 12.639-1.438 7.129 7.127-1.438 12.641-12.64-5.69-5.69zm-10.369 14.893l-.85-.85 11.141-11.125.849.849-11.14 11.126zm2.008 2.008l-.85-.85 11.141-11.125.85.85-11.141 11.125zm18.283-15.444l-2.816 2.818-5.691-5.691 2.816-2.816 5.691 5.689z"/></svg>
+<svg id="svgEditIcon" xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24"><path fill="rgba(38, 216, 65, 0.945)" d="M14.078 4.232l-12.64 12.639-1.438 7.129 7.127-1.438 12.641-12.64-5.69-5.69zm-10.369 14.893l-.85-.85 11.141-11.125.849.849-11.14 11.126zm2.008 2.008l-.85-.85 11.141-11.125.85.85-11.141 11.125zm18.283-15.444l-2.816 2.818-5.691-5.691 2.816-2.816 5.691 5.689z"></path></svg>
 {% if user.is_authenticated %}
     <script>
             let line = document.getElementsByTagName('tr');

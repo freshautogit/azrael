@@ -48,7 +48,6 @@ input, button {
 }
 
 .wrapper {
-    //transform: translateY(200%);
     display: flex;
     flex-wrap: wrap;
     flex-direction: column;
@@ -129,7 +128,7 @@ input, button {
 }
 
 a[href="/yp/"] {
-    color: none !important;
+    color: unset !important;
     text-decoration: none !important;
     transition-property: none !important;
     opacity: 1 !important;
@@ -173,7 +172,6 @@ a[href="/yp/"] {
 .selectWrapper .selector {
     font-family:  'Roboto', sans-serif;
     flex: 0 0 100%;
-    border-radius: 15px;
     -webkit-appearance: none;
     -moz-appearance: none;
     appearance: none;
@@ -216,7 +214,6 @@ select::-ms-expand {
     min-width: 300px;
     background-color: #EAF1F1;
     border: 1px solid rgba(0, 0, 0, 0.12);
-    border-radius: 0;
     font-size: 15px;
     margin: 0;
 }
@@ -227,7 +224,6 @@ select::-ms-expand {
     -webkit-user-select: text;
     -webkit-appearance:none;
     border: 1px solid rgba(0, 0, 0, 0.12) !important;
-    border-radius: 0;
     font-size: 15px;
     margin: 0;
     padding: 0;
@@ -245,6 +241,7 @@ select::-ms-expand {
     display: -webkit-flex;
     display: flex;
     min-width: 600px;
+    width: 100%;
     flex-direction: column;
     justify-content: space-between;
     align-items: stretch;
@@ -283,12 +280,11 @@ select::-ms-expand {
     flex-wrap: wrap;
     justify-content: space-between;
     width: 100%;
-    margin: 0 auto;
+    margin: 0 auto 20px auto;
 }
 .adduserWrapper .selector {
     font-family:  'Roboto', sans-serif;
     flex: 1 0 20%;
-    border-radius: 15px;
     -webkit-appearance: none;
     -moz-appearance: none;
     appearance: none;
@@ -316,7 +312,6 @@ select::-ms-expand {
 .adduserWrapper .contactInfo {
     font-family:  'Roboto', sans-serif;
     flex: 1 0 20%;
-    border-radius: 15px;
     -webkit-appearance: none;
     -moz-appearance: none;
     appearance: none;
@@ -375,6 +370,11 @@ select::-ms-expand {
     transition: box-shadow 0.5s;
 }
 
+.addButton:hover, .addButton {
+    border-radius: 0px;
+    cursor: pointer;
+}
+
 .btnWrapper button:hover {
     cursor: pointer;
     box-shadow: 0px 5.93383px 29.6691px rgba(78, 248, 21, 0.568);
@@ -392,14 +392,16 @@ select::-ms-expand {
 #name, #email, .city .citySelect, .position .departSelect {
     border-radius: 15px 0 0 15px;
 }
-#secondName, #mobile, #tel, .city select[name="address"] {
+#secondName, #mobile, #tel, .addrSelect, .positionSelect {
     border-radius: 0;
 }
-#middlename, #bdate, .city select[name="company"], .position select[name="depart"] {
+#middlename, #bdate, .brandSelect, .unitSelect {
     border-radius: 0 15px 15px 0;
 }
 
-
+details .selector {
+    border-radius: 15px;
+}
 
 .doge__wrapper {
     width: 90%;

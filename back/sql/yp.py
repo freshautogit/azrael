@@ -347,7 +347,7 @@ def add_user(request):
     address = request.GET.get('addr')
     company = request.GET.get('brand')
     unit_in_yp = request.GET.get('unit')
-    depart = request.GET.get('office')
+    depart = request.GET.get('depart')
     position = request.GET.get('position')
     bdate = request.GET.get('bdate')
 
@@ -500,6 +500,9 @@ def get_last_id(table):
 
 def yp_find(request, full, query_sql):
 
+    if request == '' and query_sql == '':
+        return False
+
     text = request.lower().split(' ')
     unit_dep = unit_depart()
     depart_position = depart_pos()
@@ -602,9 +605,16 @@ def yp_find(request, full, query_sql):
 
     try:
         result_query_sql.remove(
-            "select * from phonebook where concat(id, surname, name, middlename, city, bdate, mobile, workphone, email, address, company ) ~* ''  and fired = 0;")
+            "select * from phonebook where concat(id, surname, name, middlename, city, bdate, mobile, workphone, email, address, company ) ~* ''  and fired = 0 ORDER by surname;")
     except:
         pass
+
+    try:
+        result_query_sql.remove(
+            "select * from phonebook where concat(id, surname, name, city, position, depart, unit, mobile, workphone, email, address, company) ~* ''  and fired = 0 ORDER by surname;")
+    except:
+        pass
+
     result = []
 
     connection = psycopg2.connect(dbname=dbname, user=user,
@@ -613,6 +623,7 @@ def yp_find(request, full, query_sql):
         with connection.cursor() as cursor:
 
             for sql in result_query_sql:
+                print(sql)
                 cursor.execute(sql)
                 for row in cursor:
                     row_result = ''
