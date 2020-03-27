@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/1.11/ref/settings/
 """
 
 import os
+from back import config
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -86,11 +87,11 @@ WSGI_APPLICATION = 'azrael.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'postgres',
-        'USER': 'postgres',
-        'HOST': '10.10.1.3',
+        'NAME': config.sql_database,
+        'USER': config.sql_user,
+        'HOST': config.sql_host,
         'PORT': 5432,
-        'PASSWORD': 'asd345TGB',
+        'PASSWORD': config.sql_password,
     }
 }
 

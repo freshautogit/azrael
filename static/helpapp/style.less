@@ -15,11 +15,7 @@ html {
     max-width: 1080px;
     margin: auto;
     height: 100%;
-    background-color: @fieldBackground;
-    //background-image: url('https://avatanplus.com/files/resources/original/572a6e7b31ba91547dbf9144.jpg');
-    //background-repeat: repeat;
-    //background-size: 45%;
-    //background-attachment: fixed;
+    background-color: rgba(49, 49, 49, 0.911);
 }
 
 body {
@@ -32,10 +28,10 @@ body {
 }
 
 input:active, input:hover, input:invalid,
- textarea:active, textarea:hover, textarea:invalid,
+
   select:active, select:hover, select:invalid,
    button:active, button:hover, button:invalid {
-    border-color: none;
+    border-color: unset;
     border-style: none;
     box-shadow: none;
     color: #fff;
@@ -47,17 +43,26 @@ form {
     flex-wrap: nowrap;
     justify-content: stretch;
     width: 550px;
-    min-height: 730px;
+    min-height: 760px;
     max-height: 920px;
-    height: 100%;
+    //height: 100%;
     padding-left: 155px;
     padding-right: 155px;    
     background-color: @background;
     margin-top: 20px;
     margin-left: auto;
     margin-right: auto;
-    box-shadow: 0px 25px 75px #484848;
-    border-radius: 20px;
+    border-radius: 25px;
+    box-shadow: 5px 5px 0 rgb(27, 27, 27),
+    10px 10px 0 rgb(27, 27, 27),
+    15px 15px 0 rgb(27, 27, 27),
+    20px 20px 0 rgb(27, 27, 27),
+    25px 25px 0 rgb(27, 27, 27),
+    30px 30px 0 rgb(27, 27, 27),
+    35px 35px 0 rgb(27, 27, 27),
+    40px 40px 0 rgb(27, 27, 27),
+    45px 45px 0 rgb(27, 27, 27),
+    50px 50px 0 rgb(27, 27, 27);
     
 }
 
@@ -65,9 +70,9 @@ h1 {
     text-align: left;
     width: 100%;
     font-weight: bold;
-    font-size: 32px;
+    font-size: 40px;
     flex-shrink: 0;
-    margin: 75px 0 0 0;
+    margin: 55px 0 15px 0;
     color: #fff;
 }
 
@@ -153,8 +158,9 @@ input {
     height: 45px;
     padding: 0 0 0 5px;
     background-color: @fieldBackground;
-    border-radius: 4px;
+    border-radius: 25px;
     flex-shrink: 0;
+    color: #fff;
 }
 
 input {
@@ -172,17 +178,17 @@ span {
 
 label {
     flex-basis: 268px;
-    font-size: 13px;
+    font-size: 14px;
     color: @grayFont;
 }
 
 select {
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  appearance: none;
-  background: url(../helpapp/img/arrow-down.png) no-repeat right @fieldBackground;
-  background-size: 10px;
-  background-position-x: 97%;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    background: url(../helpapp/img/arrow-down.png) no-repeat right @fieldBackground;
+    background-size: 10px;
+    background-position-x: 97%;
 }
 select:hover,
 button > p:hover,
@@ -193,19 +199,7 @@ button > p:hover,
 select::-ms-expand {
     display: none;
 }
-textarea {
-    font-family:  'Roboto', sans-serif;
-    margin: 0 auto 0 auto;
-    flex-basis: 90px;
-    max-width: 540px;
-    padding: 5px;
-    background-color: @fieldBackground;
-    border-radius: 4px;
-    resize: none;
-    flex-shrink: 0;
-    width: 100%;
-    color: #fff;
-}
+
 
 textarea[placeholder],
 input[placeholder],
@@ -213,13 +207,11 @@ select[placeholder] {
     font-family:  'Roboto', sans-serif;
 }
 
-textarea:invalid,
 input:invalid,
 select:invalid {
     border: 0px solid transparent;
 }
 
-textarea:valid,
 input:valid,
 select:valid {
     border: 0px solid transparent;
@@ -256,9 +248,9 @@ select:valid {
     flex-basis: 268px;
     height: 50px;
     background-color: @buttonGray;
-    border-radius: 4px;
+    border-radius: 25px;
     color: white;
-    font-size: 13px;
+    font-size: 14px;
     line-height: 190%;
     text-align: center;
     letter-spacing: 0.06em;
@@ -273,9 +265,9 @@ select:valid {
     flex-basis: 268px;
     height: 50px;
     background-color: @redDisabled;
-    border-radius: 4px;
+    border-radius: 25px;
     color: white;
-    font-size: 13px;
+    font-size: 14px;
     line-height: 190%;
     text-align: center;
     letter-spacing: 0.06em;
@@ -302,9 +294,9 @@ select:valid {
 #fileUploadWrapper .item .img-wrap img{
     height: 100px;
     width: 100px;
-    background: linear-gradient(0deg, rgba(132, 150, 150, 0.15), rgba(132, 150, 150, 0.15)), url(image.png);
+    background: linear-gradient(0deg, rgba(132, 150, 150, 0.15), rgba(132, 150, 150, 0.15));
     border: 1px solid #B0BCBC;
-    border-radius: 4px;
+    border-radius: 25px;
 }
 
 .mainWrapper {
@@ -327,7 +319,20 @@ select:valid {
     width: 134.37px;
     height: 152.36px;
 }
-
+textarea {
+    font-family:  'Roboto', sans-serif;
+    margin: 0 auto 0 auto;
+    flex-basis: 80px;
+    max-width: 530px;
+    padding: 5px;
+    background-color: @fieldBackground;
+    border: 5px solid @fieldBackground;
+    border-radius: 25px;
+    resize: none;
+    flex-shrink: 0;
+    width: 100%;
+    color: #fff;
+}
 button {
     width: 550px;
     margin: 25px auto 0 auto;
@@ -336,15 +341,16 @@ button {
     flex-shrink: 0;
 
     color: #fff;
-    font-size: 16px;
     font-weight: bold;
+    font-size: 16px;
     text-transform: uppercase;
     letter-spacing: 0.06em;
     line-height: 50%;
 
     border: 2px solid transparent;
     background: @green;
-    border-radius: 4px;
+    border-radius: 25px;
+    transition: box-shadow 0.5s;
 }
 
 #nonHovered, .btn {
@@ -354,7 +360,7 @@ button {
     flex-shrink: 0;
 
     color: #fff;
-    font-size: 16px;
+    font-size: 25px;
     font-weight: bold;
     text-transform: uppercase;
     letter-spacing: 0.06em;
@@ -362,7 +368,7 @@ button {
 
     border: 2px solid transparent;
     background: @buttonGray;
-    border-radius: 4px;
+    border-radius: 25px;
 }
 
 #nonHovered {
@@ -370,7 +376,7 @@ button {
     height: 50px;
     font-style: normal;
     font-weight: 500;
-    font-size: 13px;
+    font-size: 14px;
 }
 
 .messegeWrapper {
@@ -389,7 +395,7 @@ button {
     height: 25px;
     font-style: normal;
     font-weight: normal;
-    font-size: 13px;
+    font-size: 14px;
     line-height: 190%;
     text-align: center;
     margin: 0;
@@ -427,11 +433,11 @@ button:hover {
     box-shadow: none;
 }
 .inputWrapper {
-    font-weight: 13px;
+    font-size: 14px;
 }
 
 .fake-input {
-    flex:  0 0;
+    flex:  0 0 250px;
     width: 250px;
     display: flex;
     align-items: center;
@@ -439,9 +445,9 @@ button:hover {
     height: 40px;
     padding: 0 10px;
     background-color: @fieldBackground;
-    border-radius: 3px;
+    border-radius: 25px;
     border: 2px solid transparent;
-    font-size: 13px;
+    font-size: 14px;
     color: #fff;
   }
 
@@ -463,9 +469,9 @@ button:hover {
     height: 40px;
     padding: 0 10px;
     background-color: @fieldBackground;
-    border-radius: 3px;
+    border-radius: 25px;
     border: 2px solid transparent;
-    font-size: 13px;
+    font-size: 14px;
   }
 
   .subPhoneField {
