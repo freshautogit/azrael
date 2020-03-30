@@ -21,6 +21,12 @@ def accept_task(request, ip):
         queue = 'AC'
         type_task = 'Task'
         assignee = 'robotfresh'
+    elif request.GET['task_from_yellowpages'] == 'True':
+        queue = 'DEV'
+        if request.POST['subject'] == 'yellowpages_story' or request.POST['subject'] == 'other_improvement':
+            type_task = 'Improvement'
+        elif request.POST['subject'] == 'yellowpages_bug' or request.POST['subject'] == 'yellowpages_incorrect_info':
+            type_task = 'Bug'
     else:
         queue = 'HELPDESK'
         if request.POST['subject'] == 'newAccount':
@@ -46,10 +52,11 @@ def accept_task(request, ip):
     if request.POST['localIp'] != '':
         text += 'Внутренний ip: ' + request.POST['localIp'] + '\n'
 
-    return create_task(queue, subject, text, request.POST['email'], priority, type_task)
+    tag = request.POST['subject']
+    return create_task(queue, subject, text, request.POST['email'], priority, type_task, tag)
 
 
-def create_task(queue, subject, text, email_from, priority, type_task):
+def create_task(queue, subject, text, email_from, priority, type_task, tag):
     path_to_files = '/home/django-user/public_server/azrael/media/files/'
 
 
@@ -68,7 +75,8 @@ def create_task(queue, subject, text, email_from, priority, type_task):
         emailTo='help@freshauto2.ru',
         description=text,
         priority=priority,
-        attachments=path_to_file
+        attachments=path_to_file,
+        tags=[tag]
     ).key)
 
     for file in path_to_file:
