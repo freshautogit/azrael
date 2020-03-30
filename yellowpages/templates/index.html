@@ -78,7 +78,12 @@
         </details>
     </div>
     </form>
-  </div>
+</div>
+<footer>
+    <a href="{% url 'help' %}">Написать в поддержку</a>
+    <a href="{% url 'help' %}?improvement=true">Предложение по улучшению</a>
+    <a href="{% url 'help' %}?bug=true">Нашли ошибку?</a>
+</footer>
 </body>
 <script src="{% static 'yellowpages/scripts/dropdown.js' %}"></script>
 </html>

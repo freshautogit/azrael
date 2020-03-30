@@ -21,15 +21,24 @@
         <label for="office">Филиал<span> *</span></label>
     </div>
     <div class="selectWrapper">
-        <select id="subject" name="subject" required aria-required="true" onChange="Selected(this)">
-            <option value="false" disabled selected> </option>
-            <option value="1CD">1С Дилер</option>
-            <option value="1CP">1С Пробег</option>
-            <option value="newAccount">Создание учётной записи(приём)</option>
-            <option value="delAccount">Удаление учётной записи(увольнение)</option>
-            <option value="changeAccount">Изменение учётной записи</option>
-            <option value="other">Другая тема</option>
-        </select>
+        {% if improovement and bug is not True %}
+            <select id="subject" name="subject" required aria-required="true" onChange="Selected(this)">
+                <option value="false" disabled selected> </option>
+                <option value="1CD">1С Дилер</option>
+                <option value="1CP">1С Пробег</option>
+                <option value="newAccount">Создание учётной записи(приём)</option>
+                <option value="delAccount">Удаление учётной записи(увольнение)</option>
+                <option value="changeAccount">Изменение учётной записи</option>
+                <option value="other">Другая тема</option>
+            </select>
+        {% elif improovement is True %}
+        {% elif bug is True %}
+            <select id="subject" name="subject" required aria-required="true" onChange="Selected(this)">
+                <option value="false" disabled selected> </option>
+                <option value="yellowpages">Ошибка в справочнике</option>
+                <option value="form">Ошибка в форме заявок</option>
+            </select>
+        {% endif %}
     </div>
 
     <div class="labelWrapper">

@@ -19,6 +19,7 @@ urlpatterns = [
     path('adduser/', views.add_user, name='add_user'),
     path('addinfo/', views.add_info, name='add_info'),
     path('saveuser/', views.save_user, name='save_user'),
+    path('help/', include('azrael.helpapp.views')),
 
     path('', include('django.contrib.auth.urls'))
 ]

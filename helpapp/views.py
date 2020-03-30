@@ -15,7 +15,7 @@ def index(request):
     request.session['visitors'] = visitors + 1
     return render(request, 'indexF.html', context={'visitors': visitors})
 
-
+#TODO: Добавить обработку сообщений об ошибке и предложений по улучшению
 def success(request):
     if request.method == 'POST':
 
