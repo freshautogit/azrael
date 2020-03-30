@@ -151,19 +151,15 @@
 <body>
 <div class="mainWrapper">
 <header>
-    <h1>Заполните форму, чтобы подать заявку на регистрацию</h1>
+    {% if success is not None %}
+        <h1>Заявка на регистрацию отправлена, спасибо!</h1>
+        <h1>С вами свяжется сотрудник поддержки и предоставит учетные данные в случае одобреня заявки</h1>
+    {% else %}
+        <h1>Что-то пошло не так, </h1><p><a href="{% url 'registration' %}">попробуйте еще раз.</a></p>
+    {% endif %}
 </header>
-<form class="formWrapper" method="get" action="{% url 'registration' %}">
-    {% csrf_token %}
-    <div class="username">
-        <input name="firstName" type="text" placeholder="Имя" required>
-        <input name="secondName" type="text" placeholder="Фамилия" required>
-        <input name="email" type="email" placeholder="Эл.почта" required>
-        <input type="hidden" name="regData" value="True">
-    </div>
-    <input type="submit" value="Подать заявку на регистрацию" />
-</form>
+    <p></p>
     <p><a href="{% url 'index_yp' %}">На главную</a></p>
-  </div>
+</div>
 </body>
 </html>

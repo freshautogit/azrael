@@ -22,5 +22,5 @@ urlpatterns = [
     path('help/', include('helpapp.urls')),
 
     path('', include('django.contrib.auth.urls')),
-    path('reg', views.regitstration, name="registration"),
+    path('reg/', views.regitstration, name="registration"),
 ]
