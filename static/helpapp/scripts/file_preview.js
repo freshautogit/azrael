@@ -1,5 +1,5 @@
 jQuery(document).ready(function ($) {
-                
+
     var maxFileSize = 10 * 1024 * 1024; // (байт) Максимальный размер файла (10мб)
     var queue = {};
     var form = $('form#uploadFiles');
@@ -13,9 +13,9 @@ jQuery(document).ready(function ($) {
     
     $('#id_userFile').on('change', function () {
         $('.img-wrap').remove();
-        document.getElementById("deleteLink").style.display="flex";
+        document.getElementById("deleteLink").style.opacity="1";
         document.getElementById("uploadImagesList").style.display="flex";
-        document.getElementById("uploadFiles").style.height="920px";
+        document.getElementById("uploadFiles").style.minHeight="760px";
         var files = this.files;
         var fileCount = 5;
         
@@ -40,7 +40,7 @@ jQuery(document).ready(function ($) {
 
             if ( file.size > maxFileSize ) {
                 alert( 'Размер файла не должен превышать 10 Мб' );
-                document.getElementById("deleteLink").style.display="none";
+                document.getElementById("deleteLink").style.opacity="0";
                 continue;
             }
 
@@ -79,8 +79,8 @@ jQuery(document).ready(function ($) {
         $('.img-wrap').remove();
         //$('#userfile')[0].reset();
         document.getElementById("uploadImagesList").style.display="none";
-        document.getElementById("deleteLink").style.display="none";
-        document.getElementById("uploadFiles").style.height="760px";
+        document.getElementById("deleteLink").style.opacity="0";
+        document.getElementById("uploadFiles").style.minHeight="760px";
     });
 
     // Отправка формы
@@ -101,11 +101,11 @@ jQuery(document).ready(function ($) {
             success: function(msg) {
                 console.log(msg);
                 if (msg == 'ok') {
-                  alert('Сообщение отправлено');
-                  $('#form').trigger('reset'); // очистка формы
+                    alert('Сообщение отправлено');
+                    $('#form').trigger('reset'); // очистка формы
                 } else {
-                  alert('Ошибка');
-                  }
+                    alert('Ошибка');
+                }
             },
             cache: false,
             contentType: false,

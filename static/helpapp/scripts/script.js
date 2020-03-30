@@ -38,28 +38,3 @@ fakeInputField.addEventListener('blur', function () {
   fakeInput.classList.remove('inputWrapper--focused');
 })
 
-
-//script for sending form through PHPmailer
-// $(function() {
-//   'use strict';
-//   $('#form').on('submit', function(e) {
-//     e.preventDefault();
-//     $.ajax({
-//       url: '../file_send.php',
-//       type: 'POST',
-//       contentType: false,
-//       processData: false,
-//       data: new FormData(this),
-//       success: function(msg) {
-//         console.log(msg);
-//         if (msg == 'ok') {
-//           alert('Сообщение отправлено');
-//           $('#form').trigger('reset'); // очистка формы
-//         } else {
-//           alert('Ошибка');
-//         }
-//       }
-//     });
-//   });
-// });
-// $('#form').trigger('reset');
