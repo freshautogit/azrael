@@ -87,6 +87,8 @@ def search(request):
 
     return get_headers(request, False)
 
+def regitstration(request):
+    return render(request, 'registration/registration.html')
 
 def query_sql(request):
     query = ''
