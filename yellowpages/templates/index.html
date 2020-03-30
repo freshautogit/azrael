@@ -54,7 +54,7 @@
                     <option value="">Пусто</option>
                 </select>
                 <select name="brand" class="selector brandSelect" style="color: rgb(221, 221, 221)" onchange="this.style.color='white'">
-                    <option disabled selected>Бренд</option>
+            п        <option disabled selected>Бренд</option>
                     {% for i in brands %}
                         <option id="brand{{forloop.counter}}" value="{{i}}">{{i}}</option>
                     {% endfor %}
@@ -80,9 +80,9 @@
     </form>
 </div>
 <footer>
-    <a href="{% url 'help' %}">Написать в поддержку</a>
-    <a href="{% url 'help' %}?improvement=true">Предложение по улучшению</a>
-    <a href="{% url 'help' %}?bug=true">Нашли ошибку?</a>
+    <a href="/help/">Написать в поддержку</a>
+    <a href="/help/?improvement=True">Предложение по улучшению</a>
+    <a href="/help/?bug=True">Нашли ошибку?</a>
 </footer>
 </body>
 <script src="{% static 'yellowpages/scripts/dropdown.js' %}"></script>

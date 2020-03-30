@@ -15,35 +15,45 @@
 </script>
 </head>
 <html>
-    <body>
-        <!-- {% if documents %}
-            <ul>
-                {% for document in documents %}
-                    <li><a href="{{ document.userFile.url }}">{{ document.userFile.name }}</a></li>
-                {% endfor %}
-            </ul>
-        {% else %}
-            <p>No documents.</p>
-        {% endif %} -->
-        
-        <form action="{% url 'success' %}" method="post" enctype="multipart/form-data" id="uploadFiles">
+<body>
+<form action="{% url 'success' %}" method="post" enctype="multipart/form-data" id="uploadFiles">
     {% csrf_token %}
-        <h1>Заявка в отдел IT</h1>    
-        <div class="labelWrapper">
+    {% if improvement == 'True' %}
+        <h1>Иделя по улучшению</h1>
+    {% elif bug == 'True' %}
+        <h1>Сообщение об ошибке</h1>
+    {% else %}
+        <h1>Заявка в отдел IT</h1>
+    {% endif %}
+    <div class="labelWrapper">
         <label for="subject">Тема заявки<span> *</span></label>
         <label for="office">Филиал<span> *</span></label>
-        </div>
-        <div class="selectWrapper">
+    </div>
+    <div class="selectWrapper">
+        {% if improvement == 'True' %}
             <select id="subject" name="subject" required aria-required="true" onChange="Selected(this)">
-                    <option value="false" disabled selected> </option>
-                    <option value="1CD">1С Дилер</option>
-                    <option value="1CP">1С Пробег</option>
-                    <option value="newAccount">Создание учётной записи(приём)</option>
-                    <option value="delAccount">Удаление учётной записи(увольнение)</option>
-                    <option value="changeAccount">Изменение учётной записи</option>
-                    <option value="other">Другая тема</option>
+                <option value="false" disabled selected> </option>
+                <option value="yellowpages">Есть идея для улучшения справочника</option>
+                <option value="other">Другое</option>
             </select>
-        </div>
+        {% elif bug == 'True' %}
+            <select id="subject" name="subject" required aria-required="true" onChange="Selected(this)">
+                <option value="false" disabled selected> </option>
+                <option value="yellowpages">Ошибка в справочнике</option>
+                <option value="form">Ошибка в форме заявок</option>
+            </select>
+        {% else %}
+            <select id="subject" name="subject" required aria-required="true" onChange="Selected(this)">
+                <option value="false" disabled selected> </option>
+                <option value="1CD">1С Дилер</option>
+                <option value="1CP">1С Пробег</option>
+                <option value="newAccount">Создание учётной записи(приём)</option>
+                <option value="delAccount">Удаление учётной записи(увольнение)</option>
+                <option value="changeAccount">Изменение учётной записи</option>
+                <option value="other">Другая тема</option>
+            </select>
+        {% endif %}
+    </div>
     
             <div class="labelWrapper">
                 <label for="ticketText">Текст заявки<span> *</span></label>

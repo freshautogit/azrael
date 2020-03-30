@@ -13,6 +13,12 @@ apply = [".jpeg", ".jpg", ".gif", ".png", ".svg", ".avi", ".mp4", ".zip", ".rar"
 def index(request):
     visitors = request.session.get('visitors', 0)
     request.session['visitors'] = visitors + 1
+    if request.GET.get('bug') is not None:
+        bug = request.GET.get('bug')
+        return render(request, 'indexF.html', context={'visitors': visitors, 'bug': bug})
+    elif request.GET.get('improvement') is not None:
+        improvement = request.GET.get('improvement')
+        return render(request, 'indexF.html', context={'visitors': visitors, 'improvement': improvement})
     return render(request, 'indexF.html', context={'visitors': visitors})
 
 #TODO: Добавить обработку сообщений об ошибке и предложений по улучшению
