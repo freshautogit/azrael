@@ -1,8 +1,26 @@
 from yandex_tracker_client import TrackerClient
+from back import config
 import os
 import Sql
 
-client = TrackerClient(token="AgAEA7qjC7i7AAW3zSixTG743kAdoEGtjtUF8hc", org_id="2120191")
+client = TrackerClient(token=config.tracker_token, org_id=config.tracker_org_id)
+
+
+def registration_in_yp(request):
+
+    key = (client.issues.create(
+        queue='TI',
+        summary='Регистрация в YP: {0}'.format(request.GET['secondName']),
+        type={'name': 'Ticket'},
+        emailFrom=request.GET['email'],
+        emailTo='help@freshauto2.ru',
+        description='{0} {1}'.format(request.GET['secondName'], request.GET['firstName']),
+        priority='critical',
+        assignee='d.borunov',
+        tags=['reg_yp']
+    ).key)
+    return True
+
 
 
 def accept_task(request, ip):
@@ -58,7 +76,6 @@ def accept_task(request, ip):
 
 def create_task(queue, subject, text, email_from, priority, type_task, tag):
     path_to_files = '/home/django-user/public_server/azrael/media/files/'
-
 
     files = []
 

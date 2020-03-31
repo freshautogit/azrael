@@ -21,5 +21,6 @@ urlpatterns = [
     path('saveuser/', views.save_user, name='save_user'),
     path('help/', include('helpapp.urls')),
 
-    path('', include('django.contrib.auth.urls'))
+    path('', include('django.contrib.auth.urls')),
+    path('reg/', views.regitstration, name="registration"),
 ]

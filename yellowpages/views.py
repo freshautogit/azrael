@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.contrib.auth.decorators import permission_required
 from back.sql import yp
+from back.help_form import helpForm
 from django.http import JsonResponse
 
 #########################################
@@ -8,6 +9,8 @@ unit_depart = yp.unit_depart()
 depart_pos = yp.depart_pos()
 city_address = yp.city_address()
 brand = yp.get_brand()
+
+
 ########################################
 
 @permission_required('yellowpages.can_edit')
@@ -16,15 +19,17 @@ def edit_user(request):
     key = request.GET.get('key')
     return render(request, 'add_user.html', {'result': result, 'key': key})
 
-#TODO Что вообще эта функция делает? Она сейчас просто возвращает страничку с поиском и ничего не ищет в итоге
+
 def save_user(request):
     not_dublicate = yp.add_user(request)
     return get_headers(request, True)
+
 
 @permission_required('yellowpages.can_delete')
 def del_user(request):
     yp.del_yp(request)
     return render(request, 'deleted.html')
+
 
 @permission_required('yellowpages.add_person')
 def add_user(request):
@@ -32,6 +37,7 @@ def add_user(request):
     cities = yp.city_address().keys()
     brands = brand
     return render(request, 'add_user.html', {'cities': cities, 'units': units, 'brands': brands})
+
 
 @permission_required('yellowpages.add_info')
 def add_info(request):
@@ -42,7 +48,8 @@ def add_info(request):
     units = yp.unit_depart().keys()
     cities = yp.city_address().keys()
     brands = yp.get_brand()
-    return render(request, 'add_info.html', {'cities': cities, 'units': units, 'brands': brands, 'not_dublicate': not_dublicate})
+    return render(request, 'add_info.html',
+                  {'cities': cities, 'units': units, 'brands': brands, 'not_dublicate': not_dublicate})
 
 
 def index_yp(request):
@@ -73,6 +80,7 @@ def regular_search(request):
                    'units': units,
                    'brands': brands})
 
+
 def search_result(request):
     query = request.GET.get('searchRequest')
     result = yp.yp_find(str(query), False, query_sql(request))
@@ -86,6 +94,13 @@ def search(request):
         return get_headers(request, True)
 
     return get_headers(request, False)
+
+
+def regitstration(request):
+    if request.GET.get('regData') is not None:
+        success = helpForm.registration_in_yp(request)
+        return render(request, 'registration/success.html', {'success': success})
+    return render(request, 'registration/registration.html')
 
 
 def query_sql(request):
@@ -123,7 +138,9 @@ def get_headers(request, add):
         query = request.GET.get('searchRequest')
     query_sql_temp = query_sql(request)
     result = yp.yp_find(query, True, query_sql_temp)
-    return render(request, 'results.html', {'result': result, 'query': query, 'headTemp': head_temp, 'cities': cities, 'units': units, 'brands': brands})
+    return render(request, 'results.html',
+                  {'result': result, 'query': query, 'headTemp': head_temp, 'cities': cities, 'units': units,
+                   'brands': brands})
 
 
 def dropdown_request(request):
