@@ -3,5 +3,5 @@ from . import views
 
 
 urlpatterns = [
-	path('', views.index_bots, name='index'),
+	path('aster_create_task/', views.aster_create_task, name='aster_create_task')
 ]
