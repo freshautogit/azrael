@@ -615,6 +615,10 @@ def yp_find(request, full, query_sql):
     except:
         pass
 
+    try:
+        result_query_sql.remove("select * from phonebook where concat(id, surname, name, middlename, city, bdate, position, depart, unit, mobile, workphone, email, address, company ) ~* ''  and fired = 0 ORDER by surname;")
+    except:
+        pass
     result = []
 
     connection = psycopg2.connect(dbname=dbname, user=user,
