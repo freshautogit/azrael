@@ -9,4 +9,5 @@ urlpatterns = [
     path('bots/', include('bots.urls')),
     path('yp/', include('yellowpages.urls')),
     path('', include('django.contrib.auth.urls')),
+    path('', include('yellowpages.urls')),
 ]
