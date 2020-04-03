@@ -26,7 +26,7 @@ SECRET_KEY = '=s8n=gp0cuv55m%=s2b%te+b1334b2=2ae64m2@sy=+qde8*a='
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['10.10.1.2', 'localhost', '127.0.0.1', 'book.freshauto2.ru']
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -34,6 +34,8 @@ ALLOWED_HOSTS = ['10.10.1.2', 'localhost', '127.0.0.1', 'book.freshauto2.ru']
 INSTALLED_APPS = [
     'yellowpages',
     'helpapp',
+    'bots',
+    'django_hosts',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -43,6 +45,7 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
+    'django_hosts.middleware.HostsRequestMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -50,9 +53,12 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'django_hosts.middleware.HostsResponseMiddleware',
 ]
 
 ROOT_URLCONF = 'azrael.urls'
+ROOT_HOSTCONF = 'azrael.hosts'
+DEFAULT_HOST = 'www'
 
 TEMPLATES = [
     {
