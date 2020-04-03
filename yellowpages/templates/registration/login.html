@@ -163,7 +163,7 @@
     <input type="submit" value="Войти" />
     <input type="hidden" name="next" value="{{ next }}" />
 </form>
-    <p><a href="{% url 'password_reset' %}">Забыл пароль</a></p>
+    <p><a href="/help/?forget_password=True">Забыл пароль</a></p>
     <p><a href="{% url 'registration' %}">Зарегистрироваться</a></p>
     <p><a href="{% url 'index_yp' %}">На главную</a></p>
   </div>
