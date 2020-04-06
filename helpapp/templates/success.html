@@ -1,16 +1,29 @@
+{% load static %}
 <!DOCTYPE html>
-<html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width, inicial-scale=1">
+<meta charset="UTF-8">
+<link rel="stylesheet/less" type="text/css" href="{% static 'helpapp/style.less' %}">
+<link rel="shortcut icon" href="#" type="image/x-icon">
+<title>Заявка в отдел IT</title>
+<script src="//cdnjs.cloudflare.com/ajax/libs/less.js/3.9.0/less.min.js"></script>
+<script
+			  src="https://code.jquery.com/jquery-3.4.1.js"
+			  integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
+              crossorigin="anonymous">
+</script>
 </head>
+<html>
 <body>
-    <p>success</p><br>
-    <form action="/help/" method="post">
-        {% csrf_token %}
-        <button type="submit">Вернуться</button>
+    <form action="{% url 'index' %}" method="get">
+        <h1>Спасибо!</h1>
+        <h2>Скоро мы решим вашу проблему!</h2>
+        <button>Написать еще заявку</button>
     </form>
-</body>
+        <script src="{% static '/helpapp/scripts/script.js' %}"></script>
+        <script src="{% static '/helpapp/scripts/jquery.maskedinput.min.js' %}"></script>
+        <script src="{% static '/helpapp/scripts/ipfinder.js' %}"></script>
+        <script src="{% static '/helpapp/scripts/file_preview.js' %}"></script>
+    </body>
 </html>

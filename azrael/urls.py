@@ -6,7 +6,7 @@ urlpatterns = [
     # path('help/', include('helpapp.urls')),
     # path('account/', include('yellowpages.urls')),
     path('admin/', admin.site.urls),
-    # path('bots/', include('bots.urls')),
+    path('bots/', include('bots.urls')),
     # path('yp/', include('yellowpages.urls')),
     # path('', include('django.contrib.auth.urls')),
     path('', include('yellowpages.urls')),

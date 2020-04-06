@@ -19,8 +19,8 @@ def get_user(number):
             cursor.execute(sql)
 
             for row in cursor:
-                mail = row['email']
-                surname = row['surname'] + ' ' + row['name']
+                mail = row[2]
+                surname = row[0] + ' ' + row[1]
 
         connection.close()
         return mail, surname
@@ -40,7 +40,7 @@ def get_assignee(number):
             cursor.execute(sql)
 
             for row in cursor:
-                login = row['email']
+                login = row[0]
 
         connection.close()
         return login[:login.index('@')]
