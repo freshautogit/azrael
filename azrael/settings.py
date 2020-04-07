@@ -26,7 +26,9 @@ SECRET_KEY = '=s8n=gp0cuv55m%=s2b%te+b1334b2=2ae64m2@sy=+qde8*a='
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['10.10.1.2', 'localhost', '127.0.0.1', 'book.freshauto2.ru', '82.148.12.227']
+
+ALLOWED_HOSTS = ['*']
+
 
 
 # Application definition
@@ -35,6 +37,7 @@ INSTALLED_APPS = [
     'yellowpages',
     'helpapp',
     'bots',
+    'django_hosts',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -44,6 +47,7 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
+    'django_hosts.middleware.HostsRequestMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -51,9 +55,12 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'django_hosts.middleware.HostsResponseMiddleware',
 ]
 
 ROOT_URLCONF = 'azrael.urls'
+ROOT_HOSTCONF = 'azrael.hosts'
+DEFAULT_HOST = 'www'
 
 TEMPLATES = [
     {
@@ -143,5 +150,5 @@ STATICFILES_DIRS = (
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
-LOGIN_REDIRECT_URL = '/yp/'
+LOGIN_REDIRECT_URL = '/'
 LOGIN_URL = '/login/'

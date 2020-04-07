@@ -19,8 +19,8 @@ def get_user(number):
             cursor.execute(sql)
 
             for row in cursor:
-                mail = row['email']
-                surname = row['surname'] + ' ' + row['name']
+                mail = row[2]
+                surname = row[0] + ' ' + row[1]
 
         connection.close()
         return mail, surname
@@ -40,7 +40,7 @@ def get_assignee(number):
             cursor.execute(sql)
 
             for row in cursor:
-                login = row['email']
+                login = row[0]
 
         connection.close()
         return login[:login.index('@')]
@@ -53,7 +53,7 @@ def get_assignee(number):
 client = TrackerClient(token=config.tracker_token, org_id=config.tracker_org_id)
 
 
-def create(number_user, number_assignee):
+def create(number_user, number_assignee, link_to_call):
     email, fio = get_user(number_user)
 
     if email == '':
@@ -65,7 +65,7 @@ def create(number_user, number_assignee):
             emailFrom=email,
             summary='Звонок от {0}'.format(fio),
             type={'name': 'Ticket'},
-            description='*Опиши проблему*',
+            description='*Опиши проблему*\n\n{0}'.format(link_to_call),
             assignee=get_assignee(number_assignee)
         )
     except Exception as e:
@@ -75,5 +75,5 @@ def create(number_user, number_assignee):
             emailFrom=email,
             summary='Звонок от {0}'.format(fio),
             type={'name': 'Ticket'},
-            description='*Опиши проблему*')
+            description='*Опиши проблему*\n\n{0}'.format(link_to_call))
         issue.comments.create(text='#FIX\nЧто то пошло не так\n{0}'.format(e), summonees='v.gussarov')

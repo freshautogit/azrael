@@ -31,8 +31,7 @@ def success(request):
                 newDoc.save()
         start_time = time.time()
         key = helpForm.accept_task(request, get_client_ip(request))
-        print("--- %s seconds ---" % (time.time() - start_time))
-        return HttpResponseRedirect('https://tracker.yandex.ru/' + key)
+        return render(request, 'success.html')
     else:
         return HttpResponse('Error!')
 
