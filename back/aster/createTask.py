@@ -61,19 +61,22 @@ def create(number_user, number_assignee, link_to_call):
 
     try:
         client.issues.create(
-            queue='helpdesk',
+            queue='AA',
             emailFrom=email,
             summary='Звонок от {0}'.format(fio),
             type={'name': 'Ticket'},
             description='*Опиши проблему*\n\n{0}'.format(link_to_call),
-            assignee=get_assignee(number_assignee)
+            assignee=get_assignee(number_assignee),
+            components=['Звонок']
         )
     except Exception as e:
         print("[!] ", e)
         issue = client.issues.create(
-            queue='helpdesk',
+            queue='AA',
             emailFrom=email,
             summary='Звонок от {0}'.format(fio),
             type={'name': 'Ticket'},
+            components=['Звонок'],
             description='*Опиши проблему*\n\n{0}'.format(link_to_call))
-        issue.comments.create(text='#FIX\nЧто то пошло не так\n{0}'.format(e), summonees='v.gussarov')
+
+        issue.comments.create(text='#FIX\n{0}\nЧто то пошло не так\n{1}'.format(number_assignee, e), summonees='v.gussarov')
