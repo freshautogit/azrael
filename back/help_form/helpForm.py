@@ -36,7 +36,7 @@ def accept_task(request, ip):
         type_task = 'Task'
         assignee = 'robotfresh'
     elif request.POST['subject'] == '1CP':
-        queue = 'AC'
+        queue = 'AA'
         type_task = 'Task'
         assignee = 'robotfresh'
     elif request.GET['task_from_yellowpages'] == 'True':
