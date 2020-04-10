@@ -46,7 +46,8 @@ def accept_task(request, ip):
         elif request.POST['subject'] == 'yellowpages_bug' or request.POST['subject'] == 'yellowpages_incorrect_info':
             type_task = 'Bug'
     else:
-        queue = 'HELPDESK'
+        queue = 'IN'
+        assignee = Sql.getAssignee(ip)
         if request.POST['subject'] == 'newAccount':
             text += 'Создать учетку: ' + request.POST['username'] + '\n'
             priority = 'critical'
