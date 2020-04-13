@@ -64,10 +64,9 @@ def create(number_user, number_assignee, link_to_call):
             queue='AA',
             emailFrom=email,
             summary='Звонок от {0}'.format(fio),
-            type={'name': 'Ticket'},
+            type={'name': 'Hotline call'},
             description='*Опиши проблему*\n\n{0}'.format(link_to_call),
-            assignee=get_assignee(number_assignee),
-            components=['Звонок']
+            assignee=get_assignee(number_assignee)
         )
     except Exception as e:
         print("[!] ", e)
@@ -75,8 +74,7 @@ def create(number_user, number_assignee, link_to_call):
             queue='AA',
             emailFrom=email,
             summary='Звонок от {0}'.format(fio),
-            type={'name': 'Ticket'},
-            components=['Звонок'],
+            type={'name': 'Hotline call'},
             description='*Опиши проблему*\n\n{0}'.format(link_to_call))
 
         issue.comments.create(text='#FIX\n{0}\nЧто то пошло не так\n{1}'.format(number_assignee, e), summonees='v.gussarov')
