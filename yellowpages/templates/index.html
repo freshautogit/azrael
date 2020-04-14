@@ -54,7 +54,7 @@
                     <option value="">Пусто</option>
                 </select>
                 <select name="brand" class="selector brandSelect" style="color: rgb(221, 221, 221)" onchange="this.style.color='white'">
-            п        <option disabled selected>Бренд</option>
+                    <option disabled selected>Бренд</option>
                     {% for i in brands %}
                         <option id="brand{{forloop.counter}}" value="{{i}}">{{i}}</option>
                     {% endfor %}
@@ -78,6 +78,11 @@
         </details>
     </div>
     </form>
+<!--    <div class="linksWrapper">
+        <a href="/help/">Написать в поддержку</a>
+        <a href="/help/?improvement=True">Предложение по улучшению</a>
+        <a href="/help/?bug=True">Нашли ошибку?</a>
+    </div>-->
 </div>
 <footer>
     <a href="/help/">Написать в поддержку</a>
