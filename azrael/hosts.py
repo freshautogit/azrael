@@ -1,8 +1,8 @@
 from django_hosts import patterns, host
+import yellowpages
 
 host_patterns = patterns(
     '',
-    host(r'book', 'azrael.yp_urls', name='book'),
+    host(r'book', yellowpages.views.redirect_to_help, name='book'),
     host(r'help', 'azrael.yp_urls', name='help'),
-    host(r'www', 'azrael.urls', name='www')
 )
