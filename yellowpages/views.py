@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.contrib.auth.decorators import permission_required
 from back.sql import yp
 from back.help_form import helpForm
-from django.http import JsonResponse, HttpResponse
+from django.http import JsonResponse, HttpResponseRedirect
 
 #########################################
 unit_depart = yp.unit_depart()
@@ -180,4 +180,4 @@ def dropdown_request(request):
 
 
 def redirect_to_help(request):
-    return HttpResponse(request, 'https://help.freshauto2.ru/')
+    return HttpResponseRedirect('https://help.freshauto2.ru/')
