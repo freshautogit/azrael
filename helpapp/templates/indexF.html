@@ -29,12 +29,14 @@
 {% else %}
     <h1>Заявка в отдел IT</h1>
 {% endif %}
+{% if improvement == 'True' or bug == 'True' %}
     <div class="labelWrapper">
         <label for="subject">Тема заявки<span> *</span></label>
-        <label for="office">Филиал<span> *</span></label>
     </div>
+{% endif %}
+{% if improvement == 'True' %}
     <div class="selectWrapper">
-        {% if improvement == 'True' %}
+
             <select id="subject" name="subject" required aria-required="true" onChange="Selected(this)">
                 <option value="false" disabled selected> </option>
                 <option value="yellowpages_story">Есть идея для улучшения справочника</option>
@@ -47,18 +49,18 @@
                 <option value="yellowpages_bug">Техническая ошибка</option>
             </select>
         {% else %}
-            <select id="subject" name="subject" required aria-required="true" onChange="Selected(this)">
-                <option value="false" disabled selected> </option>
+            <select hidden id="subject" name="subject" aria-required="true" onChange="Selected(this)">
+                <option value="false" disabled> </option>
                 <option value="1CD">1С Дилер</option>
                 <option value="1CP">1С Пробег</option>
                 <option value="newAccount">Создание учётной записи(приём)</option>
                 <option value="delAccount">Удаление учётной записи(увольнение)</option>
                 <option value="changeAccount">Изменение учётной записи</option>
-                <option value="other">Другая тема</option>
+                <option value="other" selected>Другая тема</option>
             </select>
-        {% endif %}
     </div>
-    
+{% endif %}
+
             <div class="labelWrapper">
                 <label for="ticketText">Текст заявки<span> *</span></label>
             </div>
@@ -89,19 +91,19 @@
             
             <div class="labelWrapper">
                 <label for="email">Ваш электронный адрес<span> *</span></label>
-                <label for="phone">Телефон для связи</label>
-                <label for="subPhone">Внутр.</label>
+{#                <label for="phone">Телефон для связи</label>#}
+{#                <label for="subPhone">Внутр.</label>#}
             </div>
             
             <div class="inputWrapper">
                 <div class="fake-input">
-                <input title="Заявки принимаются только с адресов freshauto" type="text" class="email fake-input__field" id="email" name="email" placeholder="i.ivanov" required pattern="([A-z0-9_.-]{4,})">
+                <input type="text" class="email fake-input__field" id="email" name="email" placeholder="i.ivanov" required pattern="([A-z0-9_.-]{4,})">
                 <div class="domain fake-input__static-value" id="domain">@freshauto.ru</div>
                 </div>
-                <div class="twoNumbersField">
-                <input type="tel" id="phone" class="subPhoneField" name="phone">
-                <input type="tel" id="subPhone" name="subPhone" pattern="([0-9]{,5})" maxlength="5">
-                </div>
+{#                <div class="twoNumbersField">#}
+{#                <input type="tel" id="phone" class="subPhoneField" name="phone">#}
+{#                <input type="tel" id="subPhone" name="subPhone" pattern="([0-9]{,5})" maxlength="5">#}
+{#                </div>#}
             </div>
             <input id="ip" class="invisible" type="text" name="localIp">
             <button type="submit">отправить</button>
