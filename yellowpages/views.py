@@ -57,7 +57,7 @@ def index_yp(request):
     units = yp.unit_depart().keys()
     cities = yp.city_address().keys()
     brands = brand
-    return render(request, 'index.html', {'cities': cities, 'units': units, 'brands': brands})
+    return render(request, 'results.html', {'cities': cities, 'units': units, 'brands': brands})
 
 
 def regular_search(request):
@@ -151,7 +151,7 @@ def dropdown_request(request):
     if (request_city is None) and (request_unit is None) and (request_position is None):
         units = yp.unit_depart().keys()
         cities = yp.city_address().keys()
-        return render(request, 'index.html', {'units': units, 'cities': cities})
+        return render(request, 'results.html', {'units': units, 'cities': cities})
 
     elif request_city is not None:
         if yp.city_address().get(request_city) is None:

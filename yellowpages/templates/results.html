@@ -5,7 +5,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, inicial-scale=1">
-    <link rel="stylesheet/less" type="text/css" href="{% static 'yellowpages/style1.less' %}" />
+    <link rel="stylesheet/less" type="text/css" href="{% static 'yellowpages/style1.less' %}">
     <title>Справочник</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/less.js/3.9.0/less.min.js"></script>
@@ -182,6 +182,11 @@
 
     {% endif %}
     <script src="{% static 'yellowpages/scripts/dropdown.js' %}"></script>
+<footer>
+    <a href="/help/">Написать в поддержку</a>
+    <a href="/help/?improvement=True">Предложение по улучшению</a>
+    <a href="/help/?bug=True">Нашли ошибку?</a>
+</footer>
 </body>
 
 </html>
