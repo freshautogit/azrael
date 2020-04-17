@@ -36,28 +36,30 @@
 {% endif %}
 {% if improvement == 'True' %}
     <div class="selectWrapper">
-
-            <select id="subject" name="subject" required aria-required="true" onChange="Selected(this)">
-                <option value="false" disabled selected> </option>
-                <option value="yellowpages_story">Есть идея для улучшения справочника</option>
-                <option value="other_improvement">Другое</option>
-            </select>
-        {% elif bug == 'True' %}
-            <select id="subject" name="subject" required aria-required="true" onChange="Selected(this)">
-                <option value="false" disabled selected> </option>
-                <option value="yellowpages_incorrect_info">Ошибка информации в справочнике</option>
-                <option value="yellowpages_bug">Техническая ошибка</option>
-            </select>
-        {% else %}
-            <select hidden id="subject" name="subject" aria-required="true" onChange="Selected(this)">
-                <option value="false" disabled> </option>
-                <option value="1CD">1С Дилер</option>
-                <option value="1CP">1С Пробег</option>
-                <option value="newAccount">Создание учётной записи(приём)</option>
-                <option value="delAccount">Удаление учётной записи(увольнение)</option>
-                <option value="changeAccount">Изменение учётной записи</option>
-                <option value="other" selected>Другая тема</option>
-            </select>
+        <select id="subject" name="subject" required aria-required="true" onChange="Selected(this)">
+            <option value="false" disabled selected> </option>
+            <option value="yellowpages_story">Есть идея для улучшения справочника</option>
+            <option value="other_improvement">Другое</option>
+        </select>
+    </div>
+{% elif bug == 'True' %}
+    <div class="selectWrapper"><select id="subject" name="subject" required aria-required="true" onChange="Selected(this)">
+        <option value="false" disabled selected> </option>
+        <option value="yellowpages_incorrect_info">Ошибка информации в справочнике</option>
+        <option value="yellowpages_bug">Техническая ошибка</option>
+    </select>
+    </div>
+{% else %}
+    <div class="selectWrapper">
+        <select hidden id="subject" name="subject" aria-required="true" onChange="Selected(this)">
+            <option value="false" disabled> </option>
+            <option value="1CD">1С Дилер</option>
+            <option value="1CP">1С Пробег</option>
+            <option value="newAccount">Создание учётной записи(приём)</option>
+            <option value="delAccount">Удаление учётной записи(увольнение)</option>
+            <option value="changeAccount">Изменение учётной записи</option>
+            <option value="other" selected>Другая тема</option>
+        </select>
     </div>
 {% endif %}
 
