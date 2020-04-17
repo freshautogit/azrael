@@ -88,7 +88,7 @@
         </details>
     </div>
     </form>
-    {% if result != False %}
+    {% if result != False and isIndex != True and newPost != True %}
         <div class="tableWrapper">
             <table id="myTable" class="tablesorter">
                 <thead>
@@ -109,22 +109,47 @@
                 </tbody>
             </table>
             <script>
-            $(function() {
-                $("#myTable").tablesorter();
-            });
+                $(function() {
+                    $("#myTable").tablesorter();
+                });
             </script>
         </div>
-    {% else %}
+    {% elif isIndex != True and newPost != True %}
         <h2 style="color: white;">Запрос не может быть пустым.</h2>
+    {% elif newPost == True %}
+        <form class="newPostWrapper" action="{% url 'add_new_post' %}" method="post">
+            {% csrf_token %}
+            <label for="post_type">Тип публикации</label>
+            <select name="post_type" required>
+                <option value="alertaCard" >Объявление</option>
+                <option value="coronaCard">Коронавирус</option>
+                <option value="newsCard" selected>Новость</option>
+            </select>
+            <label for="post_subject">Заголовок</label>
+            <input type="text" name="post_subject" required>
+            <label for="post_test">Описание</label>
+            <textarea name="post_text" id="" cols="30" rows="10" required></textarea>
+            <button>Опубликовать</button>
+        </form>
+    {% else %}
+        <div class="infoWrapper">
+            {% for post in news %}
+                <article class="{{ post.post_type }}">
+                    {% if user.is_authenticated %}
+                        <a class="delPost" href="/?delPost={{ post.id }}">+</a>
+                    {% endif %}
+                    <h2>{{ post.post_subject }}</h2>
+                    <p>{{ post.post_text }}</p>
+                </article>
+            {% endfor %}
+        </div>
     {% endif %}
-    </div>
 <svg id="svgEditIcon" xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24"><path fill="rgba(38, 216, 65, 0.945)" d="M14.078 4.232l-12.64 12.639-1.438 7.129 7.127-1.438 12.641-12.64-5.69-5.69zm-10.369 14.893l-.85-.85 11.141-11.125.849.849-11.14 11.126zm2.008 2.008l-.85-.85 11.141-11.125.85.85-11.141 11.125zm18.283-15.444l-2.816 2.818-5.691-5.691 2.816-2.816 5.691 5.689z"></path></svg>
 {% if user.is_authenticated %}
-    <script>
+        <script>
             let line = document.getElementsByTagName('tr');
 
-            for (let i = 1; i < line.length; i++) {
-                let btn = document.createElement('td');
+            for (let i = 1; i < line.length; i++) {let btn = document.createElement('td');
                 btn.innerHTML = '+';
                 btn.className = 'btn__del' + i;
                 line[i].append(btn);
@@ -157,13 +182,13 @@
                     }
                     ;
                 };
-                    btnEdit[i].onclick = function (e) {
-                        location.href = 'edituser?key=' + btn[i].id;
-                    };
+                btnEdit[i].onclick = function (e) {
+                    location.href = 'edituser?key=' + btn[i].id;
+                };
             };
-    </script>
-        {% else %}
-    <script>
+        </script>
+{% else %}
+        <script>
             let line = document.getElementsByTagName('tr');
 
             for (let i = 1; i < line.length; i++) {
@@ -171,14 +196,14 @@
                 btn.className = 'btn__del' + i;
                 line[i].append(btn);
                 line[i].className = 'tableLine_' + i;
-            };
+            }
 
             for (let i = 1; i < line.length; i++) {
                 let btnEdit = document.createElement('td');
                 btnEdit.className = 'btn__edit' + i;
                 line[i].append(btnEdit);
-            };
-    </script>
+            }
+        </script>
 
     {% endif %}
     <script src="{% static 'yellowpages/scripts/dropdown.js' %}"></script>

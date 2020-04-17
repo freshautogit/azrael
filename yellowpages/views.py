@@ -1,10 +1,12 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import permission_required
 from back.sql import yp
 from back.help_form import helpForm
 from django.http import JsonResponse
+from yellowpages.models import News
 
 #########################################
+
 unit_depart = yp.unit_depart()
 depart_pos = yp.depart_pos()
 city_address = yp.city_address()
@@ -21,7 +23,6 @@ def edit_user(request):
 
 
 def save_user(request):
-    not_dublicate = yp.add_user(request)
     return get_headers(request, True)
 
 
@@ -57,7 +58,14 @@ def index_yp(request):
     units = yp.unit_depart().keys()
     cities = yp.city_address().keys()
     brands = brand
-    return render(request, 'results.html', {'cities': cities, 'units': units, 'brands': brands})
+    if request.GET.get('delPost'):
+        News.objects.filter(id=request.GET.get('delPost')).delete()
+        return redirect('/')
+    return render(request, 'results.html', {'cities': cities,
+                                            'units': units,
+                                            'brands': brands,
+                                            'isIndex': True,
+                                            'news': News.objects.all()})
 
 
 def regular_search(request):
@@ -177,3 +185,14 @@ def dropdown_request(request):
             response = yp.depart_pos().get(request_position)
             response_position = yp.depart_pos().get(response[0])
         return JsonResponse({'response': response, 'response_position': response_position})
+
+
+@permission_required('yellowpages.can_delete')
+def add_new_post(request):
+    if request.POST.get('post_type') is not None:
+        News(post_type=request.POST.get('post_type'),
+             post_subject=request.POST.get('post_subject'),
+             post_text=request.POST.get('post_text')).save()
+        return redirect('/')
+    else:
+        return render(request, 'results.html', {'newPost': True})

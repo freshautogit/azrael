@@ -20,6 +20,7 @@ urlpatterns = [
     path('addinfo/', views.add_info, name='add_info'),
     path('saveuser/', views.save_user, name='save_user'),
     path('help/', include('helpapp.urls')),
+    path('newPost/', views.add_new_post, name='add_new_post'),
 
     path('', include('django.contrib.auth.urls')),
     path('reg/', views.regitstration, name="registration"),
