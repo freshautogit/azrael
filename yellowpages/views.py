@@ -15,9 +15,12 @@ brand = yp.get_brand()
 
 @permission_required('yellowpages.can_edit')
 def edit_user(request):
+    units = yp.unit_depart().keys()
+    cities = yp.city_address().keys()
+    brands = brand
     result = yp.get_user(request)
     key = request.GET.get('key')
-    return render(request, 'add_user.html', {'result': result, 'key': key})
+    return render(request, 'add_user.html', {'result': result, 'key': key, 'cities': cities, 'units': units, 'brands': brands})
 
 
 def save_user(request):
