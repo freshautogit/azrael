@@ -52,18 +52,18 @@
                         <option value="{{i}}">{{i}}</option>
                     {% endfor %}
                 </select>
-                <select name="address" class="selector addrSelect" style="color: rgb(221, 221, 221)" onchange="this.style.color='white'" required>
+                <select name="addr" class="selector addrSelect" style="color: rgb(221, 221, 221)" onchange="this.style.color='white'" required>
                     <option value="{{ result.10 }}" selected>{{ result.10 }}</option>
-                    <option value="">Пусто</option>
+{#                    <option value="">Пусто</option>#}
 {#                    {% for i in addresses %}#}
 {#                        <option value="{{i}}">{{i}}</option>#}
 {#                    {% endfor %}#}
                 </select>
-                <select name="company" class="selector brandSelect" style="color: rgb(221, 221, 221)" onchange="this.style.color='white'" required>
+                <select name="brand" class="selector brandSelect" style="color: rgb(221, 221, 221)" onchange="this.style.color='white'" required>
                     <option disabled>Бренд</option>
                     <option value="{{ result.11 }}" selected>{{ result.11 }}</option>
                     {% for i in brands %}
-                        <option value="{{i}}">{{i}}</option>
+                        <option id="brand{{forloop.counter}}" value="{{i}}">{{i}}</option>
                     {% endfor %}
                 </select>
             </div>
@@ -72,7 +72,7 @@
                     <option disabled>Отдел</option>
                     <option value="{{ result.12 }}" selected>{{ result.12 }}</option>
                     {% for i in units %}
-                        <option value="{{i}}">{{i}}</option>
+                        <option id="depart{{forloop.counter}}" value="{{i}}">{{i}}</option>
                     {% endfor %}
                 </select>
                 <select name="depart" class="selector positionSelect" style="color: rgb(221, 221, 221)" onchange="this.style.color='white'" required>

@@ -13,7 +13,8 @@ urlpatterns = [
     path('dropdown_request/', views.dropdown_request, name='dropdown_request'),
     path('adduser/dropdown_request/', views.dropdown_request, name='dropdown_request'),
     path('addinfo/dropdown_request/', views.dropdown_request, name='dropdown_request'),
-    path('addinfo/dropdown_request/', views.dropdown_request, name='dropdown_request'),
+    path('edituser/dropdown_request/', views.dropdown_request, name='dropdown_request'),
+    path('search/edituser/dropdown_request/', views.dropdown_request, name='dropdown_request'),
     path('search/dropdown_request/', views.dropdown_request, name='dropdown_request'),
 
     path('adduser/', views.add_user, name='add_user'),
