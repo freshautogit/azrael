@@ -8,7 +8,6 @@ import json
 def index_bots(request):
     pass
 
-
 def aster_create_task(request):
     json_task = json.loads(request.body.decode())
     if json_task['name'] == 'aster_task':
@@ -21,7 +20,6 @@ def bi(request):
     if json_task['name'] == 'bi':
         json_in_bi.send_json(json_task['key'])
     return HttpResponse(status=200)
-
 
 def zabbix_create_task(request):
     json_task = json.loads(request.body.decode())

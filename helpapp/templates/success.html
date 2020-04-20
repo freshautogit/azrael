@@ -1,0 +1,22 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, inicial-scale=1">
+    <meta charset="UTF-8">
+    <link rel="stylesheet/less" type="text/css" href="{% static 'helpapp/style.less' %}">
+    <link rel="shortcut icon" href="#" type="image/x-icon">
+    <title>Заявка в отдел IT</title>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/less.js/3.9.0/less.min.js"></script>
+</head>
+
+<body>
+<form action="{% url 'index' %}" method="get">
+    {% csrf_token %}
+    <h1 class="thxHeader">Спасибо!</h1>
+    <p class="thxMsg">Скоро мы решим вашу проблему.</p>
+    <button id="button--another_ticket">Отправить еще заявку</button>
+</form>
+</body>
+</html>

@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>СПРАВОЧНИК // ВЫХОД</title>
+</head>
+<style>
+    @import url('https://fonts.googleapis.com/css?family=Roboto:400,500,700&display=swap&subset=cyrillic,cyrillic-ext,latin-ext');
+    html {
+        background-color:rgba(49, 49, 49, 0.911)
+    }
+    html, body {
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+        min-width: 500px;
+        font-family: 'Roboto', sans-serif;
+        letter-spacing: 1px;
+    }
+
+    .mainWrapper {
+        width: 350px;
+        min-height: 210px;
+        display: flex;
+        background-color: #2e2e2e;
+        margin: 12% auto;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        border-radius: 15px;
+        box-shadow: 5px 5px 0 rgb(27, 27, 27),
+        10px 10px 0 rgb(27, 27, 27),
+        15px 15px 0 rgb(27, 27, 27),
+        20px 20px 0 rgb(27, 27, 27),
+        25px 25px 0 rgb(27, 27, 27),
+        30px 30px 0 rgb(27, 27, 27),
+        35px 35px 0 rgb(27, 27, 27),
+        40px 40px 0 rgb(27, 27, 27),
+        45px 45px 0 rgb(27, 27, 27),
+        50px 50px 0 rgb(27, 27, 27);
+    }
+
+    .formWrapper {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-items: center;
+    }
+
+    .formWrapper input {
+        margin-top: 15px;
+        height: 30px;
+        width: 250px;
+        padding: 1px 15px;
+        background-color: #464646;
+        border: 1px solid rgba(0, 0, 0, 0.12);
+        box-shadow: none;
+        -moz-appearance: none;
+        outline: none;
+        color: white;
+        border-radius: 15px;
+        box-sizing: border-box;
+        font-family: 'Roboto', sans-serif;
+        letter-spacing: 1px;
+        transition: box-shadow 0.5s, border 0.5s, background-color 0.3s;
+    }
+
+    .formWrapper {
+        margin-top: 0;
+    }
+
+    .formWrapper input::-moz-placeholder {
+        letter-spacing: 0;
+        opacity: 0.2;
+    }
+    .formWrapper input:focus {
+        border: 1px solid rgba(0, 102, 255, 0.507);
+    }
+
+    .formWrapper input:valid {
+        border: 1px solid rgba(0, 255, 128, 0.507);
+    }
+
+    .formWrapper input:-moz-ui-invalid {
+        border: 1px solid rgba(255, 0, 0, 0.507);
+    }
+
+    .formWrapper input[type="submit"] {
+        background-color: rgba(38, 216, 65, 0.945);
+        text-transform: uppercase;
+    }
+
+    .formWrapper input[type="submit"]:hover {
+        cursor: pointer;
+        box-shadow: 0 6px 30px rgba(78, 248, 21, 0.568);
+    }
+
+    .formWrapper input[type="submit"]:active {
+        box-shadow: 0 3px 16px rgba(78, 248, 21, 0.288);
+        background-color: rgb(47, 119, 58);
+    }
+
+    .formWrapper input[type="submit"]:focus {
+        outline: none !important;
+        -moz-box-pack: unset;
+    }
+
+    .mainWrapper p a, .mainWrapper p{
+        color: white;
+        text-decoration: none;
+        font-size: 12px;
+    }
+
+    .mainWrapper header {
+        max-height: 50px;
+        margin: 10px auto;
+        width: 250px;
+        text-align: center;
+    }
+
+    .mainWrapper header h1 {
+        font-size: 10px;
+        color: ivory;
+    }
+    @media only screen and (max-width: 800px) {
+        html, body {
+            min-width: 0;
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            overflow: hidden;
+        }
+        .mainWrapper {
+            min-height: 100%;
+            margin: 0;
+            border-radius: 0;
+            width: 100%;
+        }  }
+</style>
+<body>
+<div class="mainWrapper">
+<header>
+</header>
+<form class="formWrapper">
+</form>
+    <p><a href="{% url 'index_yp' %}">На главную</a></p>
+    <p><a href="{% url 'login' %}">Авторизоваться снова</a></p>
+  </div>
+</body>
+</html>

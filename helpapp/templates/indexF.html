@@ -1,0 +1,121 @@
+{% load static %}
+<!DOCTYPE html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width, inicial-scale=1">
+<meta charset="UTF-8">
+<link rel="stylesheet/less" type="text/css" href="{% static 'helpapp/style.less' %}">
+<link rel="shortcut icon" href="#" type="image/x-icon">
+<title>Заявка в отдел IT</title>
+<script src="//cdnjs.cloudflare.com/ajax/libs/less.js/3.9.0/less.min.js"></script>
+<script
+			  src="https://code.jquery.com/jquery-3.4.1.js"
+			  integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
+              crossorigin="anonymous">
+</script>
+</head>
+<html>
+<body>
+{% if improvement or bug == 'True' %}
+    <form action="{% url 'success' %}?task_from_yellowpages=True" method="post" enctype="multipart/form-data" id="uploadFiles">
+{% else %}
+    <form action="{% url 'success' %}?task_from_yellowpages=False" method="post" enctype="multipart/form-data" id="uploadFiles">
+{% endif %}
+{% csrf_token %}
+{% if improvement == 'True' %}
+    <h1>Идея по улучшению</h1>
+{% elif bug == 'True' %}
+    <h1>Сообщение об ошибке</h1>
+{% else %}
+    <h1>Заявка в отдел IT</h1>
+{% endif %}
+{% if improvement == 'True' or bug == 'True' %}
+    <div class="labelWrapper">
+        <label for="subject">Тема заявки<span> *</span></label>
+    </div>
+{% endif %}
+{% if improvement == 'True' %}
+    <div class="selectWrapper">
+        <select id="subject" name="subject" required aria-required="true" onChange="Selected(this)">
+            <option value="false" disabled selected> </option>
+            <option value="yellowpages_story">Есть идея для улучшения справочника</option>
+            <option value="other_improvement">Другое</option>
+        </select>
+    </div>
+{% elif bug == 'True' %}
+    <div class="selectWrapper"><select id="subject" name="subject" required aria-required="true" onChange="Selected(this)">
+        <option value="false" disabled selected> </option>
+        <option value="yellowpages_incorrect_info">Ошибка информации в справочнике</option>
+        <option value="yellowpages_bug">Техническая ошибка</option>
+    </select>
+    </div>
+{% else %}
+    <div class="selectWrapper">
+        <select hidden id="subject" name="subject" aria-required="true" onChange="Selected(this)">
+            <option value="false" disabled> </option>
+            <option value="1CD">1С Дилер</option>
+            <option value="1CP">1С Пробег</option>
+            <option value="newAccount">Создание учётной записи(приём)</option>
+            <option value="delAccount">Удаление учётной записи(увольнение)</option>
+            <option value="changeAccount">Изменение учётной записи</option>
+            <option value="other" selected>Другая тема</option>
+        </select>
+    </div>
+{% endif %}
+
+            <div class="labelWrapper">
+                <label for="ticketText">Текст заявки<span> *</span></label>
+            </div>
+            <div class="textWrapper">
+                <textarea title="Подробно опишите вашу проблему" id="ticketText" name="ticketText" required></textarea>
+            </div>
+        <div id="fileUploadWrapper" class="fileUploadWrapper">
+            <div class="fileUpload">
+                <p>прикрепить файлы</p>
+                <input type="file" name="userFile" id="id_userFile" multiple>
+            </div>
+            <div id="deleteLink" class="deleteLink" title="Удалить"><p>Удалить файлы</p></div>
+
+            <div id="uploadImagesList">
+                <div class="item template">
+                    <span class="img-wrap">
+                      <img src="" alt="">
+                  </span>
+                </div>
+            </div>
+        </div>
+            <div id="labelUserWrapper" class="labelWrapper" style="display: none">
+                <label id="forusername" for="username"></label>
+            </div>
+            <div id="usernameWrapper" class="usernameWrapper">
+                <input type="text" id="username" name="username">
+            </div>
+
+            <div class="labelWrapper">
+                <label for="email">Ваш электронный адрес<span> *</span></label>
+{#                <label for="phone">Телефон для связи</label>#}
+{#                <label for="subPhone">Внутр.</label>#}
+            </div>
+
+            <div class="inputWrapper">
+                <div class="fake-input">
+                <input type="text" class="email fake-input__field" id="email" name="email" placeholder="i.ivanov" required pattern="([A-z0-9_.-]{4,})">
+                <div class="domain fake-input__static-value" id="domain">@freshauto.ru</div>
+                </div>
+{#                <div class="twoNumbersField">#}
+{#                <input type="tel" id="phone" class="subPhoneField" name="phone">#}
+{#                <input type="tel" id="subPhone" name="subPhone" pattern="([0-9]{,5})" maxlength="5">#}
+{#                </div>#}
+            </div>
+            <input id="ip" class="invisible" type="text" name="localIp">
+            <button type="submit">отправить</button>
+            <div class="bottomWrapper">
+                <a href="#" hidden>Посмотреть инструкции</a>
+            </div>
+        </form>
+        <script src="{% static '/helpapp/scripts/script.js' %}"></script>
+        <script src="{% static '/helpapp/scripts/jquery.maskedinput.min.js' %}"></script>
+        <script src="{% static '/helpapp/scripts/ipfinder.js' %}"></script>
+        <script src="{% static '/helpapp/scripts/file_preview.js' %}"></script>
+    </body>
+</html>
