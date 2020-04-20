@@ -1,7 +1,6 @@
 from yandex_tracker_client import TrackerClient
 from back import config
 import os
-import Sql
 
 client = TrackerClient(token=config.tracker_token, org_id=config.tracker_org_id)
 
@@ -39,7 +38,7 @@ def accept_task(request, ip):
         queue = 'AA'
         type_task = 'Task'
         assignee = 'robotfresh'
-    elif request.GET['task_from_yellowpages'] == 'True':
+    elif request.POST['task_from_yellowpages'] == 'True':
         queue = 'DEV'
         if request.POST['subject'] == 'yellowpages_story' or request.POST['subject'] == 'other_improvement':
             type_task = 'Improvement'
@@ -47,7 +46,6 @@ def accept_task(request, ip):
             type_task = 'Bug'
     else:
         queue = 'IN'
-        assignee = Sql.getAssignee(ip)
         if request.POST['subject'] == 'newAccount':
             text += 'Создать учетку: ' + request.POST['username'] + '\n'
             priority = 'critical'
@@ -62,11 +60,11 @@ def accept_task(request, ip):
             text += 'Изменить учетку: ' + request.POST['username'] + '\n'
             priority = 'critical'
 
-    if request.POST['phone'] != '':
-        text += 'Номер телефона: ' + request.POST['phone'] + '\n'
-
-    if request.POST['subPhone'] != '':
-        text += 'Внутренний номер: ' + request.POST['subPhone'] + '\n'
+    # if request.POST['phone'] != '':
+    #     text += 'Номер телефона: ' + request.POST['phone'] + '\n'
+    #
+    # if request.POST['subPhone'] != '':
+    #     text += 'Внутренний номер: ' + request.POST['subPhone'] + '\n'
 
     if request.POST['localIp'] != '':
         text += 'Внутренний ip: ' + request.POST['localIp'] + '\n'

@@ -24,13 +24,12 @@ def index(request):
 #TODO: Добавить обработку сообщений об ошибке и предложений по улучшению
 def success(request):
     if request.method == 'POST':
-
         for f in request.FILES.getlist('userFile'):
             if str(f)[str(f).rindex('.'):] in apply:
                 newDoc = Document(userFile=f)
                 newDoc.save()
         start_time = time.time()
-        key = helpForm.accept_task(request, get_client_ip(request))
+        helpForm.accept_task(request, get_client_ip(request))
         return render(request, 'success.html')
     else:
         return HttpResponse('Error!')

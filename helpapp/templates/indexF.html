@@ -17,9 +17,11 @@
 <html>
 <body>
 {% if improvement or bug == 'True' %}
-    <form action="{% url 'success' %}?task_from_yellowpages=True" method="post" enctype="multipart/form-data" id="uploadFiles">
+    <form action="{% url 'success' %}" method="post" enctype="multipart/form-data" id="uploadFiles">
+    <input type="text" name="task_from_yellowpages" hidden value="True">
 {% else %}
     <form action="{% url 'success' %}?task_from_yellowpages=False" method="post" enctype="multipart/form-data" id="uploadFiles">
+    <input type="text" name="task_from_yellowpages" hidden value="False">
 {% endif %}
 {% csrf_token %}
 {% if improvement == 'True' %}
