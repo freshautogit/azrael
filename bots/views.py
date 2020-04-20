@@ -1,6 +1,7 @@
 from django.http import HttpResponse
 from back.aster import createTask
 from back.bi import json_in_bi
+from back.zabbix import zabbix
 import json
 
 
@@ -20,3 +21,8 @@ def bi(request):
         json_in_bi.send_json(json_task['key'])
     return HttpResponse(status=200)
 
+def zabbix_create_task(request):
+    json_task = json.loads(request.body.decode())
+    if json_task['name'] == 'zabbix':
+        zabbix.create_task(json_task['service'], json_task['type_error'], json_task['ip'], json_task['office'])
+    return HttpResponse(status=200)
