@@ -17,7 +17,7 @@ select:hover {
     cursor: pointer;
 }
 
-input:active, input:hover, input:invalid, input:focus, 
+input:active, input:hover, input:invalid, input:focus,
  textarea:active, textarea:hover, textarea:invalid, textarea:focus
    {
     border: 1px solid rgba(0, 0, 0, 0.12) !important;
@@ -29,7 +29,7 @@ input:active, input:hover, input:invalid, input:focus,
     outline-color: rgba(255, 255, 255, 0) !important;
     outline-style: none !important;
     outline-width: 0px !important;
-} 
+}
 
 select:active, select:hover, select:invalid, select:focus, details:focus, summary:focus,
    button:active, button:hover, button:invalid, button:focus {
@@ -146,7 +146,7 @@ a[href="/yp/"] {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
-    justify-content: space-between; 
+    justify-content: space-between;
     width: 100%;
     margin: 10px 0 10px 0;
 }
@@ -165,7 +165,7 @@ a[href="/yp/"] {
     height: 35px;
     padding: 0.5%;
     margin-bottom: 10px;
-}    
+}
 select::-ms-expand {
           display: none;
 }
@@ -240,13 +240,14 @@ select::-ms-expand {
     box-shadow: inset 3px 3px 3px  rgba(46, 46, 46, 0.432);
     background-image: url(https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fyt3.ggpht.com%2F-7zFDHK5X45w%2FAAAAAAAAAAI%2FAAAAAAAAAAA%2FQJfHeLTEZwE%2Fs900-c-k-no-mo-rj-c0xffffff%2Fphoto.jpg&f=1&nofb=1);
     background-size: 100%;
-    
+
 }
 
 .tableWrapper {
     color: rgba(234, 241, 241, 0.746);
     font-size: 14px;
     width: 100%;
+    margin-bottom: 35px;
 }
 
 table {
@@ -353,6 +354,26 @@ tr[class^="tableLine_"] > td:first-child {
     box-shadow: 0px 5.93383px 29.6691px rgba(78, 248, 21, 0.568);
 }
 
+footer {
+    display: flex;
+    justify-content: space-around;
+    width: 100%;
+    height: 35px;
+    background-color: rgb(46, 46, 46);
+    margin: 0;
+    position: fixed;
+    bottom: 0px;
+    font-family: 'Roboto', sans-serif;
+}
+
+footer a, footer a:active, footer a:enabled {
+    color: rgba(38, 216, 65, 0.945);
+    text-decoration: none;
+    text-transform: uppercase;
+    font-size: 14px;
+    vertical-align: middle;
+    margin-top: 10px;
+}
 
 @keyframes dogo {
     from {
