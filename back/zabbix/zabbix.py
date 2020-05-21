@@ -10,7 +10,8 @@ def create_task(subject, message, login):
         client.issues.create(
             queue='TI',
             summary='{0}'.format(subject),
-            description='{0}\nlogin = {1}'.format(message, login),
+            description='{0}'.format(message),
+            assignee='{0}'.format(login)
         )
     except Exception as e:
         client.issues.create(
