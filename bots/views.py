@@ -31,6 +31,13 @@ def zabbix_create_task(request):
     return HttpResponse(status=200)
 
 
+def zabbix_closed_task(request):
+    json_task = json.loads(request.body.decode())
+    if json_task['name'] == 'zabbix':
+        zabbix.closed_task(json_task['id'])
+    return HttpResponse(status=200)
+
+
 def new_task_no_assignee(request):
     json_task = json.loads(request.body.decode())
     if json_task['name'] == 'tracker':
