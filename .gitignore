@@ -3,3 +3,4 @@
 /static/admin
 /migrations
 /venv
+/back/rating_form/__pycache__/

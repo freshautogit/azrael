@@ -2,6 +2,7 @@ from django.shortcuts import render
 from django.contrib.auth.decorators import permission_required
 from back.sql import yp
 from back.help_form import helpForm
+from back.rating_form import feedback_rating_form
 from django.http import JsonResponse
 
 #########################################
@@ -12,6 +13,16 @@ brand = yp.get_brand()
 
 
 ########################################
+
+def form(request):
+    ticketId = 'https://ya.ru/'
+    if request.GET:
+        ticketId = request.GET.get('id')
+    return render(request, 'form.html', {'ticketId': ticketId})
+
+def get_results(request):
+    feedback_rating_form.get_results(request)
+    return HttpResponse(status=200)
 
 @permission_required('yellowpages.can_edit')
 def edit_user(request):

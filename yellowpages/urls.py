@@ -1,8 +1,10 @@
 from django.urls import path, include
 from . import views
-
 urlpatterns = [
     path('', views.index_yp, name='index_yp'),
+
+    path('rateus/', views.form, name='form'),
+    path('rateus/rating/', views.get_results, name="get_results"),
 
     path('search/', views.search, name='search'),
     path('search/edituser/', views.edit_user, name='edit_user'),

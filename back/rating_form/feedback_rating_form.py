@@ -1,17 +1,8 @@
-from django.shortcuts import render
 from django.http import HttpResponse
 from yandex_tracker_client import TrackerClient
 import json
 
 client = TrackerClient(token='AgAEA7qjC7i7AAW3zSixTG743kAdoEGtjtUF8hc', org_id='2120191')
-
-
-def form(request):
-    ticketId = 'https://ya.ru/'
-    if request.GET:
-        ticketId = request.GET.get('id')
-    return render(request, 'form.html', {'ticketId': ticketId})
-
 
 def get_results(request):
     json_task = json.loads(request.body.decode())
