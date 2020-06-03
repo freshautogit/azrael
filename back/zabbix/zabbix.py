@@ -33,7 +33,7 @@ def closed_task(id):
         issues = client.issues.find(find)
         for issue in issues:
             transition = issue.transitions['resolved']
-            issue.comments.create(text='Fixed', summonees=['v.gussarov'])
+            issue.comments.create(text='Fixed', summonees=[issue.assignee.login])
             transition.execute()
     except Exception as e:
         if e.status_code == 429:
