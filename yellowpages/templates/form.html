@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-Frame-Options" content="SAMEORIGIN">
+		<title>IT FORM</title>
+	</head>
+<style>
+
+body {
+	max-width: 800px;
+	margin: 100px auto;
+}
+
+body * {
+	margin: 0 auto;
+}
+
+</style>
+	<body>
+		<script src="https://yastatic.net/q/forms-frontend-ext/_/embed.js"></script><iframe src="https://forms.yandex.ru/u/5ecf84c3f725c9010b88b337/?iframe=1&answer_url_2856614=https://tracker.yandex.ru/{{ticketId}}" frameborder="0" name="ya-form-5ecf84c3f725c9010b88b337" width="650"></iframe>
+		<script>
+                window.onload = function() {
+                        let hiddenField = document.querySelector("#id_answer_url_2856614");
+                        console.log(hiddenField);
+                        hiddenField.value = 'https://tracker.yandex.ru/' + '{{ticketId}}';
+                        console.log(hiddenField.value);
+                };
+                </script>
+	</body>
+</html>
+
