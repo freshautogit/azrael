@@ -11,3 +11,4 @@ sql_user = keyring.get_password('postgresql', 'user')
 sql_password = keyring.get_password('postgresql', sql_user)
 sql_database = keyring.get_password('postgresql', 'db_name')
 ########################################################################################################################
+sql_database_tracker = keyring.get_password('postgresql', 'db_name_tracker')
