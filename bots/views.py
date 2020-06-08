@@ -49,5 +49,5 @@ def new_assignee(request):
     json_task = json.load(request.body.decode())
     if json_task['name'] == 'tracker':
         wbhook.new_assignee(json_task['key'])
-
+    return HttpResponse(status=200)
 
