@@ -17,6 +17,7 @@ def webhook(request):
     if json_task['name'] == 'aster_task':
         createTask.create(json_task['number_user'], json_task['number_assignee'])
 
+
 def new_task_no_assignee(key):
     issue = client.issues[key]
     trash = 'Предупреждение: Информация, содержащаяся в настоящем сообщении и документах, приложенных к нему, ' \
@@ -31,7 +32,10 @@ def new_task_no_assignee(key):
     bot = telebot.TeleBot('798242963:AAHJDqan4pAok0FOCwt6qjNaLylRPuQ_wxc')
     chat_id_array = sql_tracker.get_distribution()
     for chat_id in chat_id_array:
-        bot.send_message(chat_id, result, parse_mode='markdown')
+        try:
+            bot.send_message(chat_id, result, parse_mode='markdown')
+        except:
+            pass
 
 
 def new_assignee(key):
@@ -41,9 +45,14 @@ def new_assignee(key):
             'согласия правообладателя может повлечь ответственность, предусмотренную законодательством Российской ' \
             'Федерации. '
 
-    result = '[{0}](https://tracker.yandex.ru/{0})\n\n{1}\n\n{2}\n\n`назначена на тебя`'.format(issue.key, issue.summary,
-                                                                                    issue.description).replace(trash,
-                                                                                                               '')
+    result = '[{0}](https://tracker.yandex.ru/{0})\n\n{1}\n\n{2}\n\n`назначена на тебя`'.format(issue.key,
+                                                                                                issue.summary,
+                                                                                                issue.description).replace(
+        trash,
+        '')
     apihelper.proxy = {'https': 'socks5://fresh:qwe123QWE@freserv.ru:34567'}
     bot = telebot.TeleBot('798242963:AAHJDqan4pAok0FOCwt6qjNaLylRPuQ_wxc')
-    bot.send_message(sql_tracker.get_chat_id(issue.assignee.login), result, parse_mode='markdown')
+    try:
+        bot.send_message(sql_tracker.get_chat_id(issue.assignee.login), result, parse_mode='markdown')
+    except:
+        pass

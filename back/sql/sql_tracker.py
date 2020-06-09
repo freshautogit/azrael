@@ -1,7 +1,7 @@
 import psycopg2
 from back import config
 
-dbname = config.sql_database
+dbname = config.sql_database_tracker
 user = config.sql_user
 password = config.sql_password
 host = config.sql_host
