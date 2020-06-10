@@ -3,7 +3,7 @@ from django.contrib.auth.decorators import permission_required
 from back.sql import yp
 from back.help_form import helpForm
 from back.rating_form import feedback_rating_form
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpResponse
 
 #########################################
 unit_depart = yp.unit_depart()
