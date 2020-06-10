@@ -46,6 +46,7 @@ def new_task_no_assignee(request):
 
 
 def new_assignee(request):
+    print(request.body.decode())
     json_task = json.load(request.body.decode())
     if json_task['name'] == 'tracker':
         wbhook.new_assignee(json_task['key'])
