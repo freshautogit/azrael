@@ -7,41 +7,29 @@ client = TrackerClient(token='AgAEA7qjC7i7AAW3zSixTG743kAdoEGtjtUF8hc', org_id='
 def get_results(request):
     json_task = json.loads(request.body.decode())
     issue = client.issues[json_task['issueId']]
-    t1 = json_task['t1']
-    t2 = json_task['t2']
-    q = json_task['q']
-    if json_task['CSi'] != '0' and json_task['CSi'] != '' and json_task['CSi'] is not None:
+    t1 = int(json_task['t1'])
+    t2 = int(json_task['t2'])
+    q = int(json_task['q'])
+    p = int(json_task['p'])
+
+    if str(json_task['CSi']) != '' and json_task['CSi'] is not None:
         linkedIssueInRateQueue = client.issues.find('"Linked To": ' + str(issue.key))
-        # if len(linkedIssueInRateQueue) >= 1:
         if linkedIssueInRateQueue:
             mainTicket = client.issues[linkedIssueInRateQueue[0].key]
-            if mainTicket.CSi != '' and mainTicket.CSi != '0' and mainTicket.CSi is not None:
-                newCSi = (float(mainTicket.CSi) + float(json_task['CSi'])) / 2
-                mainTicket.update(CSi=round(newCSi, 2))
+            if mainTicket.CSi != '' and mainTicket.CSi is not None:
+                newCSi = (round(int(mainTicket.CSi)) + round(int(json_task['CSi']))) / 2
+                newT1 = (round(int(mainTicket.tFirst)) + round(int(json_task['t1']))) / 2
+                newT2 = (round(int(mainTicket.tSecond)) + round(int(json_task['t2']))) / 2
+                newQ = (round(int(mainTicket.q)) + round(int(json_task['q']))) / 2
+                newP = (round(int(mainTicket.polite)) + round(int(json_task['p']))) / 2
+                mainTicket.update(tFirst=round(newT1), tSecond=round(newT2), q=round(newQ), polite=round(newP), CSi=round(newCSi))
             else:
-                mainTicket.update(CSi=json_task['CSi'])
+                mainTicket.update(tFirst=json_task['t1'], tSecond=json_task['t2'], q=json_task['q'], polite=json_task['p'], CSi=json_task['CSi'])
         else:
-            issue.comments.create(text='При обработке данных на сервере что-то пошло не так.')
+            issue.comments.create(text='При обработке данных на сервере что-то пошло не так. feedback_rating_form.py line: 30')
     else:
+        x = t1 + t2 + q + p
+        CSi = (x - 4) / (20 - 4) * 100
+        issue.update(CSi=round(CSi))
 
-        if json_task['t1'] == '4026420':
-            t1 = 1
-        elif json_task['t1'] == '4026425':
-            t1 = 2
-        elif json_task['t1'] == '4026426':
-            t1 = 3
-        if json_task['t2'] == '4026427':
-            t2 = 1
-        elif json_task['t2'] == '4026458':
-            t2 = 2
-        elif json_task['t2'] == '4026459':
-            t2 = 3
-        if json_task['q'] == '4026460':
-            q = 1
-        elif json_task['q'] == '4026493':
-            q = 2
-        elif json_task['q'] == '4026494':
-            q = 3
-        CSi = 3 / (t1 ** t1 + t2 ** t2 + q ** q)
-        issue.update(tFirst=t1, tSecond=t2, q=q, CSi=round(CSi, 2))
     return HttpResponse(status=201)
