@@ -25,11 +25,10 @@ def new_task_no_assignee(key):
             'согласия правообладателя может повлечь ответственность, предусмотренную законодательством Российской ' \
             'Федерации. '
 
-    result = '[{0}](https://tracker.yandex.ru/{0})\n\n{1}\n\n{2}\n\n`новая`'.format(issue.key, issue.summary,
-                                                                                    issue.description).replace(trash,
-                                                                                                               '')
-    apihelper.proxy = {'https': 'socks5://fresh:qwe123QWE@freserv.ru:34567'}
-    bot = telebot.TeleBot('798242963:AAHJDqan4pAok0FOCwt6qjNaLylRPuQ_wxc')
+    result = '🔥[{0}](https://tracker.yandex.ru/{0})🔥\n\n{1}\n\n{2}\n\n```новая```'.format(issue.key, issue.summary,
+                                                                                            issue.description).replace(
+        trash, '')
+    bot = telebot.TeleBot('1156708983:AAGI10srt8dG0_MfsDtyZihNG5S4Knqrv-I')
     chat_id_array = sql_tracker.get_distribution()
     for chat_id in chat_id_array:
         try:
