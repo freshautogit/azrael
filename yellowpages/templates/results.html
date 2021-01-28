@@ -125,7 +125,7 @@
 
             for (let i = 1; i < line.length; i++) {
                 let btn = document.createElement('td');
-                btn.innerHTML = '+';
+                btn.innerHTML = '';
                 btn.className = 'btn__del' + i;
                 line[i].append(btn);
                 line[i].className = 'tableLine_' + i;
@@ -151,12 +151,6 @@
                 btnEdit[i].id = key[i].innerHTML;
                 btn[i].setAttribute('target', btn[i].id);
                 btnEdit[i].setAttribute('target', btnEdit[i].id);
-                btn[i].onclick = function (e) {
-                    if (confirm('Вы уверены что хотите удалть запись?')) {
-                        location.href = 'deluser?key=' + btn[i].id;
-                    }
-                    ;
-                };
                     btnEdit[i].onclick = function (e) {
                         location.href = 'edituser?key=' + btn[i].id;
                     };
@@ -165,13 +159,6 @@
         {% else %}
     <script>
             let line = document.getElementsByTagName('tr');
-
-            for (let i = 1; i < line.length; i++) {
-                let btn = document.createElement('td');
-                btn.className = 'btn__del' + i;
-                line[i].append(btn);
-                line[i].className = 'tableLine_' + i;
-            };
 
             for (let i = 1; i < line.length; i++) {
                 let btnEdit = document.createElement('td');
