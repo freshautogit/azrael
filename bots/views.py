@@ -39,14 +39,20 @@ def zabbix_closed_task(request):
 
 
 def new_task_no_assignee(request):
+    print('*' * 50)
+    print(request.body.decode())
     json_task = json.loads(request.body.decode())
+    print('*' * 50)
     if json_task['name'] == 'tracker':
         wbhook.new_task_no_assignee(json_task['key'])
     return HttpResponse(status=200)
 
 
 def new_assignee(request):
-    json_task = json.load(request.body.decode())
+    print('*'*50)
+    print(request.body.decode())
+    json_task = json.loads(request.body.decode())
+    print('*' * 50)
     if json_task['name'] == 'tracker':
         wbhook.new_assignee(json_task['key'])
     return HttpResponse(status=200)
