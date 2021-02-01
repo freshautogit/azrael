@@ -144,6 +144,7 @@
             let btnEdit = document.querySelectorAll('td[class^="btn__edit"]');
             let key = document.querySelectorAll('tr[class^="tableLine_"] > td:first-child');
 
+         
             console.log(line);
 
             for (let i = 0; i < line.length - 1; i++) {
@@ -155,16 +156,25 @@
                         location.href = 'edituser?key=' + btn[i].id;
                     };
             };
+            
     </script>
         {% else %}
     <script>
             let line = document.getElementsByTagName('tr');
+            
+            for (let i = 1; i < line.length; i++) {
+                let btn = document.createElement('td');
+                btn.className = 'btn__del' + i;
+                line[i].append(btn);
+                line[i].className = 'tableLine_' + i;
+            };
 
             for (let i = 1; i < line.length; i++) {
                 let btnEdit = document.createElement('td');
                 btnEdit.className = 'btn__edit' + i;
                 line[i].append(btnEdit);
             };
+
     </script>
 
     {% endif %}
@@ -175,5 +185,4 @@
         <a href="/help/?bug=True">Нашли ошибку?</a>
     </footer>
 </body>
-
 </html>

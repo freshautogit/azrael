@@ -8,7 +8,7 @@ urlpatterns = [
 
     path('search/', views.search, name='search'),
     path('search/edituser/', views.edit_user, name='edit_user'),
-    path('search/deluser/', views.del_user, name='del_user'),
+    path('search/edituser/deluser/', views.del_user, name='del_user'),
 
     path('s/', views.regular_search, name='regular_search'),
     path('s/dropdown_request/', views.dropdown_request, name='dropdown_request'),
